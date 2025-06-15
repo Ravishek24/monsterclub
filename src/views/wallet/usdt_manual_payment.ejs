@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Manual USDT</title>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"
+      integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+   <style>
+      .notification {
+         display: none;
+         background: linear-gradient(131deg, #25baff 0%, #099eff 100%);
+         color: white;
+         padding: 10px;
+         border-radius: 5px;
+         position: fixed;
+         top: 20%;
+         left: 50%;
+         /* transform: translate(-50%, -50%); */
+         transform: translateX(-50%);
+         z-index: 9999;
+         font-size: 16px;
+         text-align: center;
+         width: 60%;
+         max-width: 300px;
+         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+         animation: fade-in-out 2s ease-in-out forwards;
+      }
+
+      .notification.show {
+         display: block;
+      }
+
+      /* Alert Message Styling */
+      .alert-message {
+         position: fixed;
+         top: 20px;
+         left: 50%;
+         transform: translateX(-50%);
+         background-color: #099eff;
+         color: #000;
+         padding: 15px 20px;
+         border-radius: 10px;
+         font-size: 16px;
+         font-weight: bold;
+         z-index: 9999;
+         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+         text-align: center;
+         animation: fade-in-out 3s ease-in-out forwards;
+      }
+
+      /* Fade in and fade out animation */
+      @keyframes fade-in-out {
+         0% {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-20px);
+         }
+
+         10% {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+         }
+
+         90% {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+         }
+
+         100% {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-20px);
+         }
+      }
+
+      html {
+         height: 100%;
+      }
+
+      html {
+         height: 100%;
+      }
+
+      body {
+         margin: 0;
+         padding: 0;
+         display: flex;
+         flex-direction: column;
+         height: 100%;
+         width: 100%;
+         overflow-x: hidden;
+         background-color: #fff;
+         color: #000;
+      }
+
+      @font-face {
+         font-family: bahnschrift;
+         font-weight: 500;
+         src: url(/assets/woff2/bahnschrift-610d57ac.woff2);
+      }
+
+      * {
+         box-sizing: border-box;
+         font-family: bahnschrift;
+      }
+
+      main {
+         display: flex;
+         flex-direction: column;
+         height: 100%;
+         max-width: 100%;
+         padding: 1em 2em;
+      }
+
+      .head {
+         text-align: center;
+         padding: 20px 0;
+         background-color: #fff;
+      }
+
+      .head img {
+         width: 50px;
+         height: 50px;
+      }
+
+      .rupee {
+         font-size: 22px;
+         font-weight: 800;
+         margin: 10px 0;
+      }
+
+      .timer {
+         font-size: 18px;
+         color: #232020;
+         margin: 0;
+      }
+
+      .head p {
+         color: #f00;
+         font-size: 12px;
+         padding: 5px;
+         background: antiquewhite;
+         border-radius: 5px;
+         display: flex;
+         align-items: center;
+         text-align: left;
+      }
+      .head p i{
+         font-size: 1.7em;
+         margin-right: 0.5em;
+      }
+
+      .head h3 {
+         font-size: 14px;
+         font-weight: 400;
+         color: #888;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+      }
+
+      .upihead {
+         font-size: 22px;
+         font-weight: 900;
+         color: #888;
+      }
+
+      .head h3 img {
+         width: 16px;
+         height: 16px;
+         margin-left: 5px;
+      }
+
+      .upiid {
+         text-align: center;
+         padding: 20px;
+         background-color: #fff;
+         border-radius: 7px;
+         margin-bottom: 2em;
+         box-shadow: 0 0 10px #00000011;
+      }
+
+      .upiid h3 {
+         font-size: 16px;
+         display: flex;
+         gap:10px;
+         align-items: center;
+         justify-content: center;
+      }
+
+      .upiid img {
+         width: 75%;
+         min-height: 200px;
+         height: 200px;
+      }
+
+      .timerusdt {
+         text-align: center;
+         padding: 20px;
+         background-color: #fff;
+         border-radius: 10px;
+      }
+
+      .timerusdt h2 {
+         font-size: 24px;
+         color: #000;
+         margin: 0;
+      }
+
+      .day {
+         font-size: 18px !important;
+         font-weight: 500 !important;
+         color: #888 !important;
+         margin-top: 0.6em !important;
+         padding-left: 1em;
+      }
+
+      .day span {
+         padding: 0 0.4em !important;
+      }
+
+      .timerusdt h2 span {
+         padding: 0 0.3em;
+      }
+
+      .timerusdt h4 {
+         font-size: 14px;
+         color: #888;
+      }
+
+      .utr {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         gap: 10px;
+         font-size: 22px;
+         font-weight: 700;
+      }
+
+      .utr input {
+         width: 80%;
+         padding: 11px;
+         font-size: 16px;
+         border: 1px solid #ddd;
+         border-radius: 4px;
+      }
+
+      .utr button {
+         padding: 10px 15px;
+         font-size: 16px;
+         background-color: #007bff;
+         color: #fff;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+      }
+
+      .utr button:hover {
+         background-color: #0056b3;
+      }
+
+      .notice {
+         padding: 20px;
+         background-color: #fff;
+      }
+
+      .notice h2 {
+         font-size: 18px;
+         margin-bottom: 10px;
+      }
+
+      .notice ol {
+         padding-left: 20px;
+         color: #888;
+      }
+
+      .notice ol li {
+         font-size: 14px;
+         margin-bottom: 10px;
+      }
+
+      .notice ol li span {
+         font-weight: bold;
+         color: #f00;
+      }
+   </style>
+
+   <main>
+      <div class="head">
+         <img src="/trx.png" alt="">
+         <h2 class="rupee">
+            <%=Amount%> USDT
+         </h2>
+         <h2 class="timer">Network - TRON(TRC-20)</h2>
+         <p><i class="fa-solid fa-circle-exclamation"></i>The amount received will be subject to the actual transfer
+            amount, not less than 10 USDT</p>
+         <h3>N0. <%=UsdtWalletAddress%> <img class="upi_display_content__img"
+               src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTE1Ljc3IDEyMi44OCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTE1Ljc3IDEyMi44OCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHN0eWxlIHR5cGU9InRleHQvY3NzIj4uc3Qwe2ZpbGwtcnVsZTpldmVub2RkO2NsaXAtcnVsZTpldmVub2RkO308L3N0eWxlPjxnPjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04OS42MiwxMy45NnY3LjczaDEyLjE5aDAuMDF2MC4wMmMzLjg1LDAuMDEsNy4zNCwxLjU3LDkuODYsNC4xYzIuNSwyLjUxLDQuMDYsNS45OCw0LjA3LDkuODJoMC4wMnYwLjAyIHY3My4yN3YwLjAxaC0wLjAyYy0wLjAxLDMuODQtMS41Nyw3LjMzLTQuMSw5Ljg2Yy0yLjUxLDIuNS01Ljk4LDQuMDYtOS44Miw0LjA3djAuMDJoLTAuMDJoLTYxLjdINDAuMXYtMC4wMiBjLTMuODQtMC4wMS03LjM0LTEuNTctOS44Ni00LjFjLTIuNS0yLjUxLTQuMDYtNS45OC00LjA3LTkuODJoLTAuMDJ2LTAuMDJWOTIuNTFIMTMuOTZoLTAuMDF2LTAuMDJjLTMuODQtMC4wMS03LjM0LTEuNTctOS44Ni00LjEgYy0yLjUtMi41MS00LjA2LTUuOTgtNC4wNy05LjgySDB2LTAuMDJWMTMuOTZ2LTAuMDFoMC4wMmMwLjAxLTMuODUsMS41OC03LjM0LDQuMS05Ljg2YzIuNTEtMi41LDUuOTgtNC4wNiw5LjgyLTQuMDdWMGgwLjAyaDYxLjcgaDAuMDF2MC4wMmMzLjg1LDAuMDEsNy4zNCwxLjU3LDkuODYsNC4xYzIuNSwyLjUxLDQuMDYsNS45OCw0LjA3LDkuODJoMC4wMlYxMy45Nkw4OS42MiwxMy45NnogTTc5LjA0LDIxLjY5di03Ljczdi0wLjAyaDAuMDIgYzAtMC45MS0wLjM5LTEuNzUtMS4wMS0yLjM3Yy0wLjYxLTAuNjEtMS40Ni0xLTIuMzctMXYwLjAyaC0wLjAxaC02MS43aC0wLjAydi0wLjAyYy0wLjkxLDAtMS43NSwwLjM5LTIuMzcsMS4wMSBjLTAuNjEsMC42MS0xLDEuNDYtMSwyLjM3aDAuMDJ2MC4wMXY2NC41OXYwLjAyaC0wLjAyYzAsMC45MSwwLjM5LDEuNzUsMS4wMSwyLjM3YzAuNjEsMC42MSwxLjQ2LDEsMi4zNywxdi0wLjAyaDAuMDFoMTIuMTlWMzUuNjUgdi0wLjAxaDAuMDJjMC4wMS0zLjg1LDEuNTgtNy4zNCw0LjEtOS44NmMyLjUxLTIuNSw1Ljk4LTQuMDYsOS44Mi00LjA3di0wLjAyaDAuMDJINzkuMDRMNzkuMDQsMjEuNjl6IE0xMDUuMTgsMTA4LjkyVjM1LjY1di0wLjAyIGgwLjAyYzAtMC45MS0wLjM5LTEuNzUtMS4wMS0yLjM3Yy0wLjYxLTAuNjEtMS40Ni0xLTIuMzctMXYwLjAyaC0wLjAxaC02MS43aC0wLjAydi0wLjAyYy0wLjkxLDAtMS43NSwwLjM5LTIuMzcsMS4wMSBjLTAuNjEsMC42MS0xLDEuNDYtMSwyLjM3aDAuMDJ2MC4wMXY3My4yN3YwLjAyaC0wLjAyYzAsMC45MSwwLjM5LDEuNzUsMS4wMSwyLjM3YzAuNjEsMC42MSwxLjQ2LDEsMi4zNywxdi0wLjAyaDAuMDFoNjEuN2gwLjAyIHYwLjAyYzAuOTEsMCwxLjc1LTAuMzksMi4zNy0xLjAxYzAuNjEtMC42MSwxLTEuNDYsMS0yLjM3aC0wLjAyVjEwOC45MkwxMDUuMTgsMTA4LjkyeiIvPjwvZz48L3N2Zz4="
+               alt="copy upi id" /></h3>
+      </div>
+      <div class="upiid">
+         <h3 class="upihead">Recepient's wallet address:</h3>
+         <!-- <img src="/qrusdt.jpg" alt="qr-code"> -->
+
+         
+            <!-- Display the QR Code -->
+              <div id="crypto-qr-container">
+                <img id="crypto-qr-code" src="" alt="USDT Wallet QR Code" style="width: 300px; height: 300px">
+              </div>
+                     
+         
+         <h3 id="wallet_address_field"><%=UsdtWalletAddress%><img id="copy_wallet_address_btn" class="upi_display_content__img"
+               src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTE1Ljc3IDEyMi44OCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTE1Ljc3IDEyMi44OCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHN0eWxlIHR5cGU9InRleHQvY3NzIj4uc3Qwe2ZpbGwtcnVsZTpldmVub2RkO2NsaXAtcnVsZTpldmVub2RkO308L3N0eWxlPjxnPjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04OS42MiwxMy45NnY3LjczaDEyLjE5aDAuMDF2MC4wMmMzLjg1LDAuMDEsNy4zNCwxLjU3LDkuODYsNC4xYzIuNSwyLjUxLDQuMDYsNS45OCw0LjA3LDkuODJoMC4wMnYwLjAyIHY3My4yN3YwLjAxaC0wLjAyYy0wLjAxLDMuODQtMS41Nyw3LjMzLTQuMSw5Ljg2Yy0yLjUxLDIuNS01Ljk4LDQuMDYtOS44Miw0LjA3djAuMDJoLTAuMDJoLTYxLjdINDAuMXYtMC4wMiBjLTMuODQtMC4wMS03LjM0LTEuNTctOS44Ni00LjFjLTIuNS0yLjUxLTQuMDYtNS45OC00LjA3LTkuODJoLTAuMDJ2LTAuMDJWOTIuNTFIMTMuOTZoLTAuMDF2LTAuMDJjLTMuODQtMC4wMS03LjM0LTEuNTctOS44Ni00LjEgYy0yLjUtMi41MS00LjA2LTUuOTgtNC4wNy05LjgySDB2LTAuMDJWMTMuOTZ2LTAuMDFoMC4wMmMwLjAxLTMuODUsMS41OC03LjM0LDQuMS05Ljg2YzIuNTEtMi41LDUuOTgtNC4wNiw5LjgyLTQuMDdWMGgwLjAyaDYxLjcgaDAuMDF2MC4wMmMzLjg1LDAuMDEsNy4zNCwxLjU3LDkuODYsNC4xYzIuNSwyLjUxLDQuMDYsNS45OCw0LjA3LDkuODJoMC4wMlYxMy45Nkw4OS42MiwxMy45NnogTTc5LjA0LDIxLjY5di03Ljczdi0wLjAyaDAuMDIgYzAtMC45MS0wLjM5LTEuNzUtMS4wMS0yLjM3Yy0wLjYxLTAuNjEtMS40Ni0xLTIuMzctMXYwLjAyaC0wLjAxaC02MS43aC0wLjAydi0wLjAyYy0wLjkxLDAtMS43NSwwLjM5LTIuMzcsMS4wMSBjLTAuNjEsMC42MS0xLDEuNDYtMSwyLjM3aDAuMDJ2MC4wMXY2NC41OXYwLjAyaC0wLjAyYzAsMC45MSwwLjM5LDEuNzUsMS4wMSwyLjM3YzAuNjEsMC42MSwxLjQ2LDEsMi4zNywxdi0wLjAyaDAuMDFoMTIuMTlWMzUuNjUgdi0wLjAxaDAuMDJjMC4wMS0zLjg1LDEuNTgtNy4zNCw0LjEtOS44NmMyLjUxLTIuNSw1Ljk4LTQuMDYsOS44Mi00LjA3di0wLjAyaDAuMDJINzkuMDRMNzkuMDQsMjEuNjl6IE0xMDUuMTgsMTA4LjkyVjM1LjY1di0wLjAyIGgwLjAyYzAtMC45MS0wLjM5LTEuNzUtMS4wMS0yLjM3Yy0wLjYxLTAuNjEtMS40Ni0xLTIuMzctMXYwLjAyaC0wLjAxaC02MS43aC0wLjAydi0wLjAyYy0wLjkxLDAtMS43NSwwLjM5LTIuMzcsMS4wMSBjLTAuNjEsMC42MS0xLDEuNDYtMSwyLjM3aDAuMDJ2MC4wMXY3My4yN3YwLjAyaC0wLjAyYzAsMC45MSwwLjM5LDEuNzUsMS4wMSwyLjM3YzAuNjEsMC42MSwxLjQ2LDEsMi4zNywxdi0wLjAyaDAuMDFoNjEuN2gwLjAyIHYwLjAyYzAuOTEsMCwxLjc1LTAuMzksMi4zNy0xLjAxYzAuNjEtMC42MSwxLTEuNDYsMS0yLjM3aC0wLjAyVjEwOC45MkwxMDUuMTgsMTA4LjkyeiIvPjwvZz48L3N2Zz4="
+               alt="copy upi id" style="width:15px;height:15px;min-height:15px !important;" /></h3>
+      </div>
+      <div class="timerusdt">
+         <h2><span>6</span> : <span>23</span> : <span>56</span> : <span>56</span></h2>
+         <h2 class="day"><span>Day</span><span>Hour</span><span>Minute</span><span>Second</span></h2>
+      </div>
+      <div class="utr">
+         <h2 class="upihead">UTR</h2>
+         <input type="text" id="ref_no" name="ref_no" required placeholder="Input 12 digits UTR here" />
+         <button id="submit_button" type="submit">Submit</button>
+      </div>
+      <div class="notice">
+         <h2>Tips:</h2>
+         <ol>
+            <li>This channel anly support <span>USDT-TRC20</span> recharge</li>
+            <li>The recharge address is a <span>one-time</span> address, please do not save it or transfer it repeatedly
+            </li>
+            <li>The amount received will be subject to the actual transfer amount, not less than <span>10 USDT</span>
+            </li>
+            <li>After recharge, it will take about <span>1-2 minutes</span> to confirm the payment. Please wait
+               patiently</li>
+         </ol>
+      </div>
+      <div class="notification" id="notification"></div>
+      <footer>
+         <p></p>
+      </footer>
+   </main>
+   
+   
+   
+   
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   
+   <script>
+    // Example USDT Wallet Address (Ethereum-based)
+    const usdtWalletAddress = "<%=UsdtWalletAddress%>";  // Replace with your actual USDT wallet address
+
+    // Construct the Ethereum wallet link (USDT ERC20)
+    // const usdtLink = `ethereum:${usdtWalletAddress}`;
+    
+    const usdtLink = `${usdtWalletAddress}`;
+
+    // Function to load the QR Code using the USDT wallet address link
+    function generateQRCode(link) {
+      // Use an external QR code generation service
+      const qrCodeImgSrc = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(link)}`;
+      
+      // Set the QR Code image source
+      document.getElementById("crypto-qr-code").src = qrCodeImgSrc;
+    }
+
+    // Generate the QR Code when the page loads
+    generateQRCode(usdtLink);
+  </script>
+  
+    <script>
+    
+    window.onload = function() {
+    // Set the timer duration in seconds (7 days)
+    var duration = 7 * 24 * 60 * 60;
+    var timerDisplay = document.querySelector(".timerusdt h2");
+    var countdown = duration, days, hours, minutes, seconds;
+
+    function startCountdown() {
+        function updateTimer() {
+            days = Math.floor(countdown / (24 * 60 * 60));
+            hours = Math.floor((countdown % (24 * 60 * 60)) / (60 * 60));
+            minutes = Math.floor((countdown % (60 * 60)) / 60);
+            seconds = Math.floor(countdown % 60);
+
+            days = days < 10 ? "0" + days : days;
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            timerDisplay.innerHTML = `<span>${days}</span> : <span>${hours}</span> : <span>${minutes}</span> : <span>${seconds}</span>`;
+
+            if (countdown > 0) {
+                countdown--;
+                setTimeout(updateTimer, 1000); // Call updateTimer every second
+            } else {
+                alert("timeout");
+                window.history.back();
+            }
+        }
+        updateTimer(); // Initial call to start the countdown
+    }
+
+    startCountdown();
+};
+
+    </script>
+   <script>
+      // Function to show notifications
+      function showNotification(message) {
+         const notification = document.getElementById('notification');
+         notification.textContent = message;
+         notification.classList.add('show');
+         setTimeout(() => {
+            notification.classList.remove('show');
+         }, 2000);
+      }
+
+      const copyUpiId = document.getElementById("copy_wallet_address_btn");
+
+      copyUpiId.addEventListener("click", function () {
+         const walletAddress = document.getElementById("wallet_address_field").innerText;
+         navigator.clipboard.writeText(walletAddress).then(() => {
+            showNotification("Wallet address copied to clipboard!");
+         }).catch(() => {
+            showNotification("Failed to copy wallet address!");
+         });
+      });
+
+      const alertMessage = (text) => {
+         // Create alert message div
+         const msg = document.createElement('div');
+         msg.className = 'alert-message';  // Apply the alert message styling
+
+         // Set the text content
+         msg.textContent = text;
+
+         // Append the message to the body
+         document.body.appendChild(msg);
+
+         // Remove the message after the animation is finished (3 seconds)
+         setTimeout(() => {
+            document.body.removeChild(msg);
+         }, 3000);  // Matches the 3s animation duration
+      }
+      const submitButton = document.getElementById("submit_button");
+      submitButton.addEventListener("click", async (event) => {
+         try {
+            event.preventDefault();
+
+            // Get the reference number value
+            const refNo = document.getElementById("ref_no").value;
+            const amount = "<%=Amount%>";
+
+            // Check if the reference number is empty
+            if (!refNo || refNo.trim() === "") {
+               alertMessage("Reference number cannot be empty!");
+               return;  // Stop further execution
+            }
+
+            console.log(amount);
+            const response = await axios.post(
+               "/wallet/paynow/manualusdtrequest",
+               {
+                  money: amount,
+                  utr: refNo,
+               },
+            );
+
+            if (!response?.data) {
+               alertMessage("Something went wrong!");
+               return;
+            }
+
+            if (response?.data?.status === false) {
+               alertMessage(response?.data?.message);
+               return;
+            }
+
+            alertMessage(response?.data?.message);
+
+            window.location.href = "/wallet/rechargerecord";
+         } catch (error) {
+            console.log(error);
+            alertMessage("aryan Something went wrong!");
+         }
+      });
+   </script>
+</body>
+
+</html>

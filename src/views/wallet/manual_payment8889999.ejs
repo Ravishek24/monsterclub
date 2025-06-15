@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manual UPI</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"
+        integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <style>
+        .notification {
+            display: none;
+            background: linear-gradient(131deg, #25baff 0%, #099eff 100%);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            /* transform: translate(-50%, -50%); */
+            transform: translateX(-50%);
+            z-index: 9999;
+            font-size: 16px;
+            text-align: center;
+            width: 60%;
+            max-width: 300px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: fade-in-out 2s ease-in-out forwards;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        /* Alert Message Styling */
+        .alert-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #099eff;
+            color: #000;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 9999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fade-in-out 3s ease-in-out forwards;
+        }
+
+        /* Fade in and fade out animation */
+        @keyframes fade-in-out {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+
+            10% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+
+            90% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+            background-color: #fff;
+            color: #000;
+        }
+
+        @font-face {
+            font-family: bahnschrift;
+            font-weight: 500;
+            src: url(/assets/woff2/bahnschrift-610d57ac.woff2);
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: bahnschrift;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            max-width: 100%;
+            padding: 1em;
+        }
+        @media (max-width:767px){
+            body, main{
+                max-width:100%;
+            }
+        }
+
+        .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1e3627;
+            font-weight: 700;
+        }
+
+        .rupee {
+            color: #00bfff;
+            font-size: 22px;
+        }
+
+        .upihead {
+            color: #A4A4A4;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .timer {
+            font-size: 22px;
+        }
+
+        .upiid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .upi {
+            display: flex;
+            align-items: center;
+        }
+
+        .upi h2 {
+            margin-right: 10px;
+            color: #C15555;
+            font-size: 14px;
+        }
+
+        .upiid button {
+            background-color: #fff;
+            border: 1px solid #4F9DDB;
+            border-radius: 7px;
+            padding: 3px 5px;
+            cursor: pointer;
+            color: #4F9DDB;
+        }
+
+        #submit_button {
+            background: #1c4ff7;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+
+        .image {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .image .paid {
+            color: #D17A16;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .image .bank {
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .image img {
+            width: 100%;
+            min-height: 300px;
+            height: 300px;
+        }
+
+        .image h2 {
+            margin-top: 10px;
+        }
+
+        .utr {
+            display: flex;
+            align-items: center;
+            justify-content:center;
+            gap:21px;
+        }
+
+        .utr input {
+            padding: 11px;
+            border:1px solid #1e2637;
+            border-radius:7px;
+        }
+
+        .notice,
+        .warning {
+            margin-top: 20px;
+            color: red;
+            font-size: 12px;
+            text-align: center;
+            line-height: 2.1em;
+        }
+
+        .warning {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #00aaff;
+            border: 2px solid #81C3E4;
+            border-radius: 10px;
+            padding-right: 10px;
+            font-size: 10px;
+            line-height: 2em;
+            text-align: left;
+        }
+
+        .warning i {
+            position: relative;
+            left: 0;
+            top: 0;
+            color: aliceblue;
+            background: blue;
+            font-size: 5em;
+            display: flex;
+            height: 100%;
+            align-items: center;
+            padding: 0 10px;
+        }
+        
+        
+        /* Styling for the Pay Now button */
+    .btn {
+      display: inline-block;
+      padding: 10px 15px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      /* background-color: #28a745; */
+      border: none;
+      border-radius: 30px;
+      text-decoration: none;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      margin-top: 10px;
+     background: linear-gradient(90deg, #29BEFF 0%, #059AFF 100%);
+     width: 200px;
+    }
+
+    /* Hover and focus effects */
+    .btn:hover,
+    .btn:focus {
+      background-color: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Add smooth animation to make the button 'breathe' */
+    .btn:active {
+      transform: translateY(1px);
+    }
+    </style>
+
+    <main>
+        <div class="head">
+            <h2 class="rupee">₹ <%=Amount%>
+            </h2>
+            <h2 class="timer">07:49</h2>
+        </div>
+        <div class="upiid">
+            <div class="upihead">UPI ID</div>
+            <div class="upi">
+                <h2 id="wallet_address_field">
+                    <%=UpiId%>
+                </h2>
+                <button id="copy_wallet_address_btn">Copy UPI</button>
+            </div>
+        </div>
+        <div class="image">
+            <!-- <img class="upi_display_content__img" src="/payment/qr.jpg" alt="copy upi id" /> -->
+            
+              <!-- Display the UPI QR Code -->
+              <div id="upi-qr-container">
+                <img id="upi-qr-code" src="" alt="UPI Payment QR Code" style="width: 300px; height: 300px">
+              </div>
+              
+              <a href="upi://pay?pa=<%=UpiId%>&pn=MerchantName&am=<%=Amount%>&cu=INR" class="btn btn-success">Pay Now</a>
+              
+              
+            <h2 class="paid">Have You Paid Successfully ?</h2>
+            <h2 class="bank">Paytm, PhonePe, GooglePay, Other Bank</h2>
+        </div>
+        <div class="utr">
+            <h2 class="upihead">UTR</h2>
+            <input type="text" id="ref_no" name="ref_no" required placeholder="Input 12 digits UTR here" />
+            <button id="submit_button" type="submit">Submit</button>
+        </div>
+        <div class="notice">
+            <h2>Important Reminder: After completing the UPI transaction, please fill Ref No. / UTR ID / Freecharge -
+                Transaction ID (12 Digits). If you don't back fill UTR, 100% of the deposit transaction will fail.
+                Please be sure to backfill!</h2>
+        </div>
+        <div class="warning">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <h2>Warning: Please confirm that the account information is correct and use the account to pay, otherwise
+                the above payment will not be completed corectly !</h2>
+        </div>
+        <div class="notification" id="notification"></div>
+
+
+        <footer>
+            <p></p>
+        </footer>
+    </main>
+    
+  <script>
+    // Example of your UPI ID and the payment details
+    const upiID = "<%=UpiId%>";
+    const amount = "<%=Amount%>"; // Amount to be paid
+
+
+    // Construct the UPI payment link
+    // const upiLink = `upi://pay?pa=${upiID}&pn=MerchantName&mc=1234&tid=20250308&tr=TRANSACTIONID&tn=Payment%20for%20services&am=${amount}&cu=INR`;
+
+        const upiLink = `upi://pay?pa=${upiID}&pn=MerchantName&am=${amount}&cu=INR`;
+        
+    // Function to load the QR Code using the UPI link
+    function generateQRCode(link) {
+      // Use an alternative QR code generation service
+      const qrCodeImgSrc = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(link)}`;
+      
+      // Set the QR Code image source
+      document.getElementById("upi-qr-code").src = qrCodeImgSrc;
+    }
+
+    // Generate the QR Code when the page loads
+    generateQRCode(upiLink);
+  </script>
+  
+    
+    <script>
+    
+    window.onload = function() {
+    // Set the timer duration in seconds (7 minutes)
+    var duration = 7 * 60;
+    var timerDisplay = document.querySelector(".timer");
+    var countdown = duration, minutes, seconds;
+
+    function startCountdown() {
+        var countdownInterval = setInterval(function() {
+            minutes = parseInt(countdown / 60, 10);
+            seconds = parseInt(countdown % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            timerDisplay.textContent = minutes + ":" + seconds;
+
+            if (--countdown < 0) {
+                clearInterval(countdownInterval);
+                alert("timeout");
+                window.history.back();
+            }
+        }, 1000);
+    }
+
+    startCountdown();
+};
+
+    
+    </script>
+    <script>
+        // Function to show notifications
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+
+        
+        // Copy Wallet Address
+        const copyUpiId = document.getElementById("copy_wallet_address_btn");
+
+        copyUpiId.addEventListener("click", function () {
+            const walletAddress = document.getElementById("wallet_address_field").innerText;
+            navigator.clipboard.writeText(walletAddress).then(() => {
+                showNotification("Wallet address copied to clipboard!");
+            }).catch(() => {
+                showNotification("Failed to copy wallet address!");
+            });
+        });
+
+        const alertMessage = (text) => {
+            // Create alert message div
+            const msg = document.createElement('div');
+            msg.className = 'alert-message';  // Apply the alert message styling
+
+            // Set the text content
+            msg.textContent = text;
+
+            // Append the message to the body
+            document.body.appendChild(msg);
+
+            // Remove the message after the animation is finished (3 seconds)
+            setTimeout(() => {
+                document.body.removeChild(msg);
+            }, 3000);  // Matches the 3s animation duration
+        }
+        const submitButton = document.getElementById("submit_button");
+        submitButton.addEventListener("click", async (event) => {
+            try {
+                event.preventDefault();
+
+                // Get the reference number value
+                const refNo = document.getElementById("ref_no").value;
+                const amount = "<%=Amount%>";
+
+                // Check if the reference number is empty
+                if (!refNo || refNo.trim() === "") {
+                    alertMessage("Reference number cannot be empty!");
+                    return;  // Stop further execution
+                }
+
+                console.log(amount);
+                const response = await axios.post(
+                    "/wallet/paynow/manual_upi_request",
+                    {
+                        money: amount,
+                        utr: refNo,
+                    },
+                );
+
+                if (!response?.data) {
+                    alertMessage("Something went wrong!");
+                    return;
+                }
+
+                if (response?.data?.status === false) {
+                    alertMessage(response?.data?.message);
+                    return;
+                }
+
+                alertMessage(response?.data?.message);
+
+                window.location.href = "/wallet/rechargerecord";
+            } catch (error) {
+                console.log(error);
+                alertMessage("aryan Something went wrong!");
+            }
+        });
+    </script>
+</body>
+
+</html>

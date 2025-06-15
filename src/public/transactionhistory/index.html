@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html translate="no" data-dpr="1" style="font-size: 48.16px;">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex,nofollow">
+  <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+  <title>Ok Win</title>
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-thin.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-solid.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-regular.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/sharp-light.css">
+  <link rel="stylesheet" href="https://lottery-99.com/index_files/index-96409872.css">
+  <link rel="stylesheet" href="https://lottery-99.com/index_files/index-96409872.css">
+  <link href="https://lottery-99.com/css/wallet/main.css" rel="stylesheet">
+  <link href="https://lottery-99.com/css/wallet/chunk_2-1.css" rel="stylesheet">
+  <link href="https://lottery-99.com/css/wallet/chunk_2-2.css" rel="stylesheet">
+  <link href="https://lottery-99.com/css/wallet/chunk_2-3.css" rel="stylesheet">
+  <link rel="shortcut icon" href="https://lottery-99.com/index_files/Images/logo_500.png" type="image/x-icon">
+  <style>
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      background-color: #090909;
+      padding: 0;
+      margin: 0;
+    }
+
+    #app {
+      color: #fff;
+    }
+
+    .mian[data-v-3966082f] {
+      background-color: #f7f8ff
+    }
+
+    .mian .box[data-v-3966082f] {
+      padding: .4rem;
+      background: #f7f8ff;margin-top:0.55rem;
+    }
+
+    .mian .box .list[data-v-3966082f] {
+      background: #f7f8ff;
+      border-radius: 0rem;
+      overflow: hidden
+    }
+
+    .mian .box .list .item[data-v-4e585e69] {
+      background:#a8a5a1;
+      padding: 0.26667rem 0.4rem;
+      border-radius: 15px;
+    }
+
+    .mian .box .list .item[data-v-3966082f] {
+      padding: .26667rem .4rem
+    }
+
+    .mian .box .list .item .money[data-v-3966082f] {
+      font-size: .4rem;
+      color: #fb4e4e
+    }
+
+    .mian .box .list .item .money.action[data-v-3966082f] {
+      color: #6abe57
+    }
+
+    .mian .box .list .item .number[data-v-3966082f],
+    .mian .box .list .item .time[data-v-3966082f] {
+      font-size: .32rem;
+      color: #fff
+    }
+
+    .mian .box .list .item .number[data-v-3966082f] {
+      font-size: .4rem
+    }
+
+    .mian .box .list .item .number .btn[data-v-3966082f] {
+      padding: .13333rem .26667rem;
+      font-size: .32rem;
+      margin-left: .26667rem;
+      border-radius: .13333rem;
+      background-color: #ffce1f;
+      color: #fff
+    }
+
+    .mian .box .list .item .state[data-v-3966082f] {
+      text-align: center;
+      font-weight: 600
+    }
+
+    .mian .box .list .item .txt[data-v-3966082f] {
+      text-align: center
+    }
+
+    html {
+      -webkit-tap-highlight-color: transparent
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Segoe UI, Arial, Roboto, PingFang SC, Hiragino Sans GB, Microsoft Yahei, sans-serif
+    }
+
+    a {
+      text-decoration: none
+    }
+
+    button,
+    input,
+    textarea {
+      color: inherit;
+      font: inherit
+    }
+
+    [class*=van-]:focus,
+    a:focus,
+    button:focus,
+    input:focus,
+    textarea:focus {
+      outline: 0
+    }
+
+    ol,
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none
+    }
+
+    .navbar[data-v-106b99c8] {
+      background: linear-gradient(90deg, #f95959 0%, #ff9a8e 100%);
+    }
+
+    .item.c-row.c-row-between.m-b-10 {
+      border: 1px solid;
+      border-radius: 15px;
+    }
+    
+    
+    .ar {
+    position: fixed;
+    top: 1.43333rem;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translate(-50%);
+    width: 100%;
+    max-width: 10rem;
+    -webkit-user-select: none;
+    user-select: none;
+    z-index: 100;
+    padding: 0 .29333rem;
+    }
+    
+    .ar-searchbar {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    gap: .29333rem;
+    width: 100%;
+    font-size: .37333rem;
+    margin-top: .26667rem;
+    margin-bottom: .21333rem;
+}
+
+.ar-searchbar__selector[data-v-f330f1f2] {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    width: 4.53333rem;
+    height: 1.06667rem !important;
+    color: #ffffff;
+}
+
+.ar-searchbar__selector {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    width: 4.53333rem;
+    height: 1.06667rem;
+    color: #666;
+}
+
+
+.ar-searchbar__selector>div:first-of-type {
+    position: relative;
+    padding: 0 .26667rem;
+    z-index: 10;
+}
+
+.ar-searchbar__selector>div {
+    width: 100%;
+    line-height: 1.06667rem;
+    border-radius: .13333rem;
+    background: linear-gradient(90deg, #ff867a 0%, #ffc3a2 100%);
+}
+
+
+
+.ar-searchbar__selector>div .noSelect {
+    color: #ffffff;
+}
+
+
+.ar-searchbar__selector>div:first-of-type i {
+    position: absolute;
+    top: 50%;
+    right: .21333rem;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.van-icon {
+    position: relative;
+    display: inline-block;
+    font: .18667rem / 1 vant-icon;
+    font: normal normal normal .18667rem / 1 var(--van-icon-font-family, "vant-icon");
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+  </style>
+</head>
+
+<body style="font-size: 12px;">
+    
+    
+    <div id="app">
+  <div data-v-3966082f="" class="mian">
+      <div data-v-106b99c8="" data-v-3966082f="" class="navbar">
+          <div data-v-106b99c8="" class="navbar-left" onclick="location.href='/mian'">
+              <div data-v-a9660e98="" data-v-106b99c8="" class="c-row c-row-middle-center">
+                  <i class="fa-light fa-angle-left fa-fade fa-xl center" style="color: #FFF"></i>
+              </div>
+          </div>
+          <div data-v-106b99c8="" class="navbar-title">Transaction History</div>
+          <div data-v-106b99c8="" class="navbar-right"></div>
+      </div>
+      <div data-v-1320a495="" class="ar">
+                    <div data-v-1320a495="" class="ar-searchbar">
+                        <div data-v-f330f1f2="" data-v-1320a495="" class="ar-searchbar__selector">
+                            <div data-v-f330f1f2=""><span data-v-f330f1f2="" class="ar-searchbar__selector-default">All</span><i data-v-f330f1f2="" class="van-badge__wrapper van-icon van-icon-arrow-down"><!----><!----><!----></i>
+                            </div>
+                        </div>
+                        <div class="ar-searchbar__selector">
+                            <div><span class="noSelect">Choose a date</span><i class="van-badge__wrapper van-icon van-icon-arrow-down"><!----><!----><!----></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+      <div data-v-3966082f="" class="box">
+          <div data-v-3966082f="" class="list">
+              <div data-v-3966082f="" role="feed" class="van-list">
+                  <div class="lisys">
+              <div data-v-3966082f="" class="item c-row c-row-between m-b-10">
+              
+                  <div data-v-3966082f="">
+                  <span style="color:red">Deposit</span>
+                      <div data-v-3966082f="" class="number c-row">
+                          202481883296336791273
+                          <div data-v-3966082f="" class="m-l-10 tag-read van-image" data-clipboard-text="202481883296336791273" style="width: 18px; height: 15px;"><img src="/images/copy.png" class="van-image__img"></div>
+                      </div>
+                      <div data-v-3966082f="">
+                          <div data-v-3966082f="" class="money action m-b-10 m-t-10">
+                              <!---->
+                              <span data-v-3966082f="">₹ 300.00</span>
+                          </div>
+                      </div>
+                      <div data-v-3966082f="" class="time">NaN-NaN-NaN NaN:NaN:NaN PM</div>
+                  </div>
+                  <div data-v-3966082f="">
+                      <div data-v-3966082f="" class="state m-b-5">
+                          <!---->
+                          <div data-v-4e585e69="" style="color: #f5f3f0"> Success</div>
+                          <!---->
+                      </div>
+                  </div>
+              </div>
+          </div>
+                  
+              </div>
+          </div>
+      </div>
+      
+      
+      <div data-v-3966082f="" class="box">
+          <div data-v-3966082f="" class="list m-b-20">
+              <div data-v-3966082f="" role="feed" class="van-list">
+
+                  <div class="lisys">
+              <div data-v-4e585e69="" class="item">
+                      <div data-v-4e585e69="">
+                      <span style="color:#2cff2c">Withdraw</span>
+                          <div data-v-4e585e69="" class="tit c-row c-row-between c-row-middle">
+                              <div data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                  <span data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                      <div data-v-4e585e69="" class="m-r-5 van-image" style="width: 24px; height: 20px;">
+                                          <img src="/images/king (10).png" class="van-image__img">
+                                      </div>BankCard</span>
+                                  </div>
+                                  <div data-v-4e585e69="" data-clipboard-text="2024811574708378607156" class="tag-read"> 2024811574708378607156 
+                                      <img data-v-4e585e69="" width="18px" height="15px" src="/images/copy.png" class="m-l-5">
+                                  </div>
+                              </div>
+                              <div data-v-4e585e69="" class="c-row c-row-between m-b-5 m-t-5">
+                                  <div data-v-4e585e69="">
+                                      <!---->
+                                      <div data-v-4e585e69="" class="number green"><!---->
+                                          <span data-v-4e585e69="" style="color:red">₹ 5000.00</span>
+                                      </div>
+                                      <!---->
+                                  </div>
+                                  <!---->
+                                  <div data-v-4e585e69="" style="color: #f5f3f0"> Agree</div>
+                                  <!---->
+                              </div>
+                              <!---->
+                          </div>
+                      <div data-v-4e585e69="" class="time">2024-09-15 3:27:37 PM</div>
+                  </div>
+              
+              <br>
+          
+              <div data-v-4e585e69="" class="item">
+                      <div data-v-4e585e69="">
+                      <span style="color:#2cff2c">Withdraw</span>
+                          <div data-v-4e585e69="" class="tit c-row c-row-between c-row-middle">
+                              <div data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                  <span data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                      <div data-v-4e585e69="" class="m-r-5 van-image" style="width: 24px; height: 20px;">
+                                          <img src="/images/king (10).png" class="van-image__img">
+                                      </div>BankCard</span>
+                                  </div>
+                                  <div data-v-4e585e69="" data-clipboard-text="2024811532891576746345" class="tag-read"> 2024811532891576746345 
+                                      <img data-v-4e585e69="" width="18px" height="15px" src="/images/copy.png" class="m-l-5">
+                                  </div>
+                              </div>
+                              <div data-v-4e585e69="" class="c-row c-row-between m-b-5 m-t-5">
+                                  <div data-v-4e585e69="">
+                                      <!---->
+                                      <div data-v-4e585e69="" class="number green"><!---->
+                                          <span data-v-4e585e69="" style="color:red">₹ 20000.00</span>
+                                      </div>
+                                      <!---->
+                                  </div>
+                                  <!---->
+                                  <div data-v-4e585e69="" style="color: #f5f3f0"> Agree</div>
+                                  <!---->
+                              </div>
+                              <!---->
+                          </div>
+                      <div data-v-4e585e69="" class="time">2024-09-15 3:26:39 PM</div>
+                  </div>
+              
+              <br>
+          
+              <div data-v-4e585e69="" class="item">
+                      <div data-v-4e585e69="">
+                      <span style="color:#2cff2c">Withdraw</span>
+                          <div data-v-4e585e69="" class="tit c-row c-row-between c-row-middle">
+                              <div data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                  <span data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                      <div data-v-4e585e69="" class="m-r-5 van-image" style="width: 24px; height: 20px;">
+                                          <img src="/images/king (10).png" class="van-image__img">
+                                      </div>BankCard</span>
+                                  </div>
+                                  <div data-v-4e585e69="" data-clipboard-text="2024811185882251210848" class="tag-read"> 2024811185882251210848 
+                                      <img data-v-4e585e69="" width="18px" height="15px" src="/images/copy.png" class="m-l-5">
+                                  </div>
+                              </div>
+                              <div data-v-4e585e69="" class="c-row c-row-between m-b-5 m-t-5">
+                                  <div data-v-4e585e69="">
+                                      <!---->
+                                      <div data-v-4e585e69="" class="number green"><!---->
+                                          <span data-v-4e585e69="" style="color:red">₹ 400.00</span>
+                                      </div>
+                                      <!---->
+                                  </div>
+                                  <!---->
+                                  <div data-v-4e585e69="" style="color: #f5f3f0"> Agree</div>
+                                  <!---->
+                              </div>
+                              <!---->
+                          </div>
+                      <div data-v-4e585e69="" class="time">2024-09-11 7:56:42 AM</div>
+                  </div>
+              
+              <br>
+          
+              <div data-v-4e585e69="" class="item">
+                      <div data-v-4e585e69="">
+                      <span style="color:#2cff2c">Withdraw</span>
+                          <div data-v-4e585e69="" class="tit c-row c-row-between c-row-middle">
+                              <div data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                  <span data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                      <div data-v-4e585e69="" class="m-r-5 van-image" style="width: 24px; height: 20px;">
+                                          <img src="/images/king (10).png" class="van-image__img">
+                                      </div>BankCard</span>
+                                  </div>
+                                  <div data-v-4e585e69="" data-clipboard-text="2024811177224380085085" class="tag-read"> 2024811177224380085085 
+                                      <img data-v-4e585e69="" width="18px" height="15px" src="/images/copy.png" class="m-l-5">
+                                  </div>
+                              </div>
+                              <div data-v-4e585e69="" class="c-row c-row-between m-b-5 m-t-5">
+                                  <div data-v-4e585e69="">
+                                      <!---->
+                                      <div data-v-4e585e69="" class="number green"><!---->
+                                          <span data-v-4e585e69="" style="color:red">₹ 400.00</span>
+                                      </div>
+                                      <!---->
+                                  </div>
+                                  <!---->
+                                  <div data-v-4e585e69="" style="color: #f5f3f0"> Agree</div>
+                                  <!---->
+                              </div>
+                              <!---->
+                          </div>
+                      <div data-v-4e585e69="" class="time">2024-09-11 7:56:39 AM</div>
+                  </div>
+              
+              <br>
+          
+              <div data-v-4e585e69="" class="item">
+                      <div data-v-4e585e69="">
+                      <span style="color:#2cff2c">Withdraw</span>
+                          <div data-v-4e585e69="" class="tit c-row c-row-between c-row-middle">
+                              <div data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                  <span data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                      <div data-v-4e585e69="" class="m-r-5 van-image" style="width: 24px; height: 20px;">
+                                          <img src="/images/king (10).png" class="van-image__img">
+                                      </div>BankCard</span>
+                                  </div>
+                                  <div data-v-4e585e69="" data-clipboard-text="2024811081812795189458" class="tag-read"> 2024811081812795189458 
+                                      <img data-v-4e585e69="" width="18px" height="15px" src="/images/copy.png" class="m-l-5">
+                                  </div>
+                              </div>
+                              <div data-v-4e585e69="" class="c-row c-row-between m-b-5 m-t-5">
+                                  <div data-v-4e585e69="">
+                                      <!---->
+                                      <div data-v-4e585e69="" class="number green"><!---->
+                                          <span data-v-4e585e69="" style="color:red">₹ 300.00</span>
+                                      </div>
+                                      <!---->
+                                  </div>
+                                  <!---->
+                                  <div data-v-4e585e69="" style="color: #f5f3f0"> Agree</div>
+                                  <!---->
+                              </div>
+                              <!---->
+                          </div>
+                      <div data-v-4e585e69="" class="time">2024-09-10 6:05:57 PM</div>
+                  </div>
+              
+              <br>
+          
+              <div data-v-4e585e69="" class="item">
+                      <div data-v-4e585e69="">
+                      <span style="color:#2cff2c">Withdraw</span>
+                          <div data-v-4e585e69="" class="tit c-row c-row-between c-row-middle">
+                              <div data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                  <span data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                      <div data-v-4e585e69="" class="m-r-5 van-image" style="width: 24px; height: 20px;">
+                                          <img src="/images/king (10).png" class="van-image__img">
+                                      </div>BankCard</span>
+                                  </div>
+                                  <div data-v-4e585e69="" data-clipboard-text="2024811032032628466154" class="tag-read"> 2024811032032628466154 
+                                      <img data-v-4e585e69="" width="18px" height="15px" src="/images/copy.png" class="m-l-5">
+                                  </div>
+                              </div>
+                              <div data-v-4e585e69="" class="c-row c-row-between m-b-5 m-t-5">
+                                  <div data-v-4e585e69="">
+                                      <!---->
+                                      <div data-v-4e585e69="" class="number green"><!---->
+                                          <span data-v-4e585e69="" style="color:red">₹ 500.00</span>
+                                      </div>
+                                      <!---->
+                                  </div>
+                                  <!---->
+                                  <div data-v-4e585e69="" style="color: #f5f3f0"> Agree</div>
+                                  <!---->
+                              </div>
+                              <!---->
+                          </div>
+                      <div data-v-4e585e69="" class="time">2024-09-10 4:46:42 PM</div>
+                  </div>
+              
+              <br>
+          
+              <div data-v-4e585e69="" class="item">
+                      <div data-v-4e585e69="">
+                      <span style="color:#2cff2c">Withdraw</span>
+                          <div data-v-4e585e69="" class="tit c-row c-row-between c-row-middle">
+                              <div data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                  <span data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                      <div data-v-4e585e69="" class="m-r-5 van-image" style="width: 24px; height: 20px;">
+                                          <img src="/images/king (10).png" class="van-image__img">
+                                      </div>BankCard</span>
+                                  </div>
+                                  <div data-v-4e585e69="" data-clipboard-text="2024811056873862386199" class="tag-read"> 2024811056873862386199 
+                                      <img data-v-4e585e69="" width="18px" height="15px" src="/images/copy.png" class="m-l-5">
+                                  </div>
+                              </div>
+                              <div data-v-4e585e69="" class="c-row c-row-between m-b-5 m-t-5">
+                                  <div data-v-4e585e69="">
+                                      <!---->
+                                      <div data-v-4e585e69="" class="number green"><!---->
+                                          <span data-v-4e585e69="" style="color:red">₹ 500.00</span>
+                                      </div>
+                                      <!---->
+                                  </div>
+                                  <!---->
+                                  <div data-v-4e585e69="" style="color: #f5f3f0"> Agree</div>
+                                  <!---->
+                              </div>
+                              <!---->
+                          </div>
+                      <div data-v-4e585e69="" class="time">2024-09-10 4:46:39 PM</div>
+                  </div>
+              
+              <br>
+          
+              <div data-v-4e585e69="" class="item">
+                      <div data-v-4e585e69="">
+                      <span style="color:#2cff2c">Withdraw</span>
+                          <div data-v-4e585e69="" class="tit c-row c-row-between c-row-middle">
+                              <div data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                  <span data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                      <div data-v-4e585e69="" class="m-r-5 van-image" style="width: 24px; height: 20px;">
+                                          <img src="/images/king (10).png" class="van-image__img">
+                                      </div>BankCard</span>
+                                  </div>
+                                  <div data-v-4e585e69="" data-clipboard-text="2024811047681009839370" class="tag-read"> 2024811047681009839370 
+                                      <img data-v-4e585e69="" width="18px" height="15px" src="/images/copy.png" class="m-l-5">
+                                  </div>
+                              </div>
+                              <div data-v-4e585e69="" class="c-row c-row-between m-b-5 m-t-5">
+                                  <div data-v-4e585e69="">
+                                      <!---->
+                                      <div data-v-4e585e69="" class="number green"><!---->
+                                          <span data-v-4e585e69="" style="color:red">₹ 500.00</span>
+                                      </div>
+                                      <!---->
+                                  </div>
+                                  <!---->
+                                  <div data-v-4e585e69="" style="color: #f5f3f0"> Agree</div>
+                                  <!---->
+                              </div>
+                              <!---->
+                          </div>
+                      <div data-v-4e585e69="" class="time">2024-09-10 4:46:32 PM</div>
+                  </div>
+              
+              <br>
+          
+              <div data-v-4e585e69="" class="item">
+                      <div data-v-4e585e69="">
+                      <span style="color:#2cff2c">Withdraw</span>
+                          <div data-v-4e585e69="" class="tit c-row c-row-between c-row-middle">
+                              <div data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                  <span data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                      <div data-v-4e585e69="" class="m-r-5 van-image" style="width: 24px; height: 20px;">
+                                          <img src="/images/king (10).png" class="van-image__img">
+                                      </div>BankCard</span>
+                                  </div>
+                                  <div data-v-4e585e69="" data-clipboard-text="2024811061106724137439" class="tag-read"> 2024811061106724137439 
+                                      <img data-v-4e585e69="" width="18px" height="15px" src="/images/copy.png" class="m-l-5">
+                                  </div>
+                              </div>
+                              <div data-v-4e585e69="" class="c-row c-row-between m-b-5 m-t-5">
+                                  <div data-v-4e585e69="">
+                                      <!---->
+                                      <div data-v-4e585e69="" class="number green"><!---->
+                                          <span data-v-4e585e69="" style="color:red">₹ 500.00</span>
+                                      </div>
+                                      <!---->
+                                  </div>
+                                  <!---->
+                                  <div data-v-4e585e69="" style="color: #f5f3f0"> Agree</div>
+                                  <!---->
+                              </div>
+                              <!---->
+                          </div>
+                      <div data-v-4e585e69="" class="time">2024-09-10 3:55:15 PM</div>
+                  </div>
+              
+              <br>
+          </div>
+
+              </div>
+          </div>
+      </div>
+      
+   
+   
+      
+      
+<!-- Add jQuery or any other necessary scripts -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/js/client.js"></script>
+<script>
+$(document).ready(function () {
+  function formateT(params) {
+      let result = (params < 10) ? "0" + params : params;
+      return result;
+  }
+
+  function timerJoin(params = '', addHours = 0) {
+      let date = '';
+      if (params) {
+          date = new Date(Number(params));
+      } else {
+          date = new Date();
+      }
+
+      date.setHours(date.getHours() + addHours);
+
+      let years = formateT(date.getFullYear());
+      let months = formateT(date.getMonth() + 1);
+      let days = formateT(date.getDate());
+
+      let hours = date.getHours() % 12;
+      hours = hours === 0 ? 12 : hours;
+      let ampm = date.getHours() < 12 ? "AM" : "PM";
+
+      let minutes = formateT(date.getMinutes());
+      let seconds = formateT(date.getSeconds());
+
+      return years + '-' + months + '-' + days + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+  }
+
+   function loadsRecharge(datas) {
+          // Filter only successful recharge transactions
+          let successfulRecharges = datas.filter(data => data.status === 1);
+          
+          let html = successfulRecharges.map((data) => {
+          return `
+              <div data-v-3966082f="" class="item c-row c-row-between m-b-10">
+              
+                  <div data-v-3966082f="">
+                  <span style="color:red" >Deposit</span>
+                      <div data-v-3966082f="" class="number c-row">
+                          ${data.id_order}
+                          <div data-v-3966082f="" class="m-l-10 tag-read van-image" data-clipboard-text="${data.id_order}" style="width: 18px; height: 15px;"><img src="/images/copy.png" class="van-image__img" /></div>
+                      </div>
+                      <div data-v-3966082f="">
+                          <div data-v-3966082f="" class="money action m-b-10 m-t-10">
+                              <!---->
+                              <span data-v-3966082f="">₹ ${data.money}.00</span>
+                          </div>
+                      </div>
+                      <div data-v-3966082f="" class="time">${timerJoin(data.time)}</div>
+                  </div>
+                  <div data-v-3966082f="">
+                      <div data-v-3966082f="" class="state m-b-5">
+                          <!---->
+                          <div data-v-4e585e69="" style="color: ${(data.status == 1) ? '#f5f3f0' : (data.status == 0) ? 'rgb(255 171 0);' : 'red'}"> ${(data.status == 1) ? 'Success' : (data.status == 2) ? 'Cancelled' : 'Pending'}</div>
+                          <!---->
+                      </div>
+                  </div>
+              </div>
+          `;
+      }).join("");
+      $('.box:eq(0) .lisys').html(html);
+  }
+
+  function loadsWithdrawal(datas) {
+      let html = datas.map((data) => {
+          return `
+              <div data-v-4e585e69="" class="item">
+                      <div data-v-4e585e69="">
+                      <span style="color:#2cff2c" >Withdraw</span>
+                          <div data-v-4e585e69="" class="tit c-row c-row-between c-row-middle">
+                              <div data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                  <span data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                      <div data-v-4e585e69="" class="m-r-5 van-image" style="width: 24px; height: 20px;">
+                                          <img src="/images/king (10).png" class="van-image__img">
+                                      </div>BankCard</span>
+                                  </div>
+                                  <div data-v-4e585e69="" data-clipboard-text="${data.id_order}" class="tag-read"> ${data.id_order} 
+                                      <img data-v-4e585e69="" width="18px" height="15px" src="/images/copy.png" class="m-l-5">
+                                  </div>
+                              </div>
+                              <div data-v-4e585e69="" class="c-row c-row-between m-b-5 m-t-5">
+                                  <div data-v-4e585e69="">
+                                      <!---->
+                                      <div data-v-4e585e69="" class="number green"><!---->
+                                          <span data-v-4e585e69="" style="color:red" >₹ ${data.money}.00</span>
+                                      </div>
+                                      <!---->
+                                  </div>
+                                  <!---->
+                                  <div data-v-4e585e69="" style="color: ${(data.status == 1) ? '#f5f3f0' : 'rgb(242, 65, 59)'}"> ${(data.status == 1) ? 'Agree' : (data.status == 2) ? 'Cancelled' : 'Waiting'}</div>
+                                  <!---->
+                              </div>
+                              <!---->
+                          </div>
+                      <div data-v-4e585e69="" class="time">${timerJoin(data.time)}</div>
+                  </div>
+              </div>
+              <br>
+          `;
+      }).join("");
+      $('.box:eq(1) .lisys').html(html);
+  }
+
+  // Load recharge records
+  $.ajax({
+      type: "GET",
+      url: "/api/webapi/recharge/list",
+      dataType: "json",
+      success: function (response) {
+          if (response.datas.length > 0) {
+              loadsRecharge(response.datas);
+          }
+      }
+  });
+
+  // Load withdrawal records
+  $.ajax({
+      type: "GET",
+      url: "/api/webapi/withdraw/list",
+      dataType: "json",
+      success: function (response) {
+          if (response.datas.length > 0) {
+              loadsWithdrawal(response.datas);
+          }
+      }
+  });
+
+  // Other functions like clipboard and alertMess can remain unchanged
+});
+</script>
+
+
+
+
+
+
+</div></div>
+    
+    
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/client.js"></script>
+    <script>
+    $(document).ready(function () {
+        function formateT(params) {
+            let result = (params < 10) ? "0" + params : params;
+            return result;
+        }
+
+        function timerJoin(params = '', addHours = 0) {
+            let date = '';
+            if (params) {
+                date = new Date(Number(params));
+            } else {
+                date = new Date();
+            }
+
+            date.setHours(date.getHours() + addHours);
+
+            let years = formateT(date.getFullYear());
+            let months = formateT(date.getMonth() + 1);
+            let days = formateT(date.getDate());
+
+            let hours = date.getHours() % 12;
+            hours = hours === 0 ? 12 : hours;
+            let ampm = date.getHours() < 12 ? "AM" : "PM";
+
+            let minutes = formateT(date.getMinutes());
+            let seconds = formateT(date.getSeconds());
+
+            return years + '-' + months + '-' + days + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+        }
+
+         function loadsRecharge(datas) {
+                // Filter only successful recharge transactions
+                let successfulRecharges = datas.filter(data => data.status === 1);
+                
+                let html = successfulRecharges.map((data) => {
+                return `
+                    <div data-v-3966082f="" class="item c-row c-row-between m-b-10">
+                    
+                        <div data-v-3966082f="">
+                        <span style="color:red" >Deposit</span>
+                            <div data-v-3966082f="" class="number c-row">
+                                ${data.id_order}
+                                <div data-v-3966082f="" class="m-l-10 tag-read van-image" data-clipboard-text="${data.id_order}" style="width: 18px; height: 15px;"><img src="/images/copy.png" class="van-image__img" /></div>
+                            </div>
+                            <div data-v-3966082f="">
+                                <div data-v-3966082f="" class="money action m-b-10 m-t-10">
+                                    <!---->
+                                    <span data-v-3966082f="">₹ ${data.money}.00</span>
+                                </div>
+                            </div>
+                            <div data-v-3966082f="" class="time">${timerJoin(data.time)}</div>
+                        </div>
+                        <div data-v-3966082f="">
+                            <div data-v-3966082f="" class="state m-b-5">
+                                <!---->
+                                <div data-v-4e585e69="" style="color: ${(data.status == 1) ? '#f5f3f0' : (data.status == 0) ? 'rgb(255 171 0);' : 'red'}"> ${(data.status == 1) ? 'Success' : (data.status == 2) ? 'Cancelled' : 'Pending'}</div>
+                                <!---->
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+            $('.box:eq(0) .lisys').html(html);
+        }
+
+        function loadsWithdrawal(datas) {
+            let html = datas.map((data) => {
+                return `
+                    <div data-v-4e585e69="" class="item">
+                            <div data-v-4e585e69="">
+                            <span style="color:#2cff2c" >Withdraw</span>
+                                <div data-v-4e585e69="" class="tit c-row c-row-between c-row-middle">
+                                    <div data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                        <span data-v-4e585e69="" class="c-row c-row-between c-row-middle">
+                                            <div data-v-4e585e69="" class="m-r-5 van-image" style="width: 24px; height: 20px;">
+                                                <img src="/images/king (10).png" class="van-image__img">
+                                            </div>BankCard</span>
+                                        </div>
+                                        <div data-v-4e585e69="" data-clipboard-text="${data.id_order}" class="tag-read"> ${data.id_order} 
+                                            <img data-v-4e585e69="" width="18px" height="15px" src="/images/copy.png" class="m-l-5">
+                                        </div>
+                                    </div>
+                                    <div data-v-4e585e69="" class="c-row c-row-between m-b-5 m-t-5">
+                                        <div data-v-4e585e69="">
+                                            <!---->
+                                            <div data-v-4e585e69="" class="number green"><!---->
+                                                <span data-v-4e585e69="" style="color:red" >₹ ${data.money}.00</span>
+                                            </div>
+                                            <!---->
+                                        </div>
+                                        <!---->
+                                        <div data-v-4e585e69="" style="color: ${(data.status == 1) ? '#f5f3f0' : 'rgb(242, 65, 59)'}"> ${(data.status == 1) ? 'Agree' : (data.status == 2) ? 'Cancelled' : 'Waiting'}</div>
+                                        <!---->
+                                    </div>
+                                    <!---->
+                                </div>
+                            <div data-v-4e585e69="" class="time">${timerJoin(data.time)}</div>
+                        </div>
+                    </div>
+                    <br>
+                `;
+            }).join("");
+            $('.box:eq(1) .lisys').html(html);
+        }
+
+        // Load recharge records
+        $.ajax({
+            type: "GET",
+            url: "/api/webapi/recharge/list",
+            dataType: "json",
+            success: function (response) {
+                if (response.datas.length > 0) {
+                    loadsRecharge(response.datas);
+                }
+            }
+        });
+
+        // Load withdrawal records
+        $.ajax({
+            type: "GET",
+            url: "/api/webapi/withdraw/list",
+            dataType: "json",
+            success: function (response) {
+                if (response.datas.length > 0) {
+                    loadsWithdrawal(response.datas);
+                }
+            }
+        });
+
+        // Other functions like clipboard and alertMess can remain unchanged
+    });
+</script>
+    
+    
+</body>
+
+
+
+</html>

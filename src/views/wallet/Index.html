@@ -1,0 +1,51 @@
+const express = require('express');
+const mysql = require('mysql');
+
+const app = express();
+const port = 3000;
+
+// Create a MySQL connection pool
+const pool = mysql.createPool({
+    connectionLimit: 10,
+    host: 'localhost',
+    user: 'database',
+    password: 'database',
+    database: 'database'
+});
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+app.post('/processPayment', (req, res) => {
+    const { user, am } = req.body;
+
+    // Retrieve user's phone number from the database
+    pool.query('SELECT * FROM users WHERE token = ?', [user], (error, results) => {
+        if (error) {
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const phone = results[0].phone;
+
+        // Emulate the payment initialization
+        setTimeout(() => {
+            res.redirect(307, '/initialised');
+        }, 3000);
+
+        // Alternatively, you could render a payment page here
+    });
+});
+
+app.post('/initialised', (req, res) => {
+    const { user, am } = req.body;
+
+    // Here you can process the payment and return a response to the client
+});
+
+app.listen(port, () => {
+    console.log(`Server is listening at http://localhost:${port}`);
+});

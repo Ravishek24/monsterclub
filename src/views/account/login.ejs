@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en" translate="no" data-dpr="1" style="font-size: 40px;">
+
+<head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="shortcut icon" href="/images/bitbug_favicon.ico" type="image/x-icon">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="google" content="notranslate">
+		<meta name="robots" content="noindex,nofollow">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Ok Win</title>
+		<link rel="stylesheet" href="./index_files/index-96409872.css">
+		<link rel="stylesheet" href="./index_files/modules-96c1e775.css">
+		<link rel="stylesheet" href="./index_files/page-activity-d48e62db.css">
+    	<link rel="stylesheet" href="./index_files/page-home-58543d87.css">
+    	<link rel="stylesheet" href="./index_files/page-login-ef3d1f88.css">
+    	<link rel="stylesheet" href="./index_files/page-main-ff2e7571.css">
+    	<link rel="stylesheet" href="./index_files/index-98687087.css">
+    	<script src="https://kit.fontawesome.com/0601dcc316.js" crossorigin="anonymous"></script>
+    <style>
+   button:focus,
+input:focus{
+  outline: none;
+  box-shadow: none;
+}
+
+/*----------------------*/
+
+#captchaPopup{
+        position: absolute;
+    z-index: 10000;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: brightness(0.2);
+    display:none;
+}
+.block {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.slidercaptcha {
+    margin: 0 auto;
+    width: 100%;
+    height: 300px;
+    border-radius: 4px;
+    position:absolute;
+    top:40%;
+    left:50%;
+    transform:translate(-50%, -50%);
+}
+
+.slidercaptcha canvas:first-child {
+    border-radius: 5px;
+    border: 1px solid #e6e8eb;
+}
+
+.sliderContainer {
+    position: relative;
+    text-align: center;
+    line-height: 40px;
+    background: #f7f9fa;
+    color: #45494c;
+    border-radius: 2px;
+}
+
+.sliderbg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-color: #f7f9fa;
+    height: 40px;
+    border-radius: 2px;
+    border: 1px solid #e6e8eb;
+}
+
+.sliderContainer_active .slider {
+    top: -1px;
+    border: 1px solid #1991FA;
+}
+
+.sliderContainer_active .sliderMask {
+    border-width: 1px 0 1px 1px;
+}
+
+.sliderContainer_success .slider {
+        top: -1px;
+    border: 1px solid #02c076;
+    background-color: #02c076 !important;
+    color: #fff;
+}
+
+.sliderContainer_success .sliderMask {
+    border: 1px solid #52CCBA;
+    border-width: 1px 0 1px 1px;
+    background-color: #D2F4EF;
+}
+
+.sliderContainer_success .sliderIcon:before {
+    content: "\f00c";
+}
+
+.sliderContainer_fail .slider {
+    top: -1px;
+    border: 1px solid #f35c59;
+    background-color: #f35c59;
+    color: #fff;
+}
+
+.sliderContainer_fail .sliderMask {
+    border: 1px solid #f35c59;
+    background-color: #f7dcdd;
+    border-width: 1px 0 1px 1px;
+}
+
+.sliderContainer_fail .sliderIcon:before {
+    content: "\f00d";
+}
+
+.sliderContainer_active .sliderText, .sliderContainer_success .sliderText, .sliderContainer_fail .sliderText {
+    display: none;
+}
+
+.sliderMask {
+        position: absolute;
+    left: 0;
+    top: 0;
+    height: 40px;
+    border: 0 solid #d1e9fe;
+    background: #d1e9fe;    
+    border-radius: 2px;
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: background .2s linear;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider:hover {
+        background: #009efb;
+    color: #fff;
+    border-color: #009efb;
+}
+.slider i{
+    color:black !important;
+}
+.slider:hover .sliderIcon {
+    background-position: 0 -13px;
+}
+
+.sliderText {
+    position: relative;
+}
+
+.sliderIcon {
+}
+
+.refreshIcon {
+        position: absolute;
+        display:none;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+    padding: 6px;
+    color: #fff;
+    background-color: #ff4c4c;
+    font-size: 14px;
+    border-radius: 50px;
+}
+
+.refreshIcon:hover {
+    color: #fff;
+}
+
+.login__container .login_container-tab .tab .font30[data-v-8752c961] {
+    font-size: .4rem;
+    color: #f95959;
+    /* text-align: center; */
+    /* -webkit-box-flex: 0; */
+    /* -webkit-flex: none; */
+    /* flex: none; */
+    /* word-break: break-all; */
+    white-space: inherit !important;
+    margin-top: .21333rem;
+}
+
+
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background-color: #090909;
+            padding: 0;
+            margin: 0;
+        }
+
+        .msg-content {
+            animation: zoom-in 0.45s ease reverse;
+        }
+
+        @keyframes zoom-in {
+            0% {
+                opacity: 1;
+                transform: scale(1, 1);
+            }
+
+            50% {
+                transform: scale(0.6, 0.6);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1, 1);
+            }
+        }
+        .svg-icon{
+            width: .64rem;
+            height: .64rem;
+            margin-right: .16rem;
+        }
+        .svg-icon.forgetbg{
+            width: 1.06667rem;
+            height: 1.06667rem;
+            margin-right: .16rem;
+        }
+        .btn {
+          border: 1px solid red;
+          background-color: white;
+          color: black;
+          padding: 14px 28px;
+          font-size: 20px;
+          height: 43px;
+          cursor: pointer;
+          box-shadow: 1px 1px 10px #888888;
+          width: 90%;
+          margin-left: 16px;
+        }
+        
+        .success {
+          font-weight: 600 ;
+          color: red;
+        }
+        .footer{
+        	margin-top: 1vw;
+        	display: flex;
+        	width: 100%;
+        }
+        .footer .footer_data{
+            width: 50%;
+        }
+        .footer .footer_data img{
+            width: 4vw; 
+            margin-left: 4.2vw;
+        }
+        .footer .footer_data p{
+            text-align:center;
+        }
+         @media (max-width:600px) {
+         .footer {
+                margin-top: 5vw;
+                display: flex;
+                width: 100%;
+            }
+            .footer .footer_data img {
+                width: 10vw;
+                margin-left: 15vw;
+            }
+         }
+    </style>
+</head>
+
+<body style="font-size: 12px">
+
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute; width: 0; height: 0">
+<symbol id="icon-phone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+    <path opacity="0.6"
+        d="M7.20001 9.19999C7.20001 5.88628 9.8863 3.19998 13.2 3.19998H34.8C38.1137 3.19998 40.8 5.88627 40.8 9.19998V28H7.20001V9.19999Z"
+        fill="#f95959" />
+    <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M40.8 29.6H7.20001V38.8C7.20001 42.1137 9.88631 44.8 13.2 44.8H34.8C38.1137 44.8 40.8 42.1137 40.8 38.8V29.6ZM20 33.6C19.1164 33.6 18.4 34.3163 18.4 35.2C18.4 36.0836 19.1164 36.8 20 36.8H28C28.8837 36.8 29.6 36.0836 29.6 35.2C29.6 34.3163 28.8837 33.6 28 33.6H20Z"
+        fill="#f95959" />
+</symbol>
+<symbol id="icon-editPswIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+                <path opacity="0.6" d="M24.0022 34.7C24.8668 34.7 25.696 34.3565 26.3074 33.7452C26.9187 33.1338 27.2622 32.3046 27.2622 31.44C27.2622 30.5754 26.9187 29.7462 26.3074 29.1348C25.696 28.5235 24.8668 28.18 24.0022 28.18C23.1376 28.18 22.3084 28.5235 21.697 29.1348C21.0857 29.7462 20.7422 30.5754 20.7422 31.44C20.7422 32.3046 21.0857 33.1338 21.697 33.7452C22.3084 34.3565 23.1376 34.7 24.0022 34.7Z" fill="#f95959"/>
+                <path d="M33.3 18.882H14.7C6.5 18.882 4 21.382 4 29.582V33.302C4 41.502 6.5 44.002 14.7 44.002H33.3C41.5 44.002 44 41.502 44 33.302V29.582C44 21.382 41.5 18.882 33.3 18.882ZM24 37.482C20.66 37.482 17.96 34.762 17.96 31.442C17.96 28.122 20.66 25.402 24 25.402C27.34 25.402 30.04 28.122 30.04 31.442C30.04 34.762 27.34 37.482 24 37.482Z" fill="#f95959"/>
+                <path opacity="0.6" d="M14.238 18.9V16.56C14.238 10.7 15.898 6.8 23.998 6.8C32.098 6.8 33.758 10.7 33.758 16.56V18.9C34.778 18.92 35.698 18.96 36.558 19.08V16.56C36.558 11.16 35.258 4 23.998 4C12.738 4 11.438 11.16 11.438 16.56V19.06C12.278 18.96 13.218 18.9 14.238 18.9Z" fill="#f95959"/>
+            </symbol>
+ <symbol id="icon-invitation" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                <g id="login_list_icon">
+                    <path id="Vector" d="M37.38 23.06C36.24 22.76 34.9 22.6 33.3 22.6C31.08 22.6 30.26 23.14 29.12 24C29.06 24.04 29 24.1 28.94 24.16L27.04 26.18C25.46 27.88 22.56 27.88 20.96 26.18L19.06 24.18C19.0105 24.1103 18.9496 24.0495 18.88 24C17.72 23.14 16.9 22.6 14.7 22.6C13.1 22.6 11.76 22.74 10.62 23.06C5.85998 24.34 5.85999 28.12 5.85999 31.44V33.3C5.85999 38.32 5.85998 44 16.56 44H31.44C38.54 44 42.14 40.4 42.14 33.3V31.44C42.14 28.12 42.14 24.34 37.38 23.06Z" fill="#f95959"/>
+                    <path id="Vector_2" opacity="0.4" d="M29.58 4H18.42C9.58002 4 9.58002 8.7 9.58002 12.84V24.42C9.58002 24.86 9.78002 25.26 10.12 25.52C10.46 25.78 10.92 25.88 11.34 25.76C12.24 25.52 13.36 25.4 14.7 25.4C16.04 25.4 16.32 25.56 17.12 26.16L18.94 28.08C19.591 28.7751 20.3778 29.3293 21.2516 29.7081C22.1254 30.0869 23.0676 30.2824 24.02 30.2824C24.9724 30.2824 25.9146 30.0869 26.7884 29.7081C27.6622 29.3293 28.449 28.7751 29.1 28.08L30.92 26.16C31.72 25.56 32 25.4 33.34 25.4C34.68 25.4 35.8 25.52 36.7 25.76C37.12 25.88 37.56 25.78 37.92 25.52C38.26 25.26 38.46 24.84 38.46 24.42V12.84C38.42 8.7 38.42 4 29.58 4Z" fill="#f95959"/>
+                    <path id="Vector_3" d="M27.1 19.824H20.9C20.12 19.824 19.5 19.204 19.5 18.424C19.5 17.644 20.12 17.024 20.9 17.024H27.1C27.88 17.024 28.5 17.644 28.5 18.424C28.5 19.184 27.86 19.824 27.1 19.824ZM28.658 14.238H19.338C18.558 14.238 17.938 13.618 17.938 12.838C17.938 12.058 18.558 11.438 19.338 11.438H28.638C29.0093 11.4354 29.3664 11.5803 29.6309 11.841C29.8953 12.1017 30.0453 12.4567 30.048 12.828C30.0506 13.1993 29.9057 13.5565 29.645 13.8209C29.3843 14.0853 29.0293 14.2354 28.658 14.238Z" fill="#f95959"/>
+                </g>
+            </symbol>
+                <symbol id="icon-customer_b" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none" viewBox="0 0 80 80">
+                <path d="M67 69V32.995C67 18.6387 55.1352 7 40.5 7C25.8648 7 14 18.6387 14 32.995V69H67Z" fill="#f95959"/>
+                <path d="M66.7456 71H14.2527C13.5609 71 13 70.4314 13 69.7301V32.8776C13 17.5058 25.3364 5 40.5 5C55.6636 5 68 17.5058 68 32.8776V69.7301C67.9983 70.4314 67.4374 71 66.7456 71ZM15.5055 68.4593H65.4921V32.8776C65.4921 18.9067 54.28 7.5407 40.4983 7.5407C26.7167 7.5407 15.5055 18.9067 15.5055 32.8776V68.4593Z" fill="#333333"/>
+                <path d="M49.7097 19C49.6927 19.0617 44.433 38.0444 19.0017 38.0452C19.0017 38.0669 19 38.0886 19 38.1102V51.854C19 63.5328 28.6257 73 40.5 73C52.3743 73 62 63.5328 62 51.854V38.1102C62 38.0886 61.9983 38.0669 61.9983 38.0452C48.6252 38.0436 49.7063 19.0675 49.7097 19Z" fill="white"/>
+                <path d="M48.1738 22.339C48.7436 22.8348 49.2835 23.3623 49.7969 23.9139C49.4666 21.1199 49.5873 19.0225 49.5881 19C49.5839 19.0167 49.2057 20.3658 48.1738 22.339ZM62 38.1099C62 38.0883 61.9983 38.0666 61.9983 38.045C59.1764 38.045 56.9937 37.2142 55.3029 35.9025C55.3808 36.6283 55.4244 37.3641 55.4244 38.1108V51.8543C55.4244 62.4438 47.4311 71.2151 37 72.7583H37.0009C37.3157 72.805 37.634 72.8433 37.9532 72.8758C38.0567 72.8867 38.1611 72.895 38.2646 72.905C38.5016 72.9267 38.7404 72.9442 38.9799 72.9583C39.0818 72.9642 39.1836 72.9708 39.2854 72.975C39.6174 72.99 39.9511 73 40.2874 73C42.9107 73 45.4246 72.5467 47.7528 71.7167C52.4083 70.0568 56.3177 66.8878 58.8564 62.8188C59.2192 62.2372 59.5537 61.638 59.8583 61.0214C61.2308 58.2482 61.9991 55.1383 61.9991 51.8535V38.1099H62Z" fill="#1e2637"/>
+                <path d="M71.4825 54H61.7478V38H71.4817C71.7681 38 72 38.2408 72 38.5381V53.461C72.0008 53.7592 71.7689 54 71.4825 54ZM9.5183 54H19.2522V38H9.5183C9.23194 38 9 38.2408 9 38.5381V53.461C9 53.7592 9.23194 54 9.5183 54Z" fill="#f95959"/>
+                <path d="M67.5549 55H61.5798C60.8903 55 60.3313 54.4343 60.3313 53.7366V38.2651C60.3313 37.5674 60.8903 37.0017 61.5798 37.0017H67.5549C70.557 37.0017 73 39.473 73 42.5116V49.4917C72.9992 52.5287 70.557 55 67.5549 55ZM62.8283 52.4724H67.5549C69.1797 52.4724 70.5021 51.1342 70.5021 49.4901V42.5099C70.5021 40.8658 69.1797 39.5276 67.5549 39.5276H62.8283V52.4724ZM19.4202 55H13.4451C10.443 55 8 52.5287 8 49.4901V42.5099C8 39.4721 10.4422 37 13.4451 37H19.4202C20.1097 37 20.6687 37.5657 20.6687 38.2634V53.7349C20.6696 54.4343 20.1105 55 19.4202 55ZM13.4451 39.5284C11.8203 39.5284 10.4979 40.8666 10.4979 42.5108V49.4909C10.4979 51.1351 11.8203 52.4732 13.4451 52.4732H18.1717V39.5284H13.4451Z" fill="#333333"/>
+                <path d="M40.5 75C28.0936 75 18 64.8638 18 52.4049V38.5405C18 38.5127 18.0008 38.485 18.0017 38.4573C18.005 37.7612 18.5675 37.2106 19.2598 37.2106C29.2764 37.2106 37.2144 34.1465 42.8547 28.105C47.0778 23.5808 48.3719 18.9767 48.3845 18.9304C48.5553 18.3067 49.1672 17.9124 49.8025 18.0167C50.4379 18.1217 50.8924 18.6892 50.8556 19.3348C50.8497 19.4348 50.3475 29.4802 55.0376 34.4618C56.7788 36.3112 58.9711 37.2098 61.7402 37.2106C62.4291 37.2106 62.99 37.7671 62.9983 38.4581C62.9992 38.4892 63 38.5153 63 38.5405V52.4049C63.0008 64.8638 52.9073 75 40.5 75ZM20.5171 39.7224V52.4049C20.5171 63.47 29.4815 72.4722 40.5 72.4722C51.5185 72.4722 60.4829 63.47 60.4829 52.4049V39.6837C57.5849 39.4248 55.1406 38.2538 53.2028 36.1935C50.1951 32.9949 49.0198 28.2698 48.5745 24.6088C47.6638 26.1749 46.424 27.9629 44.7658 29.7526C40.6808 34.1634 33.1881 39.3954 20.5171 39.7224Z" fill="#333333"/>
+                <path d="M66.7365 64H40.2635C39.5658 64 39 63.441 39 62.7517C39 62.0623 39.5658 61.5033 40.2635 61.5033H65.4729V54.2483C65.4729 53.559 66.0387 53 66.7365 53C67.4342 53 68 53.559 68 54.2483V62.7525C68 63.441 67.4342 64 66.7365 64Z" fill="#333333"/>
+                <path d="M42.7986 66H38.2014C36.4333 66 35 64.4331 35 62.5C35 60.5669 36.4333 59 38.2014 59H42.7986C44.5667 59 46 60.5669 46 62.5C46 64.4331 44.5667 66 42.7986 66Z" fill="var(--main-color)"/>
+                <path d="M42.393 67H37.6079C35.0677 67 33 64.9811 33 62.5C33 60.0189 35.0669 58 37.6079 58H42.393C44.9331 58 47 60.0189 47 62.5C47.0008 64.9811 44.934 67 42.393 67ZM37.6087 60.4902C36.4739 60.4902 35.5512 61.3916 35.5512 62.5C35.5512 63.6084 36.4739 64.5098 37.6087 64.5098H42.3938C43.5286 64.5098 44.4514 63.6084 44.4514 62.5C44.4514 61.3916 43.5286 60.4902 42.3938 60.4902H37.6087Z" fill="#333333"/>
+            </symbol>
+             <symbol id="icon-clock_b" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none" viewBox="0 0 80 80">
+                <path d="M49.9046 27.0391C50.0517 27.7139 50.3656 28.3391 50.8158 28.8554H28.6882V25.7923C28.6882 20.1291 33.3609 15.6107 39.5384 15.6107C45.4703 15.6107 49.8701 19.9903 49.8701 25.8288V26.7195V26.8812L49.9046 27.0391ZM56.7053 28.9486C57.2005 28.4152 57.5444 27.755 57.7005 27.0391L57.7349 26.8812V26.7195V25.8559C57.7752 23.4025 57.3256 20.9657 56.4129 18.6958C55.4985 16.4217 54.1382 14.3621 52.4141 12.646L52.4042 12.6362L52.3941 12.6265C48.9558 9.32933 44.4187 7.49241 39.7005 7.50002L39.4816 7.50002L39.4809 7.50002C34.707 7.50203 30.106 9.30237 26.5465 12.55L26.5465 12.55L26.5429 12.5532C24.7253 14.2225 23.276 16.267 22.2885 18.5501C21.3016 20.8319 20.7978 23.3014 20.8092 25.7958V29.6025C18.5861 30.3692 16.6212 31.7782 15.1551 33.6654C13.4403 35.8728 12.507 38.6062 12.5 41.42V41.4237L12.5 59.939L12.5 59.9428C12.5085 63.2588 13.7938 66.4444 16.0873 68.8006C18.3821 71.1582 21.5008 72.4934 24.7634 72.5H24.7665L55.2406 72.5L55.2437 72.5C58.5059 72.4934 61.6239 71.1579 63.9177 68.7998C66.21 66.4432 67.4936 63.2573 67.5 59.9419V59.939L67.5 41.4237L67.5 41.4208C67.4936 38.1049 66.2104 34.9184 63.9184 32.5607C61.9702 30.5565 59.4269 29.2898 56.7053 28.9486Z" fill="#f95959" stroke="#333333" stroke-width="3"/>
+                <path d="M40.0473 39H40.0125C37.8143 39.0425 35.7039 39.888 34.0647 41.3828C32.4254 42.8777 31.366 44.9228 31.0787 47.1467C30.7915 49.3706 31.2956 51.6259 32.4994 53.503C33.7032 55.38 35.5269 56.7543 37.6393 57.3763V61.0402C37.7072 61.3594 37.8362 61.6616 38.0189 61.9297C38.2016 62.1978 38.4345 62.4264 38.7041 62.6024C39.0953 62.8626 39.5524 63.0008 40.0195 63C40.1926 62.9987 40.3651 62.9796 40.5345 62.9432C40.9997 62.8434 41.4263 62.6076 41.7624 62.2647C42.0986 61.9217 42.3296 61.4864 42.4275 61.0118V57.355C44.5245 56.7199 46.3306 55.3423 47.5209 53.4698C48.7112 51.5973 49.2075 49.3529 48.9206 47.1404C48.6337 44.9279 47.5824 42.8924 45.9558 41.4002C44.3292 39.9079 42.2341 39.0568 40.0473 39ZM44.4179 48.3444C44.4188 48.9318 44.3063 49.5137 44.0868 50.0568C43.8673 50.5999 43.5452 51.0936 43.1387 51.5096C42.7322 51.9257 42.2493 52.256 41.7177 52.4816C41.1861 52.7073 40.6161 52.8239 40.0404 52.8249C38.8787 52.8249 37.7645 52.3545 36.9425 51.5171C36.1204 50.6798 35.6577 49.5438 35.6558 48.3586C35.6503 47.1722 36.1069 46.0321 36.9253 45.1892C37.7436 44.3463 38.8566 43.8696 40.0195 43.8639C41.1823 43.8583 42.2998 44.3241 43.1259 45.1591C43.9521 45.994 44.4194 47.1296 44.4249 48.316L44.4179 48.3444Z" fill="white"/>
+            </symbol>
+</svg>
+
+
+
+    <div id="app" data-v-app="">
+      <div data-v-1690b988="" class="ar-loading-view" style="display: none; --7688837a: &#39;Roboto&#39;, &#39;Inter&#39;, sans-serif;">
+        <div data-v-1690b988="" class="loading-wrapper">
+          <div data-v-1690b988="" class="loading-animat">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 200 200" width="200" height="200" preserveAspectRatio="xMidYMid meet"
+            style="width: 100%; height: 100%; transform: translate3d(0px, 0px, 0px); content-visibility: visible;">
+              <defs>
+                <clippath id="__lottie_element_2">
+                  <rect width="200" height="200" x="0" y="0">
+                  </rect>
+                </clippath>
+                <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKgAAAAsBAMAAAADRO5JAAAAJHpUWHRDcmVhdG9yAAAImXNMyU9KVXBMK0ktUnBNS0tNLikGAEF6Bs5qehXFAAAACXBIWXMAAAABAAAAAQBPJcTWAAAAJFBMVEXzwwBHcEzzwgDzwwD0wwDzwwD0xADzwwDzwwDxwQDzwwD0wwDcY0swAAAADHRSTlP/AD+/In+jY9wQT49dhnwkAAADuUlEQVRIx+WXz08TQRTHh/4GLky7tAUutNaq4QKCJtxaKFh7ag2NopdWSJVwKYJoPLWxAY0XNiTG6EUuJN6oF/8934+Z2S22tCQ1MXEOzM7uzGfevPd9r4OQA7fT7KAzxaATZ0p3d/alPVTox0ih/TQvW8OEXmxUzsql2e3iwkDQG4t9W8kKHK/lWrcPlta/1lrRvvOXRF30bb7p3XZeri6/zJ4mnj3tv8AnVpJ9W0pOHb0Prm5vFUL3m7L/gsSAPn1gn21nUjs/CvZQJSW3X7Srw9apXN3Lnw0deo32r0Ffl8tljtvNcvkxd9Q2RbqG7QDqBer2wFkztXJ+5Gbkbn1QFeW8RN08SNI8haArGp0qLe/IDPXHGnkIA6+DnGvAWEEbHgNt4oMlekBDNkOFKhk0wYGu0jeGhkXAQAkf6wUVVQXllXnRAY25PsmIELaGjuNDtCfUo6E+dSA3tOiGZpQrEUr4k27Q0CLuqaEhWyr/Guik+xCyIsSogWI+1B1okHMf3gTxtAEABbZwXhtCgf2vcw2dxeG9VwzFUwQNdIF30VAf65SgYbAqg6/W6PzoQm9CWu8UFPfYlPKNrT3oNVC0WXSHTrGlPjqKX8bZXt0soWebGCY01C/ldA8omBZk6Ax+z/Ak6XLpnhnV9annldujLugY+pShOfjTZOgURrSuBKhapGOPhpYIQcHmCXEp+tJIKsFQXJO9EGJE7kPWsn1x1CNmcdVI1m+gbfm9J3RMKiiEMlFBaMWk9gRCMiopYQcv65OhozSxOzSgofMa+g12sjU0gNEKZFleniJtBzMb6KcG9t2P33Ydn8I4aRwbp3gITnlANU/IaHiCk3tBjqHin9DxJPzxMRRdxrpyoFE6LkNRXj/T9AmgczBah0gb6DjWUyUpAPgZmleeELYDjVE8GBoVJoMBmlLJXrxS/FYDYwYaEssOlBOTobpCgJSU97HCdYVanKaeQoVijDkSOnTEinF+ztCKhlYJyntku0I/s6XaBqUWA81ohdBJhJISQqPsii5Qb01wmhpdf+mExgw0Zi5MfoJS4Q3KzuiPGEm1NBQriTLI05HvCI071zB7XjkW/NULupdxDNW/SQY63VBQnP0omUzjAoLOUrHpAQ0qx3kTjHnbAZXrCqp+U7FuLRA0Qi+6Q4FF0E8JXUOfdEBlmqBhRlPvIWiYXlyG0nUzBUlu5XK5h66CB6/vuIYreE+16LYKBRL7w1oti/eUDbhe1HbxklHjVv0vLmhXQAf4R+K6zfdXoL8B/7cyv853sCEAAAAASUVORK5CYII=">
+                </image>
+                <image href="data:image/png;base64,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">
+                </image>
+              </defs>
+              <g clip-path="url(#__lottie_element_2)">
+                <g class="ai" transform="matrix(0.21814323961734772,-0.9759167432785034,0.9759167432785034,0.21814323961734772,-19.40599822998047,175.77734375)"
+                opacity="1" style="display: block;">
+                  <image width="200px" height="200px" preserveAspectRatio="xMidYMid slice"
+                  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAJHpUWHRDcmVhdG9yAAAImXNMyU9KVXBMK0ktUnBNS0tNLikGAEF6Bs5qehXFAAAACXBIWXMAAAABAAAAAQBPJcTWAAAAaVBMVEVHcEz02Zb02pfz2JTvzWT02Zjy1onwz2rv2ZLz2JDuyFXqvh/02ZbvzGXwzmnqviHpvCDqvh/0147vvyTqviHpvh7z15Dy04Hy0n3ovR3z1YXsxUX02prpvR302ZXz1ovx0n3wzmrsxDycrqE6AAAAHHRSTlMA8JqAINZAMBBn/dnAf8GjSIhQEGTwsNuYwPC2C1ZTIgAABaBJREFUeNrtnGt7ojAQhbkEwq1yR3SRAP//R24SKOqKizcwMw/5tm1teTPnnJnEbjVt+UWiSEOw0sPpdMoz+Bz+SS7oRSFxz3HyQT4+jeL4cBhqMSwKTElRHF4D/C5A2iJZPM0gVwqEIrqG8A9hHEdRRMnwgRAGRZhfIMTRpR8y+dFDCorCjyMyEVyHUP02QkZF+WGUalBXFI6loBrclfkYKEaMA+zhY8DIYwIaI+oxfOAzLT2gwEhjFBhaJrsf+IMS6VUVpyjKcSDAMVLZx3PwNwlRjkJVWoyjHPJS5xSCLweVrRz+5ZS0h0/Bc2RQDqszK4RzeTDPkeHggJ+6w106fJvLu3QEHFJXPkHCkW4cKo2JGPyRIeGgSDhIjqOfywaCgEMGFoI5URodQ/BSbpCcIDFIhEBYohPGCDgisL9xcSssDJ1QCgtDBxGjyQEBhyYSC0HyylaIIbHSHEdiSadjaIUEi9NDJE4nSIZ3VAWJkRQkTzeHqNVDMDhENHUUBcng/d73vbG3Q9HUKZLzFM/eLsfAoeVdh6IZRl3XobD6n65DcaBKeUEyLMrC0NW1EImytA5JZlEsmfXDQVAoi4fvHywW2cJXLYt4Hg6LeEgs4nveDwYOx/O8CIXXOUiKwuseEq+HnofD6zskXtc8RCA2ihmeg6CY4W0soZV4LQ4Q3kZ2G4hSIG2LA2TXeiUSkPZnA9lANpCbwWTnoAAh3pi5sEHstm03kA1kA7m/sjNICXrWupgUfzYQxUDctj2CnkvK0fdNi2LAEgHmgAXZX2Ru0zRw77V4FcaH59Jywc6MHGS8lNs1DdiOeNHYNa1o2gJw+u7P/2iaPVSQsm3OTTDhbgebvpe2oIBjq2mbi6DiIEBjS9SAXtUH6BWde+0KE6zby6a5HHiF22EOKftrLTkcJIHIcfPge6Amcf+VUgnUJDfPLUxC4FtEaI1B7CQTnbxoGMC5kbeN45xrYCqLn08gaotMdY09g6ctc0pGLmsYga8sXibGGDBt8cxiE/NIwRiwnlg2bOpi0eUlAXW6co535qojYwaoOYvv/KSrS/4JSK1kz5pgOpU5iAmHw76fTtzuRzglCe6Hkw0pge3/6ScAlMDG/+STwCnJjKH3YEoy42cXSknsuYTlLtEhBFcwF7A2jF6SzD9mcK/vK9bUZzseZaxW/oBlPmJlns9M8UtHojNmzQ/HOqsttf1ePHbgEBFcqu70h84bQV3XCp+wuGQebBFEr1UWV8HqR01s8pIoe1YUyn84VoW4FE0uoj8zewhx6Wq2Reu5PXb5l1sqcpR1/dwNiaGmTeQGP5VDjiihcgM9FZKnz7+mVuz/9Dn6KyGU1M/TL8xhvaZ3s1asLwrfFq++UCGSNx5HlDJQiePVU/irolwqeF+3rDok7pvRI0K4MtTgeG/6U4NEcrzZnmVj/HJ2GfUnxgyqV18mMerqI+MSsaqqsr7W453gYyOGI0j0L53iqfXBUckJOEn1lVnYlhb9nBwMQWKsbxRX/NyPGrT/jisbxSnk/n26xsIoq8rLthZRtAyvqlhPXma1VMZIo+grXRNRuW/BMvuW6KsVRZZjuaDs3be8U3p3LJotrixKsGh3JHK7qoXfAeyLUhmL3UM6pr5S1CdWv2HOgiVfJ+eHPdMXQHH7TVpthiAyiSv9swJzBoxgzfmUyDmS7x393ObIOlfW2mO2PaBY7id0kBS/3+0bR4VeYFxh9N1i9JpaV1RTcqis11nI4Awu02++A+uMj2EZL0xhtjG+3Pz6O2T0tyxcGuYTm0rdYnyhocg7lsmZhVfGnaWhiRmML6gKV6U7/2QUiaQJTNO2b57PsW3XLC6/UDcS9d7RJ+7VMw5E47r5nF646v6ZS+IaQfXA4gIE8Lc6iW0atwUYyhAYZgLt743awhLnZU+4Zlt4118md6NQfbz6swAAAABJRU5ErkJggg==">
+                  </image>
+                </g>
+                <g class="png" transform="matrix(0.8859999775886536,0,0,0.8859999775886536,25.576004028320312,80.50800323486328)"
+                opacity="1" style="display: block;">
+                  <image width="168px" height="44px" preserveAspectRatio="xMidYMid slice"
+                  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKgAAAAsBAMAAAADRO5JAAAAJHpUWHRDcmVhdG9yAAAImXNMyU9KVXBMK0ktUnBNS0tNLikGAEF6Bs5qehXFAAAACXBIWXMAAAABAAAAAQBPJcTWAAAAJFBMVEXzwwBHcEzzwgDzwwD0wwDzwwD0xADzwwDzwwDxwQDzwwD0wwDcY0swAAAADHRSTlP/AD+/In+jY9wQT49dhnwkAAADuUlEQVRIx+WXz08TQRTHh/4GLky7tAUutNaq4QKCJtxaKFh7ag2NopdWSJVwKYJoPLWxAY0XNiTG6EUuJN6oF/8934+Z2S22tCQ1MXEOzM7uzGfevPd9r4OQA7fT7KAzxaATZ0p3d/alPVTox0ih/TQvW8OEXmxUzsql2e3iwkDQG4t9W8kKHK/lWrcPlta/1lrRvvOXRF30bb7p3XZeri6/zJ4mnj3tv8AnVpJ9W0pOHb0Prm5vFUL3m7L/gsSAPn1gn21nUjs/CvZQJSW3X7Srw9apXN3Lnw0deo32r0Ffl8tljtvNcvkxd9Q2RbqG7QDqBer2wFkztXJ+5Gbkbn1QFeW8RN08SNI8haArGp0qLe/IDPXHGnkIA6+DnGvAWEEbHgNt4oMlekBDNkOFKhk0wYGu0jeGhkXAQAkf6wUVVQXllXnRAY25PsmIELaGjuNDtCfUo6E+dSA3tOiGZpQrEUr4k27Q0CLuqaEhWyr/Guik+xCyIsSogWI+1B1okHMf3gTxtAEABbZwXhtCgf2vcw2dxeG9VwzFUwQNdIF30VAf65SgYbAqg6/W6PzoQm9CWu8UFPfYlPKNrT3oNVC0WXSHTrGlPjqKX8bZXt0soWebGCY01C/ldA8omBZk6Ax+z/Ak6XLpnhnV9annldujLugY+pShOfjTZOgURrSuBKhapGOPhpYIQcHmCXEp+tJIKsFQXJO9EGJE7kPWsn1x1CNmcdVI1m+gbfm9J3RMKiiEMlFBaMWk9gRCMiopYQcv65OhozSxOzSgofMa+g12sjU0gNEKZFleniJtBzMb6KcG9t2P33Ydn8I4aRwbp3gITnlANU/IaHiCk3tBjqHin9DxJPzxMRRdxrpyoFE6LkNRXj/T9AmgczBah0gb6DjWUyUpAPgZmleeELYDjVE8GBoVJoMBmlLJXrxS/FYDYwYaEssOlBOTobpCgJSU97HCdYVanKaeQoVijDkSOnTEinF+ztCKhlYJyntku0I/s6XaBqUWA81ohdBJhJISQqPsii5Qb01wmhpdf+mExgw0Zi5MfoJS4Q3KzuiPGEm1NBQriTLI05HvCI071zB7XjkW/NULupdxDNW/SQY63VBQnP0omUzjAoLOUrHpAQ0qx3kTjHnbAZXrCqp+U7FuLRA0Qi+6Q4FF0E8JXUOfdEBlmqBhRlPvIWiYXlyG0nUzBUlu5XK5h66CB6/vuIYreE+16LYKBRL7w1oti/eUDbhe1HbxklHjVv0vLmhXQAf4R+K6zfdXoL8B/7cyv853sCEAAAAASUVORK5CYII=">
+                  </image>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <div data-v-1690b988="" class="com__box" style="display: none;">
+            <div class="loading" data-v-1690b988="">
+              <div class="shape shape-1" data-v-1690b988="">
+              </div>
+              <div class="shape shape-2" data-v-1690b988="">
+              </div>
+              <div class="shape shape-3" data-v-1690b988="">
+              </div>
+              <div class="shape shape-4" data-v-1690b988="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-v-1690b988="" class="skeleton-wrapper" style="display: none;">
+          <div data-v-1690b988="" class="van-skeleton van-skeleton--animate">
+            <div class="van-skeleton__content">
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 60%;">
+              </div>
+            </div>
+          </div>
+          <div data-v-1690b988="" class="van-skeleton van-skeleton--animate">
+            <div class="van-skeleton-avatar van-skeleton-avatar--round">
+            </div>
+            <div class="van-skeleton__content">
+              <h3 class="van-skeleton-title">
+              </h3>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 60%;">
+              </div>
+            </div>
+          </div>
+          <div data-v-1690b988="" class="van-skeleton van-skeleton--animate">
+            <div class="van-skeleton__content">
+              <h3 class="van-skeleton-title">
+              </h3>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 100%;">
+              </div>
+              <div class="van-skeleton-paragraph" style="width: 60%;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-v-8752c961="" class="login__container" style="--7688837a: &#39;Roboto&#39;, &#39;Inter&#39;, sans-serif;">
+        <div data-v-58c5e826="" data-v-8752c961="" class="navbar">
+          <div data-v-58c5e826="" class="navbar-fixed" style="background: rgb(43 50 112);">
+            <div data-v-58c5e826="" class="navbar__content">
+              <div data-v-58c5e826="" class="navbar__content-left" onclick="location.href='/home'">
+                <i data-v-58c5e826="" class="van-badge__wrapper van-icon van-icon-arrow-left">
+                </i>
+              </div>
+              <div data-v-58c5e826="" class="navbar__content-center">
+                <div data-v-58c5e826="" class="headLogo" style="background-image: url(./images/h5setting_202403131814229e5t.png);">
+                </div>
+                <div data-v-58c5e826="" class="navbar__content-title">
+                </div>
+              </div>
+              <div data-v-58c5e826="" class="navbar__content-right">
+                <div data-v-187d09fa="" data-v-8752c961="">
+                  <div data-v-187d09fa="" class="right">
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-v-8752c961="" class="login__container-heading">
+          <h1 data-v-8752c961="" class="login__container-heading__title">
+            Log in
+          </h1>
+          <div data-v-8752c961="" class="login__container-heading__subTitle">
+            <div data-v-8752c961="">
+              Please log in with your phone number or email
+            </div>
+            <div data-v-8752c961="">
+              If you forget your password, please contact customer service
+            </div>
+          </div>
+        </div>
+        <div data-v-8752c961="" class="login_container-tab">
+          <div data-v-8752c961="" class="tab active">
+            <svg data-v-50aa8bb0="" class="svg-icon icon-phone"><use xlink:href="#icon-phone"></use></svg>
+            <div data-v-8752c961="" class="font30 phonefont30active">
+            Log in with phone
+            </div>
+          </div>
+        </div>
+        <div data-v-8752c961="" class="login__container-form">
+          <div data-v-8752c961="" class="tab-content activecontent">
+            <div data-v-0ce8d964="" data-v-8752c961="" class="signIn__container">
+              <div data-v-93f53084="" data-v-0ce8d964="" class="phoneInput__container">
+                <div data-v-93f53084="" class="phoneInput__container-label">
+                  <svg data-v-50aa8bb0="" class="svg-icon icon-phone"><use xlink:href="#icon-phone"></use></svg>
+                  <span data-v-93f53084="">
+                    Phone number
+                  </span>
+                </div>
+                <div data-v-93f53084="" class="phoneInput__container-input">
+                  <div data-v-6f85c91a="" data-v-93f53084="" class="dropdown">
+                    <div data-v-6f85c91a="" class="dropdown__value">
+                      <span data-v-6f85c91a="">
+                        +91
+                      </span>
+                      <i data-v-6f85c91a="" class="van-badge__wrapper van-icon van-icon-arrow-down">
+                      </i>
+                    </div>
+                    
+                  </div>
+                  <input data-v-93f53084="" type="text" name="username" placeholder="Please enter the phone number"
+                  autocomplete="on" required>
+                </div>
+              </div>
+              <div data-v-57d49070="" data-v-0ce8d964="" class="passwordInput__container">
+                <div data-v-57d49070="" class="passwordInput__container-label">
+                  <svg data-v-ea5b66c8="" class="svg-icon icon-editPswIcon passwordInput__container-label__icon passwordInput__container-label__icon"><use xlink:href="#icon-editPswIcon"></use></svg>
+                  <span data-v-57d49070="">
+                    Password
+                  </span>
+                </div>
+                <div data-v-57d49070="" class="passwordInput__container-input">
+                  <input data-v-57d49070="" id="passwordfield" type="password" placeholder="Please enterPassword"
+                  maxlength="32" autocomplete="on" required>
+                  <img data-v-57d49070="" id="eyeicon" src="./index_files/eye.png"
+                  class="eye" onclick="showPass()">
+                </div>
+              </div>
+              <div data-v-0ce8d964="" class="signIn__container-remember">
+                <div data-v-0ce8d964="" role="checkbox" class="van-checkbox" tabindex="0"
+                aria-checked="true">
+                  <div class="van-checkbox__icon van-checkbox__icon--round van-checkbox__icon--checked">
+                    <i class="van-badge__wrapper van-icon van-icon-success" style="border-color: #f95959; background-color: #f95959;">
+                    </i>
+                  </div>
+                  <span class="van-checkbox__label">
+                    Remember password
+                  </span>
+                </div>
+              </div>
+              <div class="alert-toast" style="color:red">
+              </div>
+              <div data-v-0ce8d964="" class="signIn__container-button">
+                <button data-v-0ce8d964="" class="active">
+                  Log in
+                </button>
+                <button data-v-0ce8d964="" class="register" onclick="window.location='/register'">
+                  Register
+                </button>
+              </div>
+              <div data-v-0ce8d964="" class="signIn_footer">
+                <div data-v-0ce8d964="" class="forgetcon" onclick="window.location='/keFuMenu'">
+                  <svg data-v-33f88764="" class="svg-icon icon-clock_b forgetbg forgetbg"><use xlink:href="#icon-clock_b"></use></svg>
+                  <div data-v-0ce8d964="" class="font24">
+                    Forgot password
+                  </div>
+                </div>
+                <div data-v-0ce8d964="" class="customcon" onclick="window.location='/keFuMenu'">
+                  <svg data-v-33f88764="" class="svg-icon icon-customer_b forgetbg forgetbg"><use xlink:href="#icon-customer_b"></use></svg>
+                  <div data-v-0ce8d964="" class="font24">
+                    Customer Service
+                  </div>
+                </div>
+              </div>
+              <div data-v-b9e16d43="" data-v-0ce8d964="" class="dialog inactive">
+                <div data-v-b9e16d43="" class="dialog__container" role="dialog" tabindex="0">
+                  <div data-v-b9e16d43="" class="dialog__container-img">
+                    <img data-v-b9e16d43="" alt="" class="" data-origin="https://www.bigdaddygame2.com/assets/png/orderCancelWarn-93894f35.png"
+                    src="./index_files/orderCancelWarn-93894f35.png">
+                  </div>
+                  <div data-v-b9e16d43="" class="dialog__container-title">
+                    <h1 data-v-b9e16d43="">
+                      Account has been locked
+                    </h1>
+                  </div>
+                  <div data-v-b9e16d43="" class="dialog__container-content">
+                    <div data-v-0ce8d964="" class="idlockTip">
+                      You have entered the wrong password 10 times in a row
+                      <br data-v-0ce8d964="">
+                      Contact customer service to unlock
+                    </div>
+                  </div>
+                  <div data-v-b9e16d43="" class="dialog__container-footer">
+                    <button data-v-0ce8d964="" class="dialogBtn">
+                      Cancel
+                    </button>
+                    <button data-v-0ce8d964="" class="dialogBtn">
+                      <img data-v-0ce8d964="" src="./index_files/iconservr-248f27d9.png">
+                      Contact customer service
+                    </button>
+                    <div data-v-0ce8d964="" class="dialogClose">
+                      <img data-v-0ce8d964="" class="dialogBtnClose" data-origin="https://www.bigdaddygame2.com/assets/png/close-7b93ef94.png"
+                      src="./index_files/close-7b93ef94.png">
+                    </div>
+                  </div>
+                </div>
+                <div data-v-b9e16d43="" class="dialog__outside">
+                </div>
+              </div>
+              <div data-v-5acdbb67="" data-v-0ce8d964="" class="popups">
+              </div>
+            </div>
+          </div>
+          <div data-v-8752c961="" class="tab-content">
+            <div data-v-5d3a4ff1="" data-v-8752c961="" class="signIn__container">
+              <div data-v-144f0059="" data-v-5d3a4ff1="" class="emailcontainer">
+                <div data-v-144f0059="" class="emailinput__container">
+                  <div data-v-144f0059="" class="emailinput__container-label">
+                    <img data-v-144f0059="" src="./index_files/emailnumber-2c31d006.png" class="emailinput__container-label__icon">
+                    <span data-v-144f0059="">
+                      Email / Account Log in
+                    </span>
+                  </div>
+                  <div data-v-144f0059="" class="emailinput__container-input">
+                    <input data-v-144f0059="" type="text" name="userEmail" maxlength="250"
+                    placeholder="please input your email">
+                  </div>
+                </div>
+              </div>
+              <div data-v-57d49070="" data-v-5d3a4ff1="" class="passwordInput__container">
+                <div data-v-57d49070="" class="passwordInput__container-label">
+                  <img data-v-57d49070="" class="passwordInput__container-label__icon" data-origin="https://www.bigdaddygame2.com/assets/png/password-b827c2b3.png"
+                  src="./index_files/password-b827c2b3.png">
+                  <span data-v-57d49070="">
+                    Password
+                  </span>
+                </div>
+                <div data-v-57d49070="" class="passwordInput__container-input">
+                  <input data-v-57d49070="" type="password" placeholder="Please enterPassword"
+                  maxlength="32" autocomplete="on">
+                  <img data-v-57d49070="" src="./index_files/eyeInvisible-2fa5c152.png"
+                  class="eye">
+                </div>
+              </div>
+              <div data-v-5d3a4ff1="" class="signIn__container-remember">
+                <div data-v-5d3a4ff1="" role="checkbox" class="van-checkbox" tabindex="0"
+                aria-checked="false">
+                  <div class="van-checkbox__icon van-checkbox__icon--round">
+                    <i class="van-badge__wrapper van-icon van-icon-success">
+                    </i>
+                  </div>
+                  <span class="van-checkbox__label">
+                    Remember password
+                  </span>
+                </div>
+              </div>
+              <div data-v-5d3a4ff1="" class="signIn__container-button">
+                <button data-v-5d3a4ff1="" class="">
+                  Log in
+                </button>
+                <button data-v-5d3a4ff1="" class="register">
+                  Register
+                </button>
+              </div>
+              <div data-v-5d3a4ff1="" class="signIn_footer">
+                <div data-v-5d3a4ff1="" class="forgetcon">
+                  <svg data-v-33f88764="" class="svg-icon icon-clock_b forgetbg forgetbg"><use xlink:href="#icon-clock_b"></use></svg>
+                  <div data-v-5d3a4ff1="" class="font24">
+                    Forgot password
+                  </div>
+                </div>
+                <div data-v-5d3a4ff1="" class="customcon">
+                  <svg data-v-33f88764="" class="svg-icon icon-customer_b forgetbg forgetbg"><use xlink:href="#icon-customer_b"></use></svg>
+                  <div data-v-5d3a4ff1="" class="font24">
+                    Customer Service
+                  </div>
+                </div>
+              </div>
+              <div data-v-b9e16d43="" data-v-5d3a4ff1="" class="dialog inactive">
+                <div data-v-b9e16d43="" class="dialog__container" role="dialog" tabindex="0">
+                  <div data-v-b9e16d43="" class="dialog__container-img">
+                    <img data-v-b9e16d43="" alt="" class="" data-origin="https://www.bigdaddygame2.com/assets/png/orderCancelWarn-93894f35.png"
+                    src="./index_files/orderCancelWarn-93894f35.png">
+                  </div>
+                  <div data-v-b9e16d43="" class="dialog__container-title">
+                    <h1 data-v-b9e16d43="">
+                      Account has been locked
+                    </h1>
+                  </div>
+                  <div data-v-b9e16d43="" class="dialog__container-content">
+                    <div data-v-5d3a4ff1="" class="idlockTip">
+                      You have entered the wrong password 10 times in a row
+                      <br data-v-5d3a4ff1="">
+                      Contact customer service to unlock
+                    </div>
+                  </div>
+                  <div data-v-b9e16d43="" class="dialog__container-footer">
+                    <button data-v-5d3a4ff1="" class="dialogBtn">
+                      Cancel
+                    </button>
+                    <button data-v-5d3a4ff1="" class="dialogBtn">
+                      <img data-v-5d3a4ff1="" src="./index_files/iconservr-248f27d9.png">
+                      Contact customer service
+                    </button>
+                  </div>
+                </div>
+                <div data-v-b9e16d43="" class="dialog__outside">
+                </div>
+              </div>
+              <div data-v-5acdbb67="" data-v-5d3a4ff1="" class="popups">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+    
+    
+    
+
+
+
+    
+   <div class="container-fluid" id="captchaPopup">
+    <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="slidercaptcha card">
+                
+                    <div class="card-body">
+                        <div id="captcha"></div>
+                    </div>
+                </div>
+           
+        </div>
+    </div>
+</div>
+
+    <script>
+        //---slider-captcha-js--
+(function(){"use strict";function u(n){var i=document.getElementById(n.id),r=typeof n=="object"&&n;return new t(i,r)}var r=function(){var u=arguments.length,n=arguments[0]||{},t,i,r;for(typeof n!="object"&&typeof n!="function"&&(n={}),u==1&&(n=this,t--),t=1;t<u;t++){i=arguments[t];for(r in i)Object.prototype.hasOwnProperty.call(i,r)&&(n[r]=i[r])}return n},i=function(n){return typeof n=="function"&&typeof n.nodeType!="number"},t=function(n,i){this.$element=n;this.options=r({},t.DEFAULTS,i);this.$element.style.position="relative";this.$element.style.width=this.options.width+"px";this.$element.style.margin="0 auto";this.init()},n;t.VERSION="1.0";t.Author="argo@163.com";t.DEFAULTS={width:320,height:250,PI:Math.PI,sliderL:42,sliderR:9,offset:5,loadingText:"æ­£åœ¨åŠ è½½ä¸­...",failedText:"å†è¯•ä¸€æ¬¡",barText:"å‘å³æ»‘åŠ¨å¡«å……æ‹¼å›¾",repeatIcon:"fa fa-repeat",maxLoadCount:3,localImages:function(){return"images/Pic"+Math.round(Math.random()*4)+".jpg"},verify:function(n,t){var i=!1;return $.ajax({url:t,data:{datas:JSON.stringify(n)},dataType:"json",type:"post",async:!1,success:function(n){i=JSON.stringify(n);console.log("è¿”å›žç»“æžœï¼š"+i)}}),i},remoteUrl:null};window.sliderCaptcha=u;window.sliderCaptcha.Constructor=t;n=t.prototype;n.init=function(){this.initDOM();this.initImg();this.bindEvents()};n.initDOM=function(){var n=function(n,t){var i=document.createElement(n);return i.className=t,i},v=function(n,t){var i=document.createElement("canvas");return i.width=n,i.height=t,i},f=v(this.options.width-2,this.options.height),e=f.cloneNode(!0),t=n("div","sliderContainer"),l=n("i","refreshIcon "+this.options.repeatIcon),o=n("div","sliderMask"),y=n("div","sliderbg"),s=n("div","slider"),a=n("i","fa-solid fa-arrow-right sliderIcon"),h=n("span","sliderText"),u,c;e.className="block";h.innerHTML=this.options.barText;u=this.$element;u.appendChild(f);u.appendChild(l);u.appendChild(e);s.appendChild(a);o.appendChild(s);t.appendChild(y);t.appendChild(o);t.appendChild(h);u.appendChild(t);c={canvas:f,block:e,sliderContainer:t,refreshIcon:l,slider:s,sliderMask:o,sliderIcon:a,text:h,canvasCtx:f.getContext("2d"),blockCtx:e.getContext("2d")};i(Object.assign)?Object.assign(this,c):r(this,c)};n.initImg=function(){var n=this,f=window.navigator.userAgent.indexOf("Trident")>-1,r=this.options.sliderL+this.options.sliderR*2+3,e=function(t,i){var r=n.options.sliderL,o=n.options.sliderR,s=n.options.PI,u=n.x,e=n.y;t.beginPath();t.moveTo(u,e);t.arc(u+r/2,e-o+2,o,.72*s,2.26*s);t.lineTo(u+r,e);t.arc(u+r+o-2,e+r/2,o,1.21*s,2.78*s);t.lineTo(u+r,e+r);t.lineTo(u,e+r);t.arc(u+o-2,e+r/2,o+.4,2.76*s,1.24*s,!0);t.lineTo(u,e);t.lineWidth=2;t.fillStyle="rgba(255, 255, 255, 0.7)";t.strokeStyle="rgba(255, 255, 255, 0.7)";t.stroke();t[i]();t.globalCompositeOperation=f?"xor":"destination-over"},o=function(n,t){return Math.round(Math.random()*(t-n)+n)},t=new Image,u;t.crossOrigin="Anonymous";u=0;t.onload=function(){n.x=o(r+10,n.options.width-(r+10));n.y=o(10+n.options.sliderR*2,n.options.height-(r+10));e(n.canvasCtx,"fill");e(n.blockCtx,"clip");n.canvasCtx.drawImage(t,0,0,n.options.width-2,n.options.height);n.blockCtx.drawImage(t,0,0,n.options.width-2,n.options.height);var i=n.y-n.options.sliderR*2-1,u=n.blockCtx.getImageData(n.x-3,i,r,r);n.block.width=r;n.blockCtx.putImageData(u,0,i+1);n.text.textContent=n.text.getAttribute("data-text")};t.onerror=function(){if(u++,window.location.protocol==="file:"&&(u=n.options.maxLoadCount,console.error("can't load pic resource file from File protocal. Please try http or https")),u>=n.options.maxLoadCount){n.text.textContent="åŠ è½½å¤±è´¥";n.classList.add("text-danger");return}t.src=n.options.localImages()};t.setSrc=function(){var r="",e;u=0;n.text.classList.remove("text-danger");i(n.options.setSrc)&&(r=n.options.setSrc());r&&r!==""||(r="https://picsum.photos/"+n.options.width+"/"+n.options.height+"/?image="+Math.round(Math.random()*20));f?(e=new XMLHttpRequest,e.onloadend=function(n){var i=new FileReader;i.readAsDataURL(n.target.response);i.onloadend=function(n){t.src=n.target.result}},e.open("GET",r),e.responseType="blob",e.send()):t.src=r};t.setSrc();this.text.setAttribute("data-text",this.options.barText);this.text.textContent=this.options.loadingText;this.img=t};n.clean=function(){this.canvasCtx.clearRect(0,0,this.options.width,this.options.height);this.blockCtx.clearRect(0,0,this.options.width,this.options.height);this.block.width=this.options.width};n.bindEvents=function(){var n=this;this.$element.addEventListener("selectstart",function(){return!1});this.refreshIcon.addEventListener("click",function(){n.text.textContent=n.options.barText;n.reset();i(n.options.onRefresh)&&n.options.onRefresh.call(n.$element)});var r,u,f=[],t=!1,e=function(i){n.text.classList.contains("text-danger")||(r=i.clientX||i.touches[0].clientX,u=i.clientY||i.touches[0].clientY,t=!0)},o=function(i){var o;if(!t)return!1;var s=i.clientX||i.touches[0].clientX,h=i.clientY||i.touches[0].clientY,e=s-r,c=h-u;if(e<0||e+40>n.options.width)return!1;n.slider.style.left=e-1+"px";o=(n.options.width-60)/(n.options.width-40)*e;n.block.style.left=o+"px";n.sliderContainer.classList.add("sliderContainer_active");n.sliderMask.style.width=e+4+"px";f.push(Math.round(c))},s=function(u){var o,e;if(!t||(t=!1,o=u.clientX||u.changedTouches[0].clientX,o===r))return!1;n.sliderContainer.classList.remove("sliderContainer_active");n.trail=f;e=n.verify();e.spliced&&e.verified?(n.sliderContainer.classList.add("sliderContainer_success"),i(n.options.onSuccess)&&n.options.onSuccess.call(n.$element)):(n.sliderContainer.classList.add("sliderContainer_fail"),i(n.options.onFail)&&n.options.onFail.call(n.$element),setTimeout(function(){n.text.innerHTML=n.options.failedText;n.reset()},1e3))};this.slider.addEventListener("mousedown",e);this.slider.addEventListener("touchstart",e);document.addEventListener("mousemove",o);document.addEventListener("touchmove",o);document.addEventListener("mouseup",s);document.addEventListener("touchend",s);document.addEventListener("mousedown",function(){return!1});document.addEventListener("touchstart",function(){return!1});document.addEventListener("swipe",function(){return!1})};n.verify=function(){var n=this.trail,r=parseInt(this.block.style.left),t=!1;if(this.options.remoteUrl!==null)t=this.options.verify(n,this.options.remoteUrl);else{var i=function(n,t){return n+t},u=function(n){return n*n},f=n.reduce(i)/n.length,e=n.map(function(n){return n-f}),o=Math.sqrt(e.map(u).reduce(i)/n.length);t=o!==0}return{spliced:Math.abs(r-this.x)<this.options.offset,verified:t}};n.reset=function(){this.sliderContainer.classList.remove("sliderContainer_fail");this.sliderContainer.classList.remove("sliderContainer_success");this.slider.style.left=0;this.block.style.left=0;this.sliderMask.style.width=0;this.clean();this.text.setAttribute("data-text",this.text.textContent);this.text.textContent=this.options.loadingText;this.img.setSrc()}})();
+
+
+
+// ----set-captcha with script
+
+
+    
+    
+    </script>
+ 
+
+
+
+
+    
+    
+    
+    <script>
+        $(document).ready(function() {
+      // Select the overlay element
+      $('.van-overlay').fadeIn(10);
+    });
+        $(window).on('load', function() {
+      // Select the overlay element
+      $('.van-overlay').fadeIn(10);
+      setTimeout(function() {
+        $('.van-overlay').fadeOut(300);
+      }, 600);
+    });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function unsetCookie() {
+            setCookie('token', '', 0);
+            setCookie('auth', '', 0);
+        }
+        
+        
+        function getSessionStartTime() {
+    const now = new Date();
+    const year = now.getFullYear(); 
+    const month = String(now.getMonth() + 1).padStart(2, '0'); 
+    const day = String(now.getDate()).padStart(2, '0'); 
+    const hours = String(now.getHours()).padStart(2, '0'); 
+    const minutes = String(now.getMinutes()).padStart(2, '0'); 
+    const seconds = String(now.getSeconds()).padStart(2, '0'); 
+    const sessionStartTime = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`; 
+    return sessionStartTime;
+}
+
+// Example usage
+const loginTime = getSessionStartTime();
+localStorage.setItem("loginTime", loginTime);
+        
+        // $.ajax({
+        //     type: "GET",
+        //     url: "/api/webapi/GetUserInfo",
+        //     data: {
+                
+        //     },
+        //     dataType: "json",
+        //     success: function (response) {
+        //         if (data.status === false) {
+        //             unsetCookie();
+        //             return false;
+        //         };
+        //         location.href = "/";
+        //     }
+        // });
+        // fetch('/api/webapi/GetUserInfo')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log(data);
+        //         if (data.status === false) {
+        //             unsetCookie();
+        //             return false;
+        //         };
+        //         location.href = "/";
+        //     });
+    </script>
+    <script>
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function alertMess(text) {
+            let length = $('.alert-toast .msg').length;
+            if (length == 0) {
+                $('.alert-toast').append(
+                    `
+                    <div data-v-1dcba851="" class="msg">
+                        <div data-v-1dcba851="" class="msg-content" style=""> ${text} </div>
+                    </div>
+                    `
+                );
+                setTimeout(() => {
+                    $('.msg').fadeOut();
+                    setTimeout(() => {
+                        $('.alert-toast .msg').remove();
+                    }, 100);
+                }, 1500);
+            }
+        }
+        function validateForm(username, password, text) {
+            if (!username || !password) {
+                alertMess(text);
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+              $('button').click(async (e) => {
+    e.preventDefault();
+    let username = $('input:eq(0)').val().trim();
+    let password = $('input:eq(1)').val().trim();
+
+    if (username && password) {
+        verifyLogin(username, password);
+    }
+});
+
+function openCaptcha() {
+    $('#captchaPopup').css('display', 'flex');
+    initializeCaptcha();
+}
+
+function closeCaptcha() {
+    $('#captchaPopup').css('display', 'none');
+}
+
+function initializeCaptcha() {
+    var captcha = sliderCaptcha({
+        id: 'captcha',
+        loadingText: 'Loading...',
+        failedText: 'Try again',
+        barText: 'Slide right to fill',
+        repeatIcon: 'fa fa-redo',
+        onSuccess: function () {
+            $('.van-overlay').fadeOut(300);
+            $('.Loading').fadeIn(10);
+            setTimeout(() => {
+                location.href = '/home';
+            }, 500);
+        }
+    });
+}
+
+function verifyLogin(username, password) {
+    $('.van-overlay').fadeIn(10);
+    $.ajax({
+        type: "POST",
+        url: "/api/webapi/login",
+        data: {
+            username: username,
+            pwd: password,
+        },
+        dataType: "json",
+        success: function (response) {
+            $('.van-overlay').fadeOut(300);
+            if (response.status === true) {
+            setCookie('token', response.token, 1); 
+            setCookie('auth', response.value, 1);
+                openCaptcha();
+            } else {
+                alertMess(response.message);
+            }
+        }
+    });
+}
+
+    </script>
+    <script>
+        let getWBody = $('.mian').width();
+
+        $('html').css('font-size', `${getWBody / 10}px`);
+        $('.van-tabbar .van-tabbar-item').css({
+            'transform': 'scale(0.9)',
+        });
+        $(window).resize(() => {
+            let getWBody = $('.mian').width();
+            $('html').css('font-size', `${getWBody / 10}px`);
+            $('.van-tabbar .van-tabbar-item').css({
+                'transform': 'scale(0.9)',
+            });
+        });
+        function showPass() {
+          var x = document.getElementById("passwordfield");
+          var y = document.getElementById("eyeicon");
+          if (x.type === "password") {
+            x.type = "text";
+            y.src="./index_files/eyeVisible-7bc1c956.png";
+          } else {
+            x.type = "password";
+            y.src="./index_files/eyeInvisible-2fa5c152.png";
+          }
+        }
+    </script>
+</body>
+
+</html>

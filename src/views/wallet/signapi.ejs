@@ -1,0 +1,42 @@
+const axios = require('axios');
+const querystring = require('querystring');
+const crypto = require('crypto');
+
+class SignAPI {
+    static async httpPost(url, data) {
+        try {
+            const response = await axios.post(url, querystring.stringify(data), {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Encoding': 'gzip'
+                },
+                timeout: 15 * 60 * 1000 // milliseconds
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Axios error:', error);
+            throw new Error('Error making POST request');
+        }
+    }
+
+    static convToGBK(str) {
+        return Buffer.from(str, 'utf-8').toString('gbk');
+    }
+
+    static sign(signSource, key) {
+        if (key) {
+            signSource += `&key=${key}`;
+        }
+        return crypto.createHash('md5').update(signSource).digest('hex');
+    }
+
+    static validateSignByKey(signSource, key, retsign) {
+        if (key) {
+            signSource += `&key=${key}`;
+        }
+        const signkey = this.sign(signSource);
+        return signkey === retsign;
+    }
+}
+
+module.exports = SignAPI;

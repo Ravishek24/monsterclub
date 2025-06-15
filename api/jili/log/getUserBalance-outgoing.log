@@ -1,0 +1,10 @@
+{"body":{},"level":"info","message":"Incoming request","method":"GET","url":"/?userId=1234567890"}
+{"body":"{\"balance\":\"638.93\"}","level":"info","message":"Outgoing response","statusCode":200}
+{"body":{},"level":"info","message":"Incoming request","method":"GET","url":"/?userId=1234567890"}
+{"body":"{\"balance\":\"638.93\"}","level":"info","message":"Outgoing response","statusCode":200}
+{"body":{},"level":"info","message":"Incoming request","method":"GET","url":"/?userId=1234567890"}
+{"body":"{\"balance\":\"632.33\"}","level":"info","message":"Outgoing response","statusCode":200}
+{"body":{},"level":"info","message":"Incoming request","method":"GET","url":"/?userId=1234567890"}
+{"body":"{\"balance\":\"632.33\"}","level":"info","message":"Outgoing response","statusCode":200}
+{"body":{},"level":"info","message":"Incoming request","method":"GET","url":"/?userId=1234567890"}
+{"body":"{\"balance\":\"620.03\"}","level":"info","message":"Outgoing response","statusCode":200}

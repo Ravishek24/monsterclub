@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html translate="no" data-dpr="1" style="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="robots" content="noindex,nofollow">
+        <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+        <title>Ok Win</title>
+        <link href="/static/css/main.0a3006c4.css" rel="stylesheet">
+        
+        
+        
+    </head>
+    <body style="font-size: 12px;" class="">
+    <div id="root">
+    <div class="body dashboard gamesection">
+        <div class="root-main">
+            <div class="flex justify-center  blue-linear"><img src="/logo1.png" alt="" class="w-36"></div>
+            <div class="blue-linear p-3 text-white">
+                <h3 class="heading-h3 font-medium mb-1">Activity</h3>
+                <p class="fs-sm">Please remember to follow the event page</p>
+                <p class="fs-sm">We will launch user feedback activities from to time</p>
+            </div>
+            <div class="container-section mt-3">
+                <div class="flex justify-between items-center mx-4">
+                    <div class=" flex flex-col justify-center items-center" onclick="window.location.href='/invibonus'"><img
+                            src="https://res.cloudinary.com/dx1fouxno/image/upload/v1726568176/invitationBonus_b20pwk.png"
+                            alt="" class="w-10">
+                        <p class="fs-sm gray-100 text-center leading-3 mt-2">Invitation <br> bonus</p>
+                    </div>
+                    <div class=" flex flex-col justify-center items-center" onclick="window.location.href='/rebate'"><img
+                            src="https://res.cloudinary.com/dx1fouxno/image/upload/v1726568023/BettingRebate_uri4yc.png"
+                            alt="" class="w-10">
+                        <p class="fs-sm gray-100 text-center leading-3 mt-2">Betting <br> rebate</p>
+                    </div>
+                    <div class=" flex flex-col justify-center items-center" onclick="window.location.href='/jackpot'"><img
+                            src="https://res.cloudinary.com/dx1fouxno/image/upload/v1726568282/superJackpot_f9hzox.png"
+                            alt="" class="w-10">
+                        <p class="fs-sm gray-100 text-center leading-3 mt-2">Super<br>Jackpot</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-3 mt-5">
+                    <div class="col-span-6 nav-bg" onclick="window.location.href='/gifts'"><img
+                            src="https://res.cloudinary.com/dx1fouxno/image/upload/v1726568264/signInBanner_x7bj2j.png"
+                            alt="">
+                        <div class="p-2 mb-3">
+                            <h3 class="heading-h3  mb-1">Gift</h3>
+                            <p class="gray-100  fs-sm">Enter the redemption code to recieve gift rewards</p>
+                        </div>
+                    </div>
+                    <div class="col-span-6 nav-bg" onclick="window.location.href='/attendanceBonus'"><img
+                            src="https://res.cloudinary.com/dx1fouxno/image/upload/v1726568061/giftRedeem_q2o8kt.png"
+                            alt="">
+                        <div class="p-2 mb-3">
+                            <h3 class="heading-h3 text-black mb-1">Attendance bonus</h3>
+                            <p class="gray-100  fs-sm">The more consecutive days you sign in, the higher the reward will
+                                be.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-bg mt-3 rounded-xl" onclick="window.location.href='/rechargeBonus'"><img src="/static/media/ban11.3fd2ce6b292865c0a5a9.jpg" alt=""
+                        class="rounded-t-xl">
+                    <h3 class="heading-h3 gray-100 font-bold p-2"> First Deposit Bonus</h3>
+                </div>
+                <div class="nav-bg mt-3 rounded-xl" onclick="window.location.href='/winstreakBonus'"><img src="/static/media/ban10.3122f167574f41104d6d.png" alt=""
+                        class="rounded-t-xl">
+                    <h3 class="heading-h3 gray-100 font-bold p-2">Wingo Win Streak Bonus</h3>
+                </div>
+                <div class="nav-bg mt-3 rounded-xl" onclick="window.location.href='/aviatorDetail'"><img src="/static/media/ban9.59e0d0b3e825fc70b12f.png" alt=""
+                        class="rounded-t-xl">
+                    <h3 class="heading-h3 gray-100 font-bold p-2">cr7lottery Game Youtube</h3>
+                </div>
+            </div>
+            <div data-v-6ab3f23e="" class="tabbar__container"
+    style="--f13b4d11-currentFontFamily: 'Roboto', 'Inter', sans-serif;">
+    <div data-v-6ab3f23e="" class="tabbar__container-item" onclick="location.href='/home'"><svg data-v-6ab3f23e="" class="svg-icon icon-home">
+        <use xlink:href="#icon-home"></use>
+      </svg><span data-v-6ab3f23e="">Home</span></div>
+    <div data-v-6ab3f23e="" class="tabbar__container-item active" onclick="location.href='/checkIn'"><svg data-v-6ab3f23e="" class="svg-icon icon-activity">
+        <use xlink:href="#icon-activity"></use>
+      </svg><span data-v-6ab3f23e="">Activity</span></div>
+    <div data-v-6ab3f23e="" class="tabbar__container-item" onclick="location.href='/promotion'"><svg data-v-6ab3f23e="" class="svg-icon icon-promotion">
+        <use xlink:href="#icon-promotion"></use>
+      </svg>
+      <div data-v-6ab3f23e="" class="promotionBg"></div><span data-v-6ab3f23e="">Promotion</span>
+    </div>
+    <div data-v-6ab3f23e="" class="tabbar__container-item" onclick="location.href='/wallet'"><svg data-v-6ab3f23e="" class="svg-icon icon-wallet">
+        <use xlink:href="#icon-wallet"></use>
+      </svg><span data-v-6ab3f23e="">Wallet</span></div>
+    <div data-v-6ab3f23e="" class="tabbar__container-item" onclick="location.href='/mian'"><svg data-v-6ab3f23e="" class="svg-icon icon-main">
+        <use xlink:href="#icon-main"></use>
+      </svg><span data-v-6ab3f23e="">Account</span></div>
+  </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

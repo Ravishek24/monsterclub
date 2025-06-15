@@ -1,0 +1,483 @@
+<script>
+let labels1;
+let amounts1;
+let data;
+let canvas;
+let ctx;
+let gradient;
+let padding;
+let spaceBetween;
+let x;
+let y;
+let prevX;
+let prevY;
+let value;
+let index;
+
+</script>
+<div data-v-a9660e98="" class="tab c-row c-row-between">
+    <div data-v-a9660e98="" class="li c-row c-row-center">
+        <span data-v-a9660e98="" class="txt action">
+            Game History
+        </span>
+    </div>
+    <div data-v-a9660e98="" class="li c-row c-row-center">
+        <span data-v-a9660e98="" class="txt"> My History</span>
+    </div>
+     <div data-v-a9660e98="" class="li c-row c-row-center">
+        <span data-v-a9660e98="" class="txt "> Chart</span>
+    </div>
+   
+    
+    
+    
+</div>
+<div data-v-a9660e98="" class="con-box" style="padding: 10px 15px;">
+    <div data-v-a9660e98="" class="list m-t-10">
+        <div data-v-a9660e98="" class="wrap">
+            <div data-v-a9660e98="" class="c-tc van-row">
+                <div data-v-a9660e98="" class="van-col van-col--8">Draw</div>
+                <div data-v-a9660e98="" class="van-col van-col--5">
+                    Number
+                </div>
+                <div data-v-a9660e98="" class="van-col van-col--5">
+                    Big/Small
+                </div>
+                <div data-v-a9660e98="" class="van-col van-col--6">
+                    Colour
+                </div>
+            </div>
+        </div>
+        <div data-v-a9660e98="">
+            <div data-v-a9660e98="" class="hb"></div>
+        </div>
+        
+    </div>
+    <div data-v-a9660e98="" class="page-nav c-row c-row-center c-tc">
+        <div data-v-a9660e98="" class="arr c-row c-row-middle-center block-click">
+            <i data-v-a9660e98="" class="van-icon van-icon-arrow-left icon" style="font-size: ;color:black !important">
+                <!---->
+            </i>
+        </div>
+        <div data-v-a9660e98="" class="number"></div>
+        <div data-v-a9660e98="" class="arr c-row c-row-middle-center action">
+            <i data-v-a9660e98="" class="van-icon van-icon-arrow icon action" style="font-size: 20px">
+                <!---->
+            </i>
+        </div>
+    </div>
+</div>
+<div data-v-a9660e98="" class="con-box p-b-20" style="display: none">
+    
+    <div data-v-a9660e98="" class="list m-t-10" style="padding: 10px 15px;">
+        <div data-v-a9660e98="" class="p-t-5 p-b-5" id="history-order">
+            
+        </div>
+        
+    </div>
+    <!---->
+    <div data-v-a9660e98="" class="page-nav c-row c-row-center c-tc">
+        <div data-v-a9660e98="" class="arr c-row c-row-middle-center">
+            <i data-v-a9660e98="" class="van-icon van-icon-arrow-left icon" style="font-size: 20px;color:black !important">
+                <!---->
+            </i>
+        </div>
+        <div data-v-a9660e98="" class="number"></div>
+        <div data-v-a9660e98="" class="arr c-row c-row-middle-center action">
+            <i data-v-a9660e98="" class="van-icon van-icon-arrow icon action" style="font-size: 20px">
+                <!---->
+            </i>
+        </div>
+    </div>
+</div>
+<div data-v-a9660e98="" class="con-box p-b-20" style="display: none">
+  <div data-v-a9660e98="" class="list m-t-10" style="padding:10px 15px;">
+<style>
+  .stat-table {
+    background: #fff; 
+  
+    border-radius: 8px;
+   
+    width: 100%;
+    max-width: 600px;
+  }
+  .stat-table th, .stat-table td {
+    padding: 8px 0px;
+    text-align: center;
+    font-size: xx-small;
+  }
+  .stat-table th {
+    background: #555;
+    border-bottom: 1px solid #666;
+  }
+  .stat-table th:first-child {
+    border-radius: 5px 0 0 0;
+  }
+  .stat-table th:last-child {
+    border-radius: 0 5px 0 0;
+  }
+  .stat-row {
+    background: #fff;
+    color:#b6bcc8;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    padding:0.22rem 0.11rem;
+    border-radius: 4px;
+  }
+  .res-row {
+    background: #fff;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    padding:0.33rem 0.11rem;
+    border-top:1px solid #b6bcc8;
+  }
+  .number-cel {
+    display: inline-block;
+    text-align:center;
+    font-size:12px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    border-radius: 50%;
+    color:#b6bcc8;
+    border: 1px solid #b6bcc8; /* Slight border for definition */
+  }
+  .number-celll {
+    display: inline-block;
+    text-align:center;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size:16px;
+    border-radius: 50%;
+    color:#fb5b5b;
+    border: 1px solid #fb5b5b; /* Slight border for definition */
+  }
+  .big-game {
+    display: inline-block;
+    text-align:center;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 50%;
+    background:#dd9138;
+  }
+  .small-game {
+    display: inline-block;
+    text-align:center;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 50%;
+    background:#5088d3;
+  }
+  .number-cell {
+    display: inline-block;
+    text-align:center;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    color:#b6bcc8;
+    font-size:16px;
+    }
+  .stat-header {
+    text-align: left;
+    padding-left: 7px;
+    color:#1e2637;
+    font-size:14px;
+  }
+  .two{
+    background:red;
+    color:white;
+  }
+  .five{
+    background:#d9ac4f;
+    color:white;
+  }
+
+  #app {
+    color: #ffffff;
+}
+</style>
+<div class="stat-table">
+  <div class="table-head">
+    <div class="heading" style="display: flex;background:#f95959;width: 100%;justify-content: space-around;align-items: center;padding:0.22rem 10px;">
+      <div>Period</div>
+      <div>Number</div>
+    </div>
+  </div>
+  <div class="table-data">
+    <div class="stat-row">
+      <div class="stat-header" colspan="2">Statistic (Last 100 Periods)</div>
+      
+    </div>
+    <div class="stat-row">
+      <div class="stat-header">Winning Number</div>
+      <div>
+        <div class="number-celll">0</div>
+        <div class="number-celll">1</div>
+        <div class="number-celll">2</div>
+        <div class="number-celll">3</div>
+        <div class="number-celll">4</div>
+        <div class="number-celll">5</div>
+        <div class="number-celll">6</div>
+        <div class="number-celll">7</div>
+        <div class="number-celll">8</div>
+        <div class="number-celll">9</div>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-header">Missing </div>
+      <div>
+        <div id="Winning_0" class="number-cell">0</div>
+        <div id="Winning_1" class="number-cell">1</div>
+        <div id="Winning_2" class="number-cell">2</div>
+        <div id="Winning_3" class="number-cell">3</div>
+        <div id="Winning_4" class="number-cell">4</div>
+        <div id="Winning_5" class="number-cell">5</div>
+        <div id="Winning_6" class="number-cell">6</div>
+        <div id="Winning_7" class="number-cell">7</div>
+        <div id="Winning_8" class="number-cell">8</div>
+        <div id="Winning_9" class="number-cell">9</div>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-header">Average Missing</div>
+      <div>
+        <span class="number-cell">0</span>
+        <span class="number-cell">1</span>
+        <span class="number-cell">2</span>
+        <span class="number-cell">3</span>
+        <span class="number-cell">4</span>
+        <span class="number-cell">5</span>
+        <span class="number-cell">6</span>
+        <span class="number-cell">7</span>
+        <span class="number-cell">8</span>
+        <span class="number-cell">9</span>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-header">Frequency</div>
+      <div>
+        <span class="number-cell">0</span>
+        <span class="number-cell">1</span>
+        <span class="number-cell">2</span>
+        <span class="number-cell">3</span>
+        <span class="number-cell">4</span>
+        <span class="number-cell">5</span>
+        <span class="number-cell">6</span>
+        <span class="number-cell">7</span>
+        <span class="number-cell">8</span>
+        <span class="number-cell">9</span>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-header">Max consecutive</div>
+      <div>
+        <span class="number-cell">0</span>
+        <span class="number-cell">1</span>
+        <span class="number-cell">2</span>
+        <span class="number-cell">3</span>
+        <span class="number-cell">4</span>
+        <span class="number-cell">5</span>
+        <span class="number-cell">6</span>
+        <span class="number-cell">7</span>
+        <span class="number-cell">8</span>
+        <span class="number-cell">9</span>
+      </div>
+    </div>
+    <!-- ... More rows for Winning number, Missing, etc. ... -->
+  </div>
+  
+   </div>
+   <div class="recent-result">
+    <div class="res-row">
+      <div class="stat-header">20240926301974</div>
+      <div>
+        <div class="number-cel">0</div>
+        <div class="number-cel">1</div>
+        <div class="number-cel two">2</div>
+        <div class="number-cel">3</div>
+        <div class="number-cel">4</div>
+        <div class="number-cel">5</div>
+        <div class="number-cel">6</div>
+        <div class="number-cel">7</div>
+        <div class="number-cel">8</div>
+        <div class="number-cel">9</div>
+      </div>
+      <div class="big-game">B</div>
+    </div>
+    <div class="res-row">
+      <div class="stat-header">20240926301974</div>
+      <div>
+        <div class="number-cel">0</div>
+        <div class="number-cel">1</div>
+        <div class="number-cel">2</div>
+        <div class="number-cel">3</div>
+        <div class="number-cel">4</div>
+        <div class="number-cel five">5</div>
+        <div class="number-cel">6</div>
+        <div class="number-cel">7</div>
+        <div class="number-cel">8</div>
+        <div class="number-cel">9</div>
+      </div>
+      <div class="small-game">S</div>
+    </div>
+    <div class="res-row">
+      <div class="stat-header">20240926301974</div>
+      <div>
+        <div class="number-cel">0</div>
+        <div class="number-cel">1</div>
+        <div class="number-cel">2</div>
+        <div class="number-cel">3</div>
+        <div class="number-cel">4</div>
+        <div class="number-cel five">5</div>
+        <div class="number-cel">6</div>
+        <div class="number-cel">7</div>
+        <div class="number-cel">8</div>
+        <div class="number-cel">9</div>
+      </div>
+      <div class="big-game">B</div>
+    </div>
+    <div class="res-row">
+      <div class="stat-header">20240926301974</div>
+      <div>
+        <div class="number-cel">0</div>
+        <div class="number-cel">1</div>
+        <div class="number-cel two">2</div>
+        <div class="number-cel">3</div>
+        <div class="number-cel">4</div>
+        <div class="number-cel">5</div>
+        <div class="number-cel">6</div>
+        <div class="number-cel">7</div>
+        <div class="number-cel">8</div>
+        <div class="number-cel">9</div>
+      </div>
+      <div class="big-game">B</div>
+    </div>
+    <div class="res-row">
+      <div class="stat-header">20240926301974</div>
+      <div>
+        <div class="number-cel">0</div>
+        <div class="number-cel">1</div>
+        <div class="number-cel">2</div>
+        <div class="number-cel">3</div>
+        <div class="number-cel">4</div>
+        <div class="number-cel five">5</div>
+        <div class="number-cel">6</div>
+        <div class="number-cel">7</div>
+        <div class="number-cel">8</div>
+        <div class="number-cel">9</div>
+      </div>
+      <div class="small-game">S</div>
+    </div>
+    <div class="res-row">
+      <div class="stat-header">20240926301974</div>
+      <div>
+        <div class="number-cel">0</div>
+        <div class="number-cel">1</div>
+        <div class="number-cel two">2</div>
+        <div class="number-cel">3</div>
+        <div class="number-cel">4</div>
+        <div class="number-cel">5</div>
+        <div class="number-cel">6</div>
+        <div class="number-cel">7</div>
+        <div class="number-cel">8</div>
+        <div class="number-cel">9</div>
+      </div>
+      <div class="big-game">B</div>
+    </div>
+    <div class="res-row">
+      <div class="stat-header">20240926301974</div>
+      <div>
+        <div class="number-cel">0</div>
+        <div class="number-cel">1</div>
+        <div class="number-cel">2</div>
+        <div class="number-cel">3</div>
+        <div class="number-cel">4</div>
+        <div class="number-cel five">5</div>
+        <div class="number-cel">6</div>
+        <div class="number-cel">7</div>
+        <div class="number-cel">8</div>
+        <div class="number-cel">9</div>
+      </div>
+      <div class="big-game">B</div>
+    </div>
+    <div class="res-row">
+      <div class="stat-header">20240926301974</div>
+      <div>
+        <div class="number-cel">0</div>
+        <div class="number-cel">1</div>
+        <div class="number-cel">2</div>
+        <div class="number-cel">3</div>
+        <div class="number-cel">4</div>
+        <div class="number-cel five">5</div>
+        <div class="number-cel">6</div>
+        <div class="number-cel">7</div>
+        <div class="number-cel">8</div>
+        <div class="number-cel">9</div>
+      </div>
+      <div class="small-game">S</div>
+    </div>
+    <div class="res-row">
+      <div class="stat-header">20240926301974</div>
+      <div>
+        <div class="number-cel">0</div>
+        <div class="number-cel">1</div>
+        <div class="number-cel two">2</div>
+        <div class="number-cel">3</div>
+        <div class="number-cel">4</div>
+        <div class="number-cel">5</div>
+        <div class="number-cel">6</div>
+        <div class="number-cel">7</div>
+        <div class="number-cel">8</div>
+        <div class="number-cel">9</div>
+      </div>
+      <div class="big-game">B</div>
+    </div>
+    <div class="res-row">
+      <div class="stat-header">20240926301974</div>
+      <div>
+        <div class="number-cel">0</div>
+        <div class="number-cel">1</div>
+        <div class="number-cel">2</div>
+        <div class="number-cel">3</div>
+        <div class="number-cel">4</div>
+        <div class="number-cel five">5</div>
+        <div class="number-cel">6</div>
+        <div class="number-cel">7</div>
+        <div class="number-cel">8</div>
+        <div class="number-cel">9</div>
+      </div>
+      <div class="big-game">B</div>
+    </div>
+    <div class="res-row">
+      <div class="stat-header">20240926301974</div>
+      <div>
+        <div class="number-cel">0</div>
+        <div class="number-cel">1</div>
+        <div class="number-cel two">2</div>
+        <div class="number-cel">3</div>
+        <div class="number-cel">4</div>
+        <div class="number-cel">5</div>
+        <div class="number-cel">6</div>
+        <div class="number-cel">7</div>
+        <div class="number-cel">8</div>
+        <div class="number-cel">9</div>
+      </div>
+      <div class="big-game">B</div>
+    </div>
+   </div>
+  
+</div>
+    <div data-v-a9660e98="">
+      <div data-v-a9660e98="" class="hb">
+        </div>
+
+    </div>
+    
+  </div>
+  
+</div>

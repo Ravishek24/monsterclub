@@ -1,0 +1,70 @@
+const request = require('request');
+const crypto = require('crypto');
+
+function generateSignature(params, key) {
+    // Step 1: Filter out parameters with empty values and the 'sign' parameter
+    const filteredParams = Object.fromEntries(
+        Object.entries(params)
+        .filter(([key, value]) => value !== '' && key !== 'sign')
+    );
+
+    // Step 2: Sort the parameters by key in lexicographic order (case-sensitive)
+    const sortedParams = Object.fromEntries(
+        Object.entries(filteredParams)
+        .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+    );
+
+    // Step 3: Create a query string with the parameters
+    const queryString = new URLSearchParams(sortedParams).toString();
+
+    // Step 4: Append the key to the query string
+    const stringSignTemp = queryString + "&key=" + key;
+
+    // Step 5: Perform an MD5 hash on the resulting string and convert to uppercase
+    const signValue = crypto.createHash('md5').update(stringSignTemp).digest('hex').toUpperCase();
+
+    return signValue;
+}
+
+function sendRequest(url, params) {
+    return new Promise((resolve, reject) => {
+        request.post({ url: url, form: params }, (error, response, body) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(body);
+            }
+        });
+    });
+}
+
+const user = '9366764281';
+const am = 200;
+const amount = am * 1000;
+
+// Example usage
+const params = {
+    'mchId': '2143',
+    'productId': '7999',
+    'mchOrderNo': 'GINIxx' + user + 'xx' + Date.now(),
+    'currency': 'INR',
+    'amount': amount,
+    'notifyUrl': 'https://pay.therealjackpot.com/verificationdragonpay.php',
+    'subject': 'This is a payment from therealjackpot.com',
+    'body': 'Payment Initialized'
+};
+
+// Generate the signature
+params['sign'] = generateSignature(params, "Qjp7XCalwQKxBfI9C7Ni7xlJ"); // Replace with your actual merchant private key
+
+// The URL to send the request to
+const url = 'https://initpay.dragon1942.net/api/pay/neworder';
+
+// Send the request
+sendRequest(url, params)
+    .then(response => {
+        console.log(response);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });

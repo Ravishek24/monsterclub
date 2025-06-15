@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html translate="no" data-dpr="1" style="font-size: 48.16px;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex,nofollow">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <title>Ok Win</title>
+    <link href="/css-2/home/new.css" rel="stylesheet"/>
+        <link href="/css-2/home/chunk-vendors.css" rel="stylesheet"/>
+        <link href="/css-2/home/app.css" rel="stylesheet"/>
+        <link href="/css-2/home/chunk.css" rel="stylesheet"/>
+        <link href="/css-2/home/chunk2.css" rel="stylesheet"/>
+        <link rel="shortcut icon" href="/images/bitbug_favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="/css-2/wallet/chunk-6e8d5c6e.0fc0ae11.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background-color: #090909;
+            padding: 0;
+            margin: 0;
+        }
+        .tabbar__container-item[data-v-76c247f8]:nth-of-type(3) svg {
+    position: absolute;
+    bottom: 0.8rem !important;
+    width: 0.86667rem !important;
+    height: 0.86667rem !important;
+    z-index: 3;
+}
+        .block-click {
+            pointer-events: none;
+        }
+
+        .show-enter-active[data-v-25d9c352],
+        .show-leave-active[data-v-25d9c352] {
+            transition: all .5s
+        }
+
+        .show-enter[data-v-25d9c352],
+        .show-leave-to[data-v-25d9c352] {
+            margin-top: .13333rem
+        }
+
+        .show-enter-to[data-v-25d9c352],
+        .show-leave[data-v-25d9c352] {
+            margin-top: 0
+        }
+
+        .mian[data-v-25d9c352] {
+            background-color: #22275b
+        }
+
+        .mian .bank[data-v-25d9c352] {
+            border-radius: .69333rem
+        }
+
+        .mian .bank .navbar-back[data-v-25d9c352],
+        .mian .bank[data-v-25d9c352] {
+            width: .69333rem;
+            height: .69333rem
+        }
+
+        .mian .head-right[data-v-25d9c352] {
+            border-radius: .26667rem;
+            background: rgba(120, 11, 14, .24)
+        }
+
+        .mian .selectBox[data-v-25d9c352] {
+            width: 100%
+        }
+
+        .mian .selectBox .colorBox[data-v-25d9c352] {
+            height: 1.06667rem;
+            width: 100%;
+            background: -webkit-linear-gradient(left, #61a9ff 0%, #59b0ea 100%);
+            background: linear-gradient(90deg, #61a9ff 0%, #59b0ea 100%)
+        }
+
+        .mian .selectBox .txtBox[data-v-25d9c352] {
+            width: 95%;
+            height: 3.46667rem !important;
+            background-image: url(/assets/png/TotalAssetsBg-a7cff097.png);
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-position: center;
+            border-radius: .26667rem !important;
+            color: #fff;
+            margin-left: 0.3rem;
+            margin-right: 0.3rem;
+            position: relative !important;
+            background-color: #22275b;
+            z-index: 99;
+            margin-top: 0.3rem;
+            padding: .4rem .53333rem 0;
+            position: relative;
+        }
+
+        .mian .selectBox .txtBox.action[data-v-25d9c352] {
+            height: 1.6rem
+        }
+
+        .mian .selectBox .txtBox .txt[data-v-25d9c352] {
+            color: #ffffff;
+            font-weight: 400;
+            font-size: .4rem;
+            line-height: .53333rem
+        }
+
+        .mian .selectBox .txtBox .money[data-v-25d9c352] {
+            color: #2aaaf3;
+            font-weight: 600;
+            margin-left: .13333rem;
+            font-size: .64rem;
+            text-align: center
+        }
+
+        .mian .selectBox .txtBox .Umoney[data-v-25d9c352] {
+            font-size: .48rem;
+            font-weight: 500
+        }
+
+        .mian .selectBox .txtBox .Umoney .txt[data-v-25d9c352] {
+            font-size: .37333rem;
+            font-weight: 400
+        }
+
+        .mian .selectBox .txtBox .Umoney .red[data-v-25d9c352] {
+            font-size: .48rem;
+            color: #fb4e4e
+        }
+
+        .mian .selectBox .txtBox .img.action[data-v-25d9c352] {
+            -webkit-animation: rotation-data-v-25d9c352 .5s linear
+        }
+
+        @-webkit-keyframes rotation-data-v-25d9c352 {
+            0% {
+                -webkit-transform: rotate(0deg)
+            }
+
+            to {
+                -webkit-transform: rotate(180deg)
+            }
+        }
+
+        .mian .selectBox .txtBox .icon[data-v-25d9c352] {
+            position: absolute;
+            right: .53333rem;
+            top: 0;
+            height: 1.46667rem;
+            width: .88rem;
+            background: url(/images/wallet_bookmark.png) no-repeat 50%;
+            background-size: 100% 100%
+        }
+
+        .mian .selectBox .tab[data-v-25d9c352] {
+            padding: .13333rem .4rem 0;
+            
+        }
+
+        .mian .selectBox .tab .box[data-v-25d9c352] {
+            width: 100%
+        }
+
+        .mian .selectBox .tab .box ul[data-v-25d9c352] {
+            width: calc(100% + .26667rem)
+        }
+
+        .mian .selectBox .tab .box ul li.item[data-v-25d9c352] {
+            padding: .21333rem;
+            width: calc(33.3% - .26667rem);
+            border-radius: .3333rem;
+            white-space: nowrap;
+            background-image: linear-gradient(40deg, #e5e7f6 35%, #f5f3fb);
+            margin-bottom: .26667rem;
+            margin-right: .26667rem;
+            position: relative
+        }
+
+        .mian .selectBox .tab .box ul li.item .icon[data-v-25d9c352] {
+            height: .8rem;
+            width: .8rem;
+            border-radius: .8rem;
+            margin: 0 auto
+        }
+
+        .mian .selectBox .tab .box ul li.item .icon .size[data-v-25d9c352] {
+            font-size: .53333rem;
+            color: #333
+        }
+
+        .mian .selectBox .tab .box ul li.item .name[data-v-25d9c352] {
+            text-align: center
+        }
+
+        .mian .selectBox .tab .box ul li.item .icons[data-v-25d9c352] {
+            padding-right: 0.10667rem;
+            text-align: right;
+            width: 0.7rem;
+            line-height: 1.06667rem;
+            height: 0.6rem;
+            background: url(/images/wallet_tick.png) no-repeat 50%;
+            background-size: 100% 100%;
+            position: absolute;
+            right: 0;
+            bottom: 0
+        }
+
+        .mian .selectBox .tab .box ul li.item.action[data-v-25d9c352] {
+            background: -webkit-linear-gradient(left, #61a9ff 0%, #59b0ea 100%);
+            background: linear-gradient(90deg, #61a9ff 0%, #59b0ea 100%);
+            color: #fff
+        }
+
+        .mian .selectBox .tab .box ul li.item.action .size[data-v-25d9c352] {
+            color: #fff
+        }
+
+        .mian .selectBox .withd[data-v-25d9c352] {
+            padding: 0 .53333rem;
+            height: 1.06667rem;
+            line-height: 1.06667rem;
+            font-size: .34667rem
+        }
+
+        .mian .selectBox .number-box[data-v-25d9c352] {
+            padding: 0 .53333rem;
+            height: 1.26667rem;
+            line-height: 1.06667rem;
+            color: #ffffff;
+            margin-left: 20px;
+            margin-right: 20px;
+            border-radius: 35px;
+            background: #323a7c;
+            font-size: .66667rem;
+            font-weight: 600
+        }
+
+        .mian .selectBox .number-box .symbol.action[data-v-25d9c352] {
+            font-size: .48rem
+        }
+
+        .mian .selectBox .number-box .input[data-v-25d9c352] {
+            font-size: .48rem;
+            background: 0 0 !important
+        }
+
+        .mian .selectBox .ipnBox[data-v-25d9c352] {
+            padding: 0 .53333rem
+        }
+
+        .mian .selectBox .ipnBox .red[data-v-25d9c352] {
+            font-size: .42667rem;
+            color: #fb4e4e
+        }
+
+        .mian .selectBox .bankBox[data-v-25d9c352] {
+            padding: 0 .53333rem
+        }
+
+        .mian .selectBox .bankBox .box[data-v-25d9c352] {
+            background: #323a7c;
+            border: .05333rem solid #2aaaf3;
+            box-shadow: 0 .21333rem .37333rem 0 rgba(243, 195, 0, .14);
+            border-radius: .13333rem
+        }
+
+        .mian .selectBox .bankBox .box .item[data-v-25d9c352] {
+            padding: .26667rem;
+            border-bottom: .02667rem solid #22275b;
+            font-size: .37333rem;
+            color: #2aaaf3
+        }
+
+        .mian .selectBox .bankBox .box .item[data-v-25d9c352]:last-child {
+            border-bottom: none
+        }
+
+        .mian .selectBox .conBox[data-v-25d9c352] {
+            padding: 0 .53333rem
+        }
+
+        .mian .selectBox .conBox .des[data-v-25d9c352] {
+            color: #2aaaf3;
+            font-size: .42667rem;
+            margin-bottom: .3rem;
+            margin-top: .5rem
+        }
+
+        .mian .selectBox .conBox .box[data-v-25d9c352] {
+            background: #323a7c;
+            border-radius: .23333rem
+        }
+
+        .mian .selectBox .conBox .box .tit[data-v-25d9c352] {
+            height: .93333rem;
+            padding: 0 .26667rem;
+            color: #f2413b
+        }
+
+        .mian .selectBox .conBox .box .tit.action[data-v-25d9c352] {
+            border-bottom: .02667rem solid #ebebeb
+        }
+
+        .mian .selectBox .conBox .box .list .item[data-v-25d9c352] {
+            height: .93333rem;
+            padding: 0 .4rem;
+            line-height: .93333rem;
+            color: #2aaaf3;
+            
+        }
+
+        .mian .selectBox .conBox .box .list .item .name[data-v-25d9c352] {
+            max-width: 6.4rem;
+            overflow: hidden;
+            white-space: nowrap
+        }
+
+        .mian .selectBox .conBox .box .list .icon[data-v-25d9c352] {
+            height: .53333rem;
+            width: .53333rem;
+            border-radius: .53333rem;
+            border: .05333rem solid #eee
+        }
+
+        .mian .selectBox .conBox .box .list .icon.action[data-v-25d9c352] {
+            border-color: rgb(255, 255, 255);
+            background-color: #1b1d37
+        }
+
+        .mian .selectBox .conBox .box .add[data-v-25d9c352] {
+            -webkit-line-clamp: 1;
+            height: .93333rem;
+            padding: 0 .26667rem;
+            background: #59b0eaab;
+            border-radius: .26667rem;
+            color: #ffffff;
+            font-weight: 400
+        }
+
+        .mian .selectBox .conBox .box .add .plus[data-v-25d9c352] {
+            margin-right: .26667rem;
+            height: .66667rem;
+            width: .66667rem;
+            border-radius: .66667rem;
+            background-color: rgba(4, 6, 26, .41)
+        }
+
+        .mian .selectBox .requiredBox[data-v-25d9c352] {
+            padding: 0 .53333rem
+        }
+
+        .mian .selectBox .requiredBox .box[data-v-25d9c352] {
+            position: relative;
+            height: 1.06667rem;
+            line-height: .96rem;
+            margin: 0.4rem 0 0.8rem;
+            background: #323a7c;
+            color: #ffffff;
+            font-size: .37333rem;
+            border-radius: 0.26667rem;
+            outline: none;
+            border: 0.05333rem solid #323a7c;
+            overflow: hidden
+        }
+
+        .mian .selectBox .requiredBox .box .input[data-v-25d9c352] {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #323a7c;
+            outline: none;
+            padding-left: .26667rem
+        }
+
+        .mian .withdrawal-btn .btn[data-v-25d9c352] {
+            width: 50%;
+            height: 0.93333rem;
+            font-size: .4rem;
+            font-weight: 700;
+            letter-spacing: .01333rem;
+            border: none;
+            border-radius: 1.06667rem;
+            color: #FFFFFF;
+            background: -webkit-linear-gradient(top, #59b0ea 0%, #61a9ff 100%);
+            background: linear-gradient(180deg, #59b0ea 0%, #61a9ff 100%)
+        }
+
+        html {
+            -webkit-tap-highlight-color: transparent
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Segoe UI, Arial, Roboto, PingFang SC, Hiragino Sans GB, Microsoft Yahei, sans-serif
+        }
+
+        a {
+            text-decoration: none
+        }
+
+        button,
+        input,
+        textarea {
+            color: inherit;
+            font: inherit
+        }
+
+        [class*=van-]:focus,
+        a:focus,
+        button:focus,
+        input:focus,
+        textarea:focus {
+            outline: 0
+        }
+
+        ol,
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none
+        }
+
+        .navbar[data-v-106b99c8] {
+        background: linear-gradient(90deg, #2b3270 0%, #2b3270 100%) !important;
+        }
+        .van-field__control {
+        font-weight: 400;
+        }
+
+        .van-button__content {
+        font-weight: 400;
+        }
+
+        .m-t-10 {
+        margin-top: .36667rem !important;
+        margin-bottom: .36667rem !important;
+        }
+
+        .symbol.c-row.c-row-middle {
+    font-weight: 400;
+}
+
+
+.activity-wrapper .activity-panel-header.lg5[data-v-53f1c857] {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: nowrap;
+    font-size: 13px;
+}
+
+.activity-wrapper .activity-panel-content .content-title .content-para[data-v-53f1c857] {
+    color: #fff;
+    font-weight: 500;
+    padding: .13333rem .26667rem;
+    font-size: .37333rem;
+}
+
+.activity-wrapper .activity-panel-content .content-title p[data-v-53f1c857] {
+    padding: .06667rem .26667rem;
+    color: #fff;
+    font-size: 12px;
+}
+
+.activity-wrapper .activitySection__container>.box>.box-content .box-title[data-v-53f1c857] {
+    font-size: .4rem;
+    font-weight: 400 !important;
+    margin-bottom: .13333rem;
+    color: #fff;
+}
+        
+    </style>
+</head>
+
+<body style="font-size: 12px;">
+    <div id="app">
+        <div data-v-25d9c352="" class="mian">
+            <div data-v-106b99c8="" data-v-25d9c352="" class="c-row navbar">
+                <div data-v-106b99c8="" class="navbar-left" onclick="location.href='/home'">
+                    <div data-v-25d9c352="" data-v-106b99c8="" class="c-row c-row-middle-center">
+                        <i class="fa-light fa-angle-left fa-fade fa-xl center" style="color: #FFF"></i>
+                    </div>
+                </div>
+                <div data-v-106b99c8="" class="navbar-title"> Activity</div>
+                <div data-v-106b99c8="" class="navbar-right">
+                    <div data-v-11ffe290="" data-v-106b99c8="" class="c-row">
+                        <i class="fa-fade fa center" style="color: #FFF">
+                            <img data-v-11ffe290="" data-v-106b99c8="" src="/images/audio.webp"
+                                style="width:.66667rem;height:.66667rem">
+                        </i>
+                    </div>
+                </div>
+            </div>
+
+            <div data-v-53f1c857="" data-v-0ea39f99="" class="activity-wrapper" style="--f817f0ee: 'Roboto', 'Inter', sans-serif;">
+              <div data-v-53f1c857="" class="activity-banner">
+                <div data-v-53f1c857="">
+                  <div data-v-53f1c857="" class="banner-title">
+                    Activity
+                  </div>
+                  <div data-v-53f1c857="" class="banner-para">
+                    Please remember to follow the event page
+                  </div>
+                  <div data-v-53f1c857="" class="banner-para">
+                    We will launch user feedback activities from time to time
+                  </div>
+                </div>
+              </div>
+              <div data-v-53f1c857="" class="activity-panel">
+                <!---->
+                <div data-v-53f1c857="" class="activity-panel-header lg5">
+                  <div data-v-53f1c857="" class="header-item"  onclick="location.href='/'">
+                    <div data-v-53f1c857="" class="van-badge__wrapper">
+                      <div data-v-53f1c857="" class="a1 bgcontainer">
+                      </div>
+                      <!---->
+                    </div>
+                    <span data-v-53f1c857="">
+                      Activity Award
+                    </span>
+                  </div>
+                  <div data-v-53f1c857="" class="header-item"  onclick="location.href='/'">
+                    <div data-v-53f1c857="" class="van-badge__wrapper">
+                      <div data-v-53f1c857="" class="a2 bgcontainer">
+                      </div>
+                      <!---->
+                    </div>
+                    <span data-v-53f1c857="">
+                      Invitation bonus
+                    </span>
+                  </div>
+                  <div data-v-53f1c857="" class="header-item" onclick="location.href='/'">
+                    <div data-v-53f1c857="" class="van-badge__wrapper">
+                      <div data-v-53f1c857="" class="a3 bgcontainer">
+                      </div>
+                      <!---->
+                    </div>
+                    <span data-v-53f1c857="">
+                      Betting rebate
+                    </span>
+                  </div>
+                  <div data-v-53f1c857="" class="header-item"  onclick="location.href='/'">
+                    <div data-v-53f1c857="" class="van-badge__wrapper">
+                      <div data-v-53f1c857="" class="a4 bgcontainer">
+                      </div>
+                      <!---->
+                    </div>
+                    <span data-v-53f1c857="">
+                      Super Jackpot
+                    </span>
+                  </div>
+                  <div data-v-53f1c857="" class="header-item"  onclick="location.href='/checkIn'">
+                    <div data-v-53f1c857="" class="van-badge__wrapper">
+                      <div data-v-53f1c857="" class="a5 bgcontainer">
+                      </div>
+                      <!---->
+                    </div>
+                    <span data-v-53f1c857="">
+                      New member gift package
+                    </span>
+                  </div>
+                </div>
+                <div data-v-53f1c857="" class="activity-panel-content">
+                  <div data-v-53f1c857="" class="content-title">
+                    <img data-v-53f1c857="" data-src="/assets/png/signInBanner-33f86d3f.png"
+                    src="/assets/png/signInBanner-33f86d3f.png" lazy="loaded">
+                    <div data-v-53f1c857="" class="content-para">
+                      Gifts
+                    </div>
+                    <p data-v-53f1c857="">
+                      Enter the redemption code to receive gift rewards
+                    </p>
+                  </div>
+                  <div data-v-53f1c857="" class="content-title">
+                    <img data-v-53f1c857="" data-src="/assets/png/giftRedeem-45917887.png"
+                    src="/assets/png/giftRedeem-45917887.png" lazy="loaded">
+                    <div data-v-53f1c857="" class="content-para">
+                      Attendance bonus
+                    </div>
+                    <p data-v-53f1c857="">
+                      The more consecutive days you sign in, the higher the reward will be.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!---->
+              <div data-v-53f1c857="" role="feed" class="van-list" aria-busy="false">
+                <div data-v-53f1c857="" class="activitySection__container">
+                  <div data-v-53f1c857="" class="box">
+                    <img data-v-53f1c857="" src="/banner/Banner1.jpeg"
+                    class="act_0">
+                    <div data-v-53f1c857="" class="box-content">
+                      <div data-v-53f1c857="" class="box-title">
+                        💸 First Deposit Bonus 💸
+                      </div>
+                    </div>
+                  </div>
+                  <div data-v-53f1c857="" class="box">
+                    <img data-v-53f1c857="" src="/banner/Banner2.jpeg"
+                    class="act_1">
+                    <div data-v-53f1c857="" class="box-content">
+                      <div data-v-53f1c857="" class="box-title">
+                        💰 Get Daily Check-in Bonus 💰
+                      </div>
+                    </div>
+                  </div>
+                  <div data-v-53f1c857="" class="box">
+                    <img data-v-53f1c857="" src="/banner/Banner3.jpeg"
+                    class="act_2">
+                    <div data-v-53f1c857="" class="box-content">
+                      <div data-v-53f1c857="" class="box-title">
+                        🚀Aviator Fly High &amp; Win Big🚀
+                      </div>
+                    </div>
+                  </div>
+                  <div data-v-53f1c857="" class="box">
+                    <img data-v-53f1c857="" src="/banner/Banner4.jpeg"
+                    class="act_3">
+                    <div data-v-53f1c857="" class="box-content">
+                      <div data-v-53f1c857="" class="box-title">
+                        💰Lucky "10" Days Of Interest💰
+                      </div>
+                    </div>
+                  </div>
+                  <div data-v-53f1c857="" class="box">
+                    <img data-v-53f1c857="" src="/banner/Banner5.jpeg"
+                    class="act_4">
+                    <div data-v-53f1c857="" class="box-content">
+                      <div data-v-53f1c857="" class="box-title">
+                        ▶️ Youtube Creative Video ▶️
+                      </div>
+                    </div>
+                  </div>
+                  <div data-v-53f1c857="" class="box">
+                    <img data-v-53f1c857="" src="/banner/Banner1.jpeg"
+                    class="act_5">
+                    <div data-v-53f1c857="" class="box-content">
+                      <div data-v-53f1c857="" class="box-title">
+                        ❗️ Mysterious Gift ❗️
+                      </div>
+                    </div>
+                  </div>
+                  <div data-v-53f1c857="" class="box">
+                    <img data-v-53f1c857="" src="/banner/Banner2.jpeg"
+                    class="act_6">
+                    <div data-v-53f1c857="" class="box-content">
+                      <div data-v-53f1c857="" class="box-title">
+                        ✨Member Wingo Winning Streak✨
+                      </div>
+                    </div>
+                  </div>
+                  <div data-v-53f1c857="" class="box">
+                    <img data-v-53f1c857="" src="/banner/Banner3.jpeg"
+                    class="act_7">
+                    <div data-v-53f1c857="" class="box-content">
+                      <div data-v-53f1c857="" class="box-title">
+                        💲Affiliate Program Tiranga💲
+                      </div>
+                    </div>
+                  </div>
+                  <div data-v-53f1c857="" class="box">
+                    <img data-v-53f1c857="" src="/banner/Banner4.jpeg"
+                    class="act_8">
+                    <div data-v-53f1c857="" class="box-content">
+                      <div data-v-53f1c857="" class="box-title">
+                        ⚙️ Mission Bonus ⚙️
+                      </div>
+                    </div>
+                  </div>
+                  <div data-v-53f1c857="" class="box">
+                    <img data-v-53f1c857="" src="/banner/Banner5.jpeg"
+                    class="act_9">
+                    <div data-v-53f1c857="" class="box-content">
+                      <div data-v-53f1c857="" class="box-title">
+                        ➕ Invitation Bonus ➕
+                      </div>
+                    </div>
+                  </div>
+                  <div data-v-53f1c857="" class="box">
+                    <img data-v-53f1c857="" src="/banner/Banner1.jpeg"
+                    class="act_10">
+                    <div data-v-53f1c857="" class="box-content">
+                      <div data-v-53f1c857="" class="box-title">
+                        Agent Commission
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!---->
+                <div class="van-list__finished-text">
+                  No more
+                </div>
+                <br><br><br><br><br><br>
+                <!---->
+                <div class="van-list__placeholder">
+                </div>
+                
+              </div>
+              <!---->
+              <!---->
+            </div>
+                
+
+                
+                
+                    
+                   
+                    
+                    
+                    
+                    
+                
+            </div>
+            
+        </div>
+    </div>
+
+
+
+    <div data-v-67fe8f9c="" class="tabbar__container" style="--76181987: 'Roboto', 'Inter', sans-serif;">
+    <div data-v-67fe8f9c="" class="tabbar__container-item active">
+        <svg data-v-67fe8f9c="" xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 46 44" class="">
+            <circle cx="27" cy="28" r="18" fill="#FFF4F4"></circle>
+            <path fill="#FFCDCB" fill-rule="evenodd" d="m23.66 5.278-17.9 12.08v25.507h10.08v-10.44a5.04 5.04 0 0 1 5.04-5.04h6.36a5.04 5.04 0 0 1 5.04 5.04v4.38h-3.36v-4.38a1.68 1.68 0 0 0-1.68-1.68h-6.36a1.68 1.68 0 0 0-1.68 1.68v11.16a2.64 2.64 0 0 1-2.64 2.64H5.04a2.64 2.64 0 0 1-2.64-2.64v-26.61a2.64 2.64 0 0 1 1.163-2.188L22.437 2.05a2.16 2.16 0 0 1 2.382-.023L44.514 14.77a2.64 2.64 0 0 1 1.206 2.216v26.598a2.64 2.64 0 0 1-2.64 2.64H30.6v-3.36h11.76V17.379z" clip-rule="evenodd"></path>
+            <path fill="#FFCDCB" d="M32.4 44.545a1.68 1.68 0 1 1-3.36 0 1.68 1.68 0 0 1 3.36 0M32.28 36.745a1.68 1.68 0 1 1-3.36 0 1.68 1.68 0 0 1 3.36 0"></path>
+        </svg>
+        <!---->
+        <span data-v-67fe8f9c="">Home</span>
+    </div>
+    <div data-v-67fe8f9c="" class="tabbar__container-item" data-url="/checkIn" onclick="location.href='/checkIn'">
+        <svg data-v-67fe8f9c="" xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 46 44" class="">
+            <circle cx="27" cy="24" r="18" fill="#FFF4F4"></circle>
+            <path fill="#FFCDCB" fill-rule="evenodd" d="M10.512 5.2h26.975a4.8 4.8 0 0 1 4.796 4.6l.51 12.2h3.203L45.48 9.666A8 8 0 0 0 37.489 2H10.511A8 8 0 0 0 2.52 9.666l-1.17 28A8 8 0 0 0 9.34 46h29.317a8 8 0 0 0 7.993-8.334L46.331 30h-3.203l.326 7.8a4.8 4.8 0 0 1-4.796 5H9.341a4.8 4.8 0 0 1-4.795-5l1.17-28a4.8 4.8 0 0 1 4.796-4.6" clip-rule="evenodd"></path>
+            <path fill="#FFCDCB" fill-rule="evenodd" d="M13.92 16.64c.466 5.158 4.8 9.2 10.08 9.2 5.279 0 9.614-4.042 10.078-9.2h-3.522a6.621 6.621 0 0 1-13.113 0z" clip-rule="evenodd"></path>
+            <path fill="#FFCDCB" d="M34.092 16.65a1.75 1.75 0 0 1-1.75 1.75c-.967 0-1.795-.784-1.795-1.75 0-.967.828-1.75 1.795-1.75.966 0 1.75.783 1.75 1.75M17.449 16.648c0 .966-.766 1.75-1.733 1.75-.966 0-1.795-.784-1.795-1.75 0-.967.829-1.75 1.795-1.75.967 0 1.733.783 1.733 1.75M46 22a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0M46.33 30.044a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0"></path>
+        </svg>
+        <!---->
+        <span data-v-67fe8f9c="">Activity</span>
+    </div>
+    <div data-v-67fe8f9c="" class="tabbar__container-item" onclick="location.href='/promotion'">
+        <svg data-v-67fe8f9c="" xmlns="http://www.w3.org/2000/svg" width="57" height="49" fill="none" viewBox="0 0 57 49" class="">
+            <path fill="#fff" fill-rule="evenodd" d="M8.939 1.501A4 4 0 0 1 12.062 0h32.155a4 4 0 0 1 3.124 1.501l7.738 9.673c.427.533.749 1.12.968 1.735H.233a5.99 5.99 0 0 1 .967-1.735zM0 16.091h56.28a5.985 5.985 0 0 1-1.277 2.673l-23.79 28.549a4 4 0 0 1-6.146 0l-23.79-28.55A5.984 5.984 0 0 1 0 16.092m20.556 5.936 7.195 10.102a.5.5 0 0 0 .816-.002l7.118-10.093a2.44 2.44 0 0 1 4.435 1.406v.2h-.223c-.326 0-.782.248-1.304.93-.506.663-6.466 8.724-9.651 13.035a.975.975 0 0 1-1.563.007L17.32 24.26s-.394-.62-1.06-.62h-.14v-.195a2.445 2.445 0 0 1 4.436-1.418" clip-rule="evenodd"></path>
+        </svg>
+        <div data-v-67fe8f9c="" class="promotionBg"></div>
+        <span data-v-67fe8f9c="">Promotion</span>
+    </div>
+    <div data-v-67fe8f9c="" class="tabbar__container-item" onclick="location.href='/wallet'">
+        <svg data-v-67fe8f9c="" xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 46 44" class="wallet">
+            <circle cx="28" cy="24" r="18" fill="#FFF4F4"></circle>
+            <path stroke="#FFCDCB" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.2" d="M3 23c0-5.984 3.526-10.164 9.009-10.868.559-.088 1.139-.132 1.741-.132h21.5c.559 0 1.096.022 1.612.11C42.41 12.77 46 16.972 46 23v11c0 6.6-4.3 11-10.75 11h-21.5C7.3 45 3 40.6 3 34v-2.178"></path>
+            <path stroke="#FFCDCB" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.2" d="M46 23.724h-6.452c-2.366 0-4.301 1.862-4.301 4.138S37.182 32 39.548 32H46m-9-20c-.516-.083-1.194 0-1.753 0H14c-.602 0-1.44-.083-2 0 0 0 .731-.648 1.247-1.145l6.99-6.745A7.737 7.737 0 0 1 25.571 2c1.997 0 3.914.758 5.333 2.11l3.764 3.662C36.045 9.076 39.548 12 37 12"></path>
+        </svg>
+        <!---->
+        <span data-v-67fe8f9c="">Wallet</span>
+    </div>
+    <div data-v-67fe8f9c="" class="tabbar__container-item" onclick="location.href='/mian'">
+        <svg data-v-67fe8f9c="" xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 46 44" class="">
+            <circle cx="28" cy="24" r="18" fill="#FFF4F4"></circle>
+            <path fill="#FFCDCB" fill-rule="evenodd" d="M24.08 5.28C13.741 5.28 5.36 13.661 5.36 24c0 10.339 8.381 18.72 18.72 18.72 10.339 0 18.72-8.381 18.72-18.72v-8.76h3.36V24c0 12.194-9.886 22.08-22.08 22.08C11.886 46.08 2 36.195 2 24 2 11.806 11.886 1.92 24.08 1.92h20.28v3.36z" clip-rule="evenodd"></path>
+            <path fill="#FFCDCB" d="M46.16 3.6a1.68 1.68 0 1 1-3.36 0 1.68 1.68 0 0 1 3.36 0M46.16 15.12a1.68 1.68 0 1 1-3.36 0 1.68 1.68 0 0 1 3.36 0"></path>
+            <path fill="#FFCDCB" fill-rule="evenodd" d="M15.806 29.582a1.68 1.68 0 0 1 2.372.144c1.15 1.298 2.748 2.794 5.462 2.794 2.872 0 4.857-1.428 5.805-2.533a1.68 1.68 0 0 1 2.55 2.186c-1.451 1.695-4.314 3.707-8.355 3.707-4.198 0-6.647-2.424-7.977-3.926a1.68 1.68 0 0 1 .143-2.372" clip-rule="evenodd"></path>
+        </svg>
+        <!---->
+        <span data-v-67fe8f9c="">Account</span>
+    </div>
+</div>
+</div>
+
+    
+    
+</body>
+
+</html>

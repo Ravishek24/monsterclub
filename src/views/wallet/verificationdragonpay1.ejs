@@ -1,0 +1,54 @@
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'database',
+  password: 'database',
+  database: 'database'
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to database: ' + err.stack);
+    return;
+  }
+  console.log('Connected to database.');
+});
+
+if (!(req.method === 'POST' && req.body.status === '2')) {
+  console.log("It is not You! It is us.. We are having problems processing your request. Please head over to the main page.");
+} else {
+  const payorderid = req.body.payOrderId;
+  const mchorder = req.body.mchOrderNo;
+  const am = req.body.amount;
+  const currency = req.body.currency;
+  const status = req.body.status;
+  const amount = am / 100;
+  const user = mchorder.split('xx');
+  const username = user[1];
+  const rand = Math.floor(Math.random() * (999999999999 - 100000000000 + 1) + 100000000000);
+
+  if (mchorder !== '') {
+    const sql1 = `INSERT INTO dragonpay (username, payOrderId, mchOrderNo, amount, currency, status) VALUES ('${username}', '${payorderid}', '${mchorder}', '${amount}', '${currency}', 'Success')`;
+
+    connection.query(sql1, (error, results) => {
+      if (error) throw error;
+      console.log('Success');
+      const sql2 = `UPDATE users SET money = money + ${amount} WHERE phone = '${username}'`;
+      connection.query(sql2, (error, results) => {
+        if (error) throw error;
+        const sql3 = `INSERT INTO recharge (id_order, transaction_id, utr, phone, money, type, status, today, url, time) VALUES ('${rand}', '${payorderid}', '${rand}', '${username}', '${amount}', 'upiauto', '1', CURRENT_TIMESTAMP(), NULL, CURRENT_TIMESTAMP())`;
+        const sql4 = `INSERT INTO recharge (id_order, transaction_id, utr, phone, money, type, status, today, url, time) VALUES ('${rand}', '${payorderid}', '${rand}', '${username}', '${amount}', 'upiauto', '2', CURRENT_TIMESTAMP(), NULL, CURRENT_TIMESTAMP())`;
+        connection.query(sql3, (error, results) => {
+          if (error) {
+            connection.query(sql4, (error, results) => {
+              if (error) throw error;
+            });
+          }
+        });
+      });
+    });
+  }
+}
+
+connection.end();

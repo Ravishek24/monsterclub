@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html translate="no" data-dpr="3" style="font-size: 41.2174px">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport" />
+  <title>Ok Win</title>
+  <link rel="stylesheet" href="/css/bet/wingo/main.css" />
+  <link rel="stylesheet" href="/css/bet/wingo/chunk-4e7d3985.25c9d2c0.css" />
+  <link rel="stylesheet" href="/css/bet/wingo/chunk-4e7d3985.25c9d2c1.css" />
+  <link rel="stylesheet" href="/css/bet/wingo/chunk-4e7d3985.25c9d2c2.css" />
+  <link rel="stylesheet" href="/css/bet/wingo/chunk-4e7d3985.25c9d2c3.css" />
+  <link rel="stylesheet" href="/css/bet/wingo/chunk-4e7d3985.25c9d2c4.css" />
+  <link href="/static/css/main.0a3006c4.css" rel="stylesheet">
+  
+  <link rel="shortcut icon" href="/images/bitbug_favicon.ico" type="image/x-icon">
+  
+  
+  <style type="text/css">
+    .navbar[data-v-106b99c8], .game-list .tab .li .txt.action[data-v-a9660e98], .game-head[data-v-a9660e98]{
+        background: linear-gradient(90deg, #f95959 0%, #ff9a8e 100%);
+    }
+  .game-betting .tab .box .item.action[data-v-a9660e98]{
+       background: linear-gradient(180deg, #f95959 0%, #ff9a8e 100%);
+  }
+  .p-2{
+    padding:0.1rem;
+  }
+  .mt-5 {
+    margin-top: 0.5rem;
+    height:1.2rem;
+    }
+    .color-blue-500{
+        width:1rem;
+    }
+ 
+.p-1 {
+    padding: .1rem 0.25rem;
+}
+    .text-sm {
+    font-size: 14px;
+    line-height: 15px;
+}
+  .rfm-marquee-container {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    width: var(--width);
+    transform: var(--transform);
+  }
+
+  .rfm-marquee-container:hover div {
+    animation-play-state: var(--pause-on-hover);
+  }
+
+  .rfm-marquee-container:active div {
+    animation-play-state: var(--pause-on-click);
+  }
+
+  .rfm-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .rfm-overlay::before,
+  .rfm-overlay::after {
+    background: linear-gradient(to right, var(--gradient-color), rgba(255, 255, 255, 0));
+    content: "";
+    height: 100%;
+    position: absolute;
+    width: var(--gradient-width);
+    z-index: 2;
+    pointer-events: none;
+    touch-action: none;
+  }
+
+  .rfm-overlay::after {
+    right: 0;
+    top: 0;
+    transform: rotateZ(180deg);
+  }
+
+  .rfm-overlay::before {
+    left: 0;
+    top: 0;
+  }
+
+  .rfm-marquee {
+    flex: 0 0 auto;
+    min-width: var(--min-width);
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    animation: scroll var(--duration) linear var(--delay) var(--iteration-count);
+    animation-play-state: var(--play);
+    animation-delay: var(--delay);
+    animation-direction: var(--direction);
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0%);
+    }
+
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .rfm-initial-child-container {
+    flex: 0 0 auto;
+    display: flex;
+    min-width: auto;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .rfm-child {
+    transform: var(--transform);
+  }
+</style>
+  <style>
+   .px-6{
+        padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .game-head .total-box .total-btn[data-v-a9660e98] {
+    gap: 1rem;
+}
+    html,
+    body {
+      height: auto;
+      width: 100%;
+      background-color: #090909;
+      padding: 0;
+      margin: 0;
+    }
+
+    .block-click {
+      pointer-events: none;
+    }
+  </style>
+
+  <style>
+    /* The Modal (background) */
+   .modal {
+      display: block;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 20001;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      background:rgba(0,0,0,0.7);
+      /* Enable scroll if needed */
+    }
+
+    .text-over-image {
+      position: absolute;
+      /* Position relative to the parent element */
+      top: 35%;
+      /* Center vertically */
+      left: 50%;
+      /* Center horizontally */
+      transform: translate(-50%, -50%);
+      /* Adjust the positioning */
+      color: #fff;
+      /* Text color */
+      font-size: 0.53rem;
+      /* Text size */
+      font-weight: 900;
+      /* Text weight */
+      text-align: center;
+      /* Center text */
+    }
+
+    .text-over-image-l {
+      position: absolute;
+      display:flex;
+      flex-wrap:no-wrap;
+      /* Position relative to the parent element */
+      top: 47%;
+      /* Center vertically */
+      left: 50%;
+      /* Center horizontally */
+      transform: translate(-50%, -47%);
+      /* Adjust the positioning */
+      color: #fff;
+      /* Text color */
+      font-size: 0.32rem;
+      /* Text size */
+      font-weight: 700;
+      /* Text weight */
+      text-align: center;
+      /* Center text */
+    }
+
+    /* Modal Content */
+    .modal-content {
+      text-align: -webkit-center;
+      position: relative;
+      top: 20%;
+    }
+
+    .modal-content img {
+      width: 7.3333rem;
+      /* Use this to ensure the image is full width */
+      height: auto;
+      /* Adjust height automatically */
+      display: block;
+      /* Change display to block to avoid extra space */
+    }
+    .modal-content video {
+      width: 10rem;
+      display:none;
+      /* Use this to ensure the image is full width */
+      height: 100%;
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Circle button style */
+    .close-btn {
+      border: 2px solid #fff;
+      /* Black border */
+      border-radius: 50%;
+      /* Circle shape */
+      background-color: transparent;
+      /* Transparent background */
+      width: 30px;
+      /* Width and height should be equal for a circle */
+      height: 30px;
+      /* Width and height should be equal for a circle */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .close-btn:hover {
+      background-color: #ddd;
+      /* Light grey background on hover */
+    }
+
+    /* "X" line style */
+    .close-x {
+      font-size: 35px;
+      /* Large font size for the "X" */
+      font-family: none;
+      line-height: 1;
+      /* Tight line height for the "X" */
+      color: #fff;
+      /* Black color for the "X" */
+      padding: 0;
+      /* No padding */
+      margin: 0;
+      /* No margin */
+    }
+
+    .text-over-image-2 {
+      position: absolute;
+      top: 63%;
+      left: 50%;
+      transform: translate(-50%, -63%);
+      color: #ff850f;
+      font-size: 0.56rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .text-over-image-3 {
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -70%);
+      color: #8c4500;
+      font-size: 0.31rem;
+      font-weight: none;
+      text-align: center;
+    }
+
+    .btn-boox {
+      background: linear-gradient(to bottom, #20d90a, #aae69d);
+      border: none;
+      color: white;
+      padding: 5px 6px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 10px;
+      margin: 4px 4px;
+      cursor: pointer;
+      font-family: monospace;
+      border-radius: 5px;
+    }
+    .game-betting .content .time-box .info[data-v-a9660e98]{
+        color:white;
+    }
+    .game-betting .content .time-box .out[data-v-a9660e98]{
+        color:white;
+    }
+  </style>
+</head>
+
+<body style="font-size: 12px">
+  <div id="app">
+    <div data-v-a9660e98="" class="mian game">
+      <div data-v-106b99c8="" data-v-a9660e98="" class="navbar">
+        <div data-v-106b99c8="" class="navbar-left" onclick="location.href='/home'">
+          <div data-v-a9660e98="" data-v-106b99c8="" class="c-row c-row-middle-center">
+            <img data-v-a9660e98="" data-v-106b99c8="" src="/images/back.c3244ab0.png" class="navbar-back" />
+          </div>
+        </div>
+        <div data-v-106b99c8="" class="navbar-title">
+          <div data-v-a9660e98="" data-v-106b99c8="" class="c-row c-row-middle-center">
+            <img data-v-a9660e98="" data-v-106b99c8="" src="/images/h5setting_202403131814229e5t.png" class="logo"
+              style="width: 2.98667rem;height: 1.12rem;background-repeat: no-repeat;background-size: 2.98667rem 1.12rem;background-position: center;">
+          </div>
+        </div>
+        <div data-v-106b99c8="" class="navbar-right">
+          <div data-v-a9660e98="" data-v-106b99c8="" class="c-row navbarR">
+            <div data-v-a9660e98="" data-v-106b99c8="" class="c-row item c-row-middle-center"
+              onclick="location.href='/keFuMenu'">
+              <img data-v-a9660e98="" data-v-106b99c8="" src="/images/kefu-b361c42f.png" class="item-volume" />
+            </div>
+            <div data-v-a9660e98="" data-v-106b99c8="" class="c-row item c-row-middle-center">
+              <img data-v-a9660e98="" data-v-106b99c8="" src="/images/volume-up-line.webp" class="item-volume" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!---------->
+      <%- include('element/info.ejs') -%>
+        <!---------->
+        <div data-v-a9660e98="" class="game-betting">
+          <div data-v-a9660e98="" class="tab">
+            <%- include('element/e_tab_time.ejs') -%>
+          </div>
+          <div data-v-a9660e98="" class="content">
+            <div data-v-a9660e98="" class="time-box c-row c-row-between m-b-10" style="width: calc(100% - 0.69333rem);height: 3rem;margin: 0.48rem auto 0;background-image: url(/okwinn/wingoissue-0c200440.png);
+    background-repeat:no-repeat;background-size: 100% 100%;background-position: 0.01333rem center;display: flex;align-items: center;justify-content: center;position: relative;color: #8f5206;">
+              <div data-v-a9660e98="" class="info">
+              <div data-v-3e4c6499="" class="TimeLeft__C-rule">How to play</div>
+                <div data-v-a9660e98="" class="txt">Wingo 30 Sec</div>
+                <div class="wingo-change-time-img" style="display:flex;height:25px;gap:0.11rem;"><img src="/assets/png/n8-d4d951a4.png" alt=""><img src="/assets/png/n9-a20f6f42.png" alt=""><img src="/assets/png/n4-cb84933b.png" alt=""><img src="/assets/png/n3-f92c313f.png" alt=""><img src="/assets/png/n4-cb84933b.png" alt=""></div>
+              </div>
+              <div data-v-a9660e98="" class="out">
+                <div data-v-a9660e98="" class="txt">
+                  Time remaining
+                </div>
+                <div data-v-a9660e98="" class="number c-row c-row-middle c-flew-end">
+                  <div data-v-a9660e98="" class="item">0</div>
+                  <div data-v-a9660e98="" class="item">0</div>
+                  <div data-v-a9660e98="" class="item c-row c-row-middle">
+                    :
+                  </div>
+                  <div data-v-a9660e98="" class="item">0</div>
+                  <div data-v-a9660e98="" class="item">0</div>
+                </div>
+                <div data-v-a9660e98="" class="numbers" style="position:relative;top:12%;left:10%;text-align:center;font-weight:700;">Loading............</div>
+              </div>
+            </div>
+            <%- include('element/e_bet.ejs') -%>
+          </div>
+        </div>
+        <div data-v-a9660e98="" class="game-list p-b-20">
+          <%- include('element/list-order.ejs') -%>
+            <%- include('element/join.ejs') -%>
+
+        </div>
+        <!---->
+        <!---->
+        <!---->
+        <div data-v-a9660e98="" id="moveBox" class="moveBox" style="display: none">
+          <div data-v-a9660e98="" class="moveHead c-row c-row-between c-row-middle">
+            <div data-v-a9660e98="" class="close">Close</div>
+            <div data-v-a9660e98="">
+              <span data-v-a9660e98="">Full Screen</span>
+            </div>
+          </div>
+          <div data-v-a9660e98="" class="long">
+            <div data-v-a9660e98="" class="van-tabs van-tabs--line">
+              <div class="van-tabs__wrap van-hairline--top-bottom">
+                <div role="tablist" class="van-tabs__nav van-tabs__nav--line">
+                  <div role="tab" aria-selected="true" class="van-tab van-tab--active">
+                    <span class="van-tab__text van-tab__text--ellipsis">Bệt rồng mới nhất</span>
+                  </div>
+                  <div role="tab" class="van-tab">
+                    <span class="van-tab__text van-tab__text--ellipsis">My Bets</span>
+                  </div>
+                  <div class="van-tabs__line"></div>
+                </div>
+              </div>
+              <div class="van-tabs__content">
+                <div data-v-a9660e98="" role="tabpanel" class="van-tab__pane" style="">
+                  <div data-v-a9660e98="" class="longlist"></div>
+                </div>
+                <div data-v-a9660e98="" role="tabpanel" class="van-tab__pane" style="display: none">
+                  <!---->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-v-a9660e98="" id="sipachp">
+          <!-- <audio data-v-a9660e98="" id="voice1" muted="muted">
+                        <source data-v-a9660e98="" src="/audio/di1.da40b233.mp3" type="audio/mpeg" />
+                    </audio>
+                    <audio data-v-a9660e98="" id="voice2" muted="muted">
+                        <source data-v-a9660e98="" src="/audio/di2.317de251.mp3" type="audio/mpeg" />
+                    </audio> -->
+        </div>
+        <div data-v-a9660e98="" class="popup-qt van-popup van-popup--center"
+          style="width: 80%; border-radius: 10px; max-width: 340px; z-index: 2040;display: none;">
+          <div data-v-a9660e98="" class="rule-box">
+            <div data-v-a9660e98="" class="title c-row c-row-middle-center">Pre-Selling Rules</div>
+            <div data-v-a9660e98="" class="info">
+              <div data-v-a9660e98="" class="comment"> To protect users' rights - legitimate interests
+                participate in the pre-sale and maintain the normal operating sequence of the pre-sale, the rules
+                rules developed under the agreement in accordance with the relevant agreements and rules of
+                national laws and regulations. Chapter 1 Definition1.1 Definition of presale: refer to
+                A sales model in which a seller offers a bundle of products or services to collect orders
+                Consumer ordering through pre-sale and delivery product tools
+                goods and services to the seller as agreed in advance. 1.2 The pre-sale model is the "Signed ." model
+                "Deposit" is referred to as a fixed amount of pre-sold goods
+                available. The "deposit" can participate in mini games and have a chance to win a lot
+                profit. Deposits can be exchanged directly for goods but the deposit amount
+                Not for exchange.1.3 Pre-sale products: Products provided by the seller
+                By using the pre-sale product tool, only pre-sale words are highlighted on the
+                the title or on the product detail page, in addition other products do not use
+                Pre-sale product tools are not pre-sale products.1.4 Pre-sale system:
+                Access to the system of product tools provided to support sales by selling model
+                before. 1.5 Pre-sale goods price: is the price of goods before sale. The price of the goods
+                Pre-sale consists of two parts: selling price and payment.</div>
+              <div data-v-a9660e98="" class="rule-btn c-row m-t-20 c-row-center">
+                <button data-v-a9660e98=""
+                  class="btn van-button van-button--default van-button--normal van-button--block van-button--round"
+                  style="color: rgb(255, 255, 255); background: rgb(242, 65, 59); border-color: rgb(242, 65, 59);">
+                  <div data-v-a9660e98="" class="van-button__content">
+                    <span data-v-a9660e98="" class="van-button__text">
+                      <span data-v-a9660e98="">I Know</span>
+                    </span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%- include('element/alert2.ejs') -%>
+    </div>
+    
+  </div>
+  <div id="myModal" class="modal" style="display: none">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+
+      <img src="" alt="Popup Image" id="loss-img">
+   
+      <div class="text-over-image">
+        <!-- Your text here -->
+        <div id="myModal_header">Congratulations</div><br>
+      </div>
+      <div class="text-over-image-l">
+        <!-- Your text here -->
+        <div id="lottery_result">Lottery Result: <span class="btn-boox">Green</span><span class="btn-boox">7</span><span
+            class="btn-boox">Big</span></div><br>
+      </div>
+      <div class="text-over-image-2">
+        <!-- Your text here -->
+        <div id="myModal_result">Win: 50</div><br>
+      </div>
+      <div class="text-over-image-3">
+        <!-- Your text here -->
+        <div id="myModal_result_Period">Period: 1 Minute 1234567890 </div><br>
+      </div>
+      <div class="close-btn">
+        <span class="close-x">&times;</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the element that closes the modal
+    var closeBtn = document.querySelector(".close-btn");
+
+
+
+    // When the user clicks on the close button, close the modal
+    closeBtn.onclick = function () {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, also close it
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="/js/client.js"></script>
+  <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"
+    integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
+    crossorigin="anonymous"></script>
+  <script src="/js/wingo5.js"></script>
+</body>
+
+</html>
