@@ -532,9 +532,7 @@ html:lang(ar) .hot_container .popular .list .win-odds .win-p[data-v-d06787cb] {
   height: 80%;
 }
 .gameListGrid__container[data-v-df3cc798] {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 2.45333rem;
+  position: relative;
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: inline-flex;

@@ -603,9 +603,7 @@ html:lang(ar) .hot_container .platform .list .win-odds .win-p[data-v-d06787cb],h
 }
 
 .gameListGrid__container[data-v-df3cc798] {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 2.45333rem;
+    position: relative;
     display: -webkit-inline-box;
     display: -webkit-inline-flex;
     display: inline-flex;
@@ -32796,7 +32794,7 @@ html:lang(ar) .WinTrx__C-head-more[data-v-ac90c264] {
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
-    min-height: 15.68rem;
+    min-height: 11.68rem;
     margin-top: .4rem
 }
 
@@ -33243,7 +33241,7 @@ html:lang(ar) .WinTrx__C-head-more[data-v-ac90c264] {
 }
 
 .navbar__content-left img[data-v-003e4505] {
-    height: 80%
+    height: 200%
 }
 
 .navbar__content-right svg[data-v-003e4505] {

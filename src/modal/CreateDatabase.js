@@ -80,6 +80,18 @@ const Admin = async(req, res) => {
     await connection.execute("INSERT INTO `admin` (`id`, `wingo1`, `wingo3`, `wingo5`, `wingo10`, `k5d`, `k5d3`, `k5d5`, `k5d10`, `win_rate`, `telegram`, `cskh`, `app`) VALUES (NULL, '-1', '-1', '-1', '-1', '-1', '-1', '-1', '-1', '80', 'https://t.me/dreamsister', 'https://t.me/ChenQiaoYing', '#')");
 }
 
+// Initialize Wingo periods
+let wingoGames = ['wingo', 'wingo3', 'wingo5', 'wingo10'];
+for (let i = 0; i < wingoGames.length; i++) {
+    await connection.execute("INSERT INTO wingo SET period = ?, game = ?, amount = 0, status = 0, time = ?", [202506160000, wingoGames[i], timeNow]);
+}
+
+// Initialize K3 periods
+let k3Games = [1, 3, 5, 10];
+for (let i = 0; i < k3Games.length; i++) {
+    await connection.execute("INSERT INTO k3 SET period = ?, result = ?, game = ?, status = 0, time = ?", [202506160000, 0, k3Games[i], timeNow]);
+}
+
 CreateWingo();
 Create5D();
 CreateK3();

@@ -169,15 +169,21 @@ const betWinGo = async (req, res) => {
         });
     }
 
-
     let gameJoin = '';
     if (typeid == 1) gameJoin = 'wingo';
     if (typeid == 3) gameJoin = 'wingo3';
     if (typeid == 5) gameJoin = 'wingo5';
     if (typeid == 10) gameJoin = 'wingo10';
-    const [winGoNow] = await connection.query(`SELECT period FROM wingo WHERE status = 0 AND game = '${gameJoin}' ORDER BY id DESC LIMIT 1 `);
+    const [maxPeriodRow] = await connection.query(`SELECT MAX(period) as period FROM wingo WHERE game = ?`, [gameJoin]);
+    if (!maxPeriodRow[0] || !maxPeriodRow[0].period) {
+        return res.status(200).json({
+            message: 'Error!',
+            status: true
+        });
+    }
+    let period = maxPeriodRow[0].period;
     const [user] = await connection.query('SELECT `phone`, `code`, `invite`, `level`, `money`, `proxy` FROM users WHERE token = ? AND veri = 1  LIMIT 1 ', [auth]);
-    if (!winGoNow[0] || !user[0] || !isNumber(x) || !isNumber(money)) {
+    if (!user[0] || !isNumber(x) || !isNumber(money)) {
         return res.status(200).json({
             message: 'Error!',
             status: true
@@ -185,7 +191,6 @@ const betWinGo = async (req, res) => {
     }
 
     let userInfo = user[0];
-    let period = winGoNow[0].period;
     let fee = (x * money) * 0.02;
     let total = (x * money) - fee;
     let timeNow = Date.now();
@@ -459,14 +464,14 @@ const addWinGo = async (game) => {
             return;
         }
 
-        const [winGo] = await connection.execute('SELECT * FROM wingo WHERE status = 0 AND game = ? ORDER BY id DESC LIMIT 1', [join]);
-        if (!winGo || winGo.length === 0) {
-            console.error('No active wingo game found');
+        // Get the highest period for the game, regardless of status
+        const [maxPeriodRow] = await connection.execute('SELECT MAX(period) as period FROM wingo WHERE game = ?', [join]);
+        if (!maxPeriodRow || maxPeriodRow.length === 0 || !maxPeriodRow[0].period) {
+            console.error('No period found for wingo game');
             return;
         }
-
-        let period = winGo[0].period;
-        let amount = winGo[0].amount;
+        let period = maxPeriodRow[0].period;
+        let amount = 0;
 
         // xanh đỏ tím
         let timeNow = Date.now();
@@ -479,7 +484,9 @@ const addWinGo = async (game) => {
 
         let newArr = '';
         if (nextResult == '-1') {
-            await connection.execute(`UPDATE wingo SET amount = ?,status = ? WHERE period = ? AND game = "${join}"`, [amount, 1, period]);
+            // Generate random result between 0-9
+            let randomResult = Math.floor(Math.random() * 10);
+            await connection.execute(`UPDATE wingo SET amount = ?,status = ? WHERE period = ? AND game = "${join}"`, [randomResult, 1, period]);
             newArr = '-1';
         } else {
             let result = '';
@@ -496,13 +503,7 @@ const addWinGo = async (game) => {
             result = arr[0];
             await connection.execute(`UPDATE wingo SET amount = ?,status = ? WHERE period = ? AND game = "${join}"`, [result, 1, period]);
         }
-        const sql = `INSERT INTO wingo SET 
-        period = ?,
-        amount = ?,
-        game = ?,
-        status = ?,
-        time = ?`;
-
+        const sql = `INSERT INTO wingo SET period = ?, amount = ?, game = ?, status = ?, time = ?`;
         await connection.execute(sql, [Number(period) + 1, 0, join, 0, timeNow]);
 
         if (game == 1) join = 'wingo1';

@@ -146,10 +146,10 @@ const initWebRouter = app => {
    router.get("/win/10", middlewareController, winGoController.winGoPage10)
 
    // BET K5D
-   router.get("/5d", middlewareController, k5Controller.K5DPage)
-   router.post("/api/webapi/action/5d/join", middlewareController, k5Controller.betK5D) // register
-   router.post("/api/webapi/5d/GetNoaverageEmerdList", middlewareController, k5Controller.listOrderOld) // register
-   router.post("/api/webapi/5d/GetMyEmerdList", middlewareController, k5Controller.GetMyEmerdList) // register
+   router.get("/5d",  k5Controller.K5DPage)
+   router.post("/api/webapi/action/5d/join", k5Controller.betK5D) // register
+   router.post("/api/webapi/5d/GetNoaverageEmerdList", k5Controller.listOrderOld) // register
+   router.post("/api/webapi/5d/GetMyEmerdList", k5Controller.GetMyEmerdList) // register
 
    // BET K3
    router.get("/k3", middlewareController, k3Controller.K3Page)

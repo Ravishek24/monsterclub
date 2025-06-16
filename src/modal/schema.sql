@@ -86,12 +86,14 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `telegram` varchar(255) NOT NULL,
   `cskh` varchar(255) NOT NULL,
   `app` varchar(255) NOT NULL,
+  `recharge_bonus` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `recharge_bonus_2` decimal(20,2) NOT NULL DEFAULT 0.00,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Insert default admin settings
-INSERT IGNORE INTO `admin` (`id`, `wingo1`, `wingo3`, `wingo5`, `wingo10`, `k5d`, `k5d3`, `k5d5`, `k5d10`, `win_rate`, `telegram`, `cskh`, `app`) 
-VALUES (1, '-1', '-1', '-1', '-1', '-1', '-1', '-1', '-1', '0.95', 'https://t.me/your_telegram', 'https://t.me/your_cskh', 'https://your-app-url.com');
+INSERT IGNORE INTO `admin` (`id`, `wingo1`, `wingo3`, `wingo5`, `wingo10`, `k5d`, `k5d3`, `k5d5`, `k5d10`, `win_rate`, `telegram`, `cskh`, `app`, `recharge_bonus`, `recharge_bonus_2`) 
+VALUES (1, '-1', '-1', '-1', '-1', '-1', '-1', '-1', '-1', '0.95', 'https://t.me/your_telegram', 'https://t.me/your_cskh', 'https://your-app-url.com', 0.00, 0.00);
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

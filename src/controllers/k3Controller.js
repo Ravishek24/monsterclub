@@ -124,16 +124,23 @@ const betK3 = async (req, res) => {
         //     });
         // }
 
-        const [k3Now] = await connection.query(`SELECT period FROM k3 WHERE status = 0 AND game = ${game} ORDER BY id DESC LIMIT 1 `);
+        // Fetch the current period using MAX(period)
+        const [maxPeriodRow] = await connection.query(`SELECT MAX(period) as period FROM k3 WHERE game = ?`, [game]);
+        if (!maxPeriodRow[0] || !maxPeriodRow[0].period) {
+            return res.status(200).json({
+                message: 'Error!',
+                status: false
+            });
+        }
+        let period = { period: maxPeriodRow[0].period };
         const [user] = await connection.query('SELECT `phone`, `code`, `invite`, `level`, `money` FROM users WHERE token = ? AND veri = 1  LIMIT 1 ', [auth]);
-        if (k3Now.length < 1 || user.length < 1) {
+        if (user.length < 1) {
             return res.status(200).json({
                 message: 'Error!',
                 status: false
             });
         }
         let userInfo = user[0];
-        let period = k3Now[0];
 
         let date = new Date();
         let years = formateT(date.getFullYear());
@@ -286,10 +293,15 @@ const addK3 = async (game) => {
 
         let newArr = '';
         if (nextResult == '-1') {
-            await connection.execute(`UPDATE k3 SET result = ?,status = ? WHERE period = ? AND game = "${game}"`, [result2, 1, period]);
+            // Generate random K3 result: 3 dice, each 1-6
+            const dice1 = Math.floor(Math.random() * 6) + 1;
+            const dice2 = Math.floor(Math.random() * 6) + 1;
+            const dice3 = Math.floor(Math.random() * 6) + 1;
+            const randomResult = `${dice1}${dice2}${dice3}`;
+            await connection.execute(`UPDATE k3 SET result = ?,status = ? WHERE period = ? AND game = "${game}"`, [randomResult, 1, period]);
             newArr = '-1';
         } else {
-            let result = '';
+            let result = 0; // Default to 0 if no valid result
             let arr = nextResult.split('|');
             let check = arr.length;
             if (check == 1) {
@@ -300,7 +312,9 @@ const addK3 = async (game) => {
                 }
                 newArr = newArr.slice(0, -1);
             }
-            result = arr[0];
+            if (arr[0]) {
+                result = parseInt(arr[0]) || 0; // Convert to integer, default to 0 if invalid
+            }
             await connection.execute(`UPDATE k3 SET result = ?,status = ? WHERE period = ? AND game = ${game}`, [result, 1, period]);
         }
         const sql = `INSERT INTO k3 SET period = ?, result = ?, game = ?, status = ?, time = ?`;
@@ -314,6 +328,7 @@ const addK3 = async (game) => {
         await connection.execute(`UPDATE admin SET ${join} = ?`, [newArr]);
     } catch (error) {
         if (error) {
+            console.log(error);
         }
     }
 }

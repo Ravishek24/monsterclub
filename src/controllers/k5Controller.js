@@ -328,13 +328,13 @@ const add5D = async(game) => {
             return;
         }
 
-        const [k5D] = await connection.execute('SELECT * FROM 5d WHERE status = 0 AND game = ? ORDER BY id DESC LIMIT 1', [game]);
-        if (!k5D || k5D.length === 0) {
-            console.error('No active 5D game found');
+        // Get the highest period for the game, regardless of status
+        const [maxPeriodRow] = await connection.execute('SELECT MAX(period) as period FROM 5d WHERE game = ?', [game]);
+        if (!maxPeriodRow || maxPeriodRow.length === 0 || !maxPeriodRow[0].period) {
+            console.error('No period found for 5D game');
             return;
         }
-
-        let period = k5D[0].period;
+        let period = maxPeriodRow[0].period;
         let result2 = makeid(5);
         let timeNow = Date.now();
 
@@ -369,13 +369,11 @@ const add5D = async(game) => {
         if (game == 1) join = 'k5d';
         if (game == 3) join = 'k5d3';
         if (game == 5) join = 'k5d5';
-        if (game == 10) join = 'k5d10'; 
+        if (game == 10) join = 'k5d10';
 
         await connection.execute(`UPDATE admin SET ${join} = ?`, [newArr]);
     } catch (error) {
-        if (error) {
-            console.log(error);
-        }
+        if (error) console.log(error);
     }
 }
 
