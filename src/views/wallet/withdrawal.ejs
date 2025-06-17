@@ -1761,7 +1761,7 @@
         }
         var withdraw = (obj) =>{
             if(!isable){
-                alertMess("Please Deposit 1000 Then Able For Withdraw", $(this), 'error');
+                alertMess("Please Deposit 100 Then Able For Withdraw", $(this), 'error');
                 return false;
             }
             let money = $('#amt_imp').val().trim();
@@ -1809,7 +1809,7 @@
                 allMoney = data.money_user;
                 $('#all_amt').text('₹'+response.data.money_user)
                 
-                isable = response.data.money_user >= 1000? true : false;
+                isable = response.data.money_user >= 100? true : false;
                 $('#need_to_bet').text('₹'+response.result)
             }
         });

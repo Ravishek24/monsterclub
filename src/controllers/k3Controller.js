@@ -279,11 +279,33 @@ const addK3 = async (game) => {
         if (game == 5) join = 'k3d5';
         if (game == 10) join = 'k3d10';
 
-        let result2 = makeid(3);
+        // Get the highest period for the game with proper null handling
+        const [maxPeriodRow] = await connection.query(`SELECT MAX(period) as period FROM k3 WHERE game = ${game}`);
+        let period = maxPeriodRow[0]?.period || 0;
+        
+        // If no periods exist, initialize with period 1
+        if (period === 0 || period === null) {
+            console.log(`No existing periods found for K3 game ${game}, initializing with period 1`);
+            const timeNow = Date.now();
+            const sql = `INSERT INTO k3 SET period = ?, result = ?, game = ?, status = ?, time = ?`;
+            await connection.execute(sql, [1, 0, game, 0, timeNow]);
+            
+            // Initialize admin setting if needed
+            if (game == 1) await connection.execute(`UPDATE admin SET k3d = ?`, ['-1']);
+            if (game == 3) await connection.execute(`UPDATE admin SET k3d3 = ?`, ['-1']);
+            if (game == 5) await connection.execute(`UPDATE admin SET k3d5 = ?`, ['-1']);
+            if (game == 10) await connection.execute(`UPDATE admin SET k3d10 = ?`, ['-1']);
+            
+            return;
+        }
+
+        const [setting] = await connection.query('SELECT * FROM `admin`');
+        if (!setting || setting.length === 0) {
+            console.error('No admin settings found for K3');
+            return;
+        }
+
         let timeNow = Date.now();
-        let [k5D] = await connection.query(`SELECT period FROM k3 WHERE status = 0 AND game = ${game} ORDER BY id DESC LIMIT 1 `);
-        const [setting] = await connection.query('SELECT * FROM `admin` ');
-        let period = k5D[0].period;
 
         let nextResult = '';
         if (game == 1) nextResult = setting[0].k3d;
@@ -292,16 +314,16 @@ const addK3 = async (game) => {
         if (game == 10) nextResult = setting[0].k3d10;
 
         let newArr = '';
-        if (nextResult == '-1') {
+        if (nextResult == '-1' || !nextResult) {
             // Generate random K3 result: 3 dice, each 1-6
             const dice1 = Math.floor(Math.random() * 6) + 1;
             const dice2 = Math.floor(Math.random() * 6) + 1;
             const dice3 = Math.floor(Math.random() * 6) + 1;
             const randomResult = `${dice1}${dice2}${dice3}`;
-            await connection.execute(`UPDATE k3 SET result = ?,status = ? WHERE period = ? AND game = "${game}"`, [randomResult, 1, period]);
+            await connection.execute(`UPDATE k3 SET result = ?, status = ? WHERE period = ? AND game = ${game}`, [randomResult, 1, period]);
             newArr = '-1';
         } else {
-            let result = 0; // Default to 0 if no valid result
+            let result = '';
             let arr = nextResult.split('|');
             let check = arr.length;
             if (check == 1) {
@@ -313,23 +335,33 @@ const addK3 = async (game) => {
                 newArr = newArr.slice(0, -1);
             }
             if (arr[0]) {
-                result = parseInt(arr[0]) || 0; // Convert to integer, default to 0 if invalid
+                result = arr[0];
+            } else {
+                // Fallback to random if no valid result
+                const dice1 = Math.floor(Math.random() * 6) + 1;
+                const dice2 = Math.floor(Math.random() * 6) + 1;
+                const dice3 = Math.floor(Math.random() * 6) + 1;
+                result = `${dice1}${dice2}${dice3}`;
             }
-            await connection.execute(`UPDATE k3 SET result = ?,status = ? WHERE period = ? AND game = ${game}`, [result, 1, period]);
+            await connection.execute(`UPDATE k3 SET result = ?, status = ? WHERE period = ? AND game = ${game}`, [result, 1, period]);
         }
+
+        // Create next period
         const sql = `INSERT INTO k3 SET period = ?, result = ?, game = ?, status = ?, time = ?`;
         await connection.execute(sql, [Number(period) + 1, 0, game, 0, timeNow]);
 
+        // Update admin settings
         if (game == 1) join = 'k3d';
         if (game == 3) join = 'k3d3';
         if (game == 5) join = 'k3d5';
         if (game == 10) join = 'k3d10';
 
         await connection.execute(`UPDATE admin SET ${join} = ?`, [newArr]);
+
+        console.log(`K3 Game ${game}: Period ${period} completed, Period ${Number(period) + 1} started`);
+        
     } catch (error) {
-        if (error) {
-            console.log(error);
-        }
+        console.error('Error in addK3:', error);
     }
 }
 

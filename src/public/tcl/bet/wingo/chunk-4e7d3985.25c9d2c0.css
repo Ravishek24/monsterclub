@@ -1111,11 +1111,11 @@
 }
 
 .van-notice-bar__wraps {
-    font-size: 15px;
+    font-size: 14px;
     width: 100%;
     height: fit-content;
     max-height: .98667rem;
-    line-height: .29333rem;
+    line-height: .5rem;
     animation: marquee 7s linear infinite;
     display: flex;
     text-overflow: ellipsis;
