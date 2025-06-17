@@ -871,32 +871,6 @@ localStorage.setItem("loginTime", loginTime);
     }
 });
 
-function openCaptcha() {
-    $('#captchaPopup').css('display', 'flex');
-    initializeCaptcha();
-}
-
-function closeCaptcha() {
-    $('#captchaPopup').css('display', 'none');
-}
-
-function initializeCaptcha() {
-    var captcha = sliderCaptcha({
-        id: 'captcha',
-        loadingText: 'Loading...',
-        failedText: 'Try again',
-        barText: 'Slide right to fill',
-        repeatIcon: 'fa fa-redo',
-        onSuccess: function () {
-            $('.van-overlay').fadeOut(300);
-            $('.Loading').fadeIn(10);
-            setTimeout(() => {
-                location.href = '/home';
-            }, 500);
-        }
-    });
-}
-
 function verifyLogin(username, password) {
     $('.van-overlay').fadeIn(10);
     $.ajax({
@@ -912,7 +886,7 @@ function verifyLogin(username, password) {
             if (response.status === true) {
             setCookie('token', response.token, 1); 
             setCookie('auth', response.value, 1);
-                openCaptcha();
+                location.href = '/home';
             } else {
                 alertMess(response.message);
             }
