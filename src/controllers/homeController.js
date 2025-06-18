@@ -68,7 +68,25 @@ const giftPage = async (req, res) => {
 }
 
 const vipPage = async (req, res) => {
-    return res.render("checkIn/vip.ejs");
+    try {
+        const auth = req.cookies.auth;
+        // Get user's VIP experience points and level
+        const [user] = await connection.query(
+            'SELECT vip_exp, user_level FROM users WHERE token = ? AND veri = 1 LIMIT 1',
+            [auth]
+        );
+
+        return res.render("checkIn/vip.ejs", {
+            vipExp: user[0]?.vip_exp || 0,
+            userLevel: user[0]?.user_level || 0
+        });
+    } catch (error) {
+        console.error('Error in vipPage:', error);
+        return res.render("checkIn/vip.ejs", {
+            vipExp: 0,
+            userLevel: 0
+        });
+    }
 }
 
 const jackpotPage = async (req, res) => {

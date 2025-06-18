@@ -2171,27 +2171,51 @@ const gamestatis = async (req, res) => {
         switch (type) {
             case 'today':
                 query = `
-                    SELECT SUM(money) AS betAmount, COUNT(id) AS betCount, SUM(get) AS betWinLossAmount, game 
+                    SELECT 
+                        game,
+                        bet,
+                        SUM(money) AS betAmount,
+                        COUNT(id) AS betCount,
+                        SUM(\`get\`) AS betWinLossAmount
                     FROM minutes_1 
-                    WHERE phone = ? AND DATE(today) = CURDATE()`;
+                    WHERE phone = ? AND DATE(today) = CURDATE()
+                    GROUP BY game, bet`;
                 break;
             case 'yesterday':
                 query = `
-                    SELECT SUM(money) AS betAmount, COUNT(id) AS betCount, SUM(get) AS betWinLossAmount, game 
+                    SELECT 
+                        game,
+                        bet,
+                        SUM(money) AS betAmount,
+                        COUNT(id) AS betCount,
+                        SUM(\`get\`) AS betWinLossAmount
                     FROM minutes_1 
-                    WHERE phone = ? AND DATE(today) = CURDATE() - INTERVAL 1 DAY`;
+                    WHERE phone = ? AND DATE(today) = CURDATE() - INTERVAL 1 DAY
+                    GROUP BY game, bet`;
                 break;
             case 'this week':
                 query = `
-                    SELECT SUM(money) AS betAmount, COUNT(id) AS betCount, SUM(get) AS betWinLossAmount, game 
+                    SELECT 
+                        game,
+                        bet,
+                        SUM(money) AS betAmount,
+                        COUNT(id) AS betCount,
+                        SUM(\`get\`) AS betWinLossAmount
                     FROM minutes_1 
-                    WHERE phone = ? AND YEARWEEK(today, 1) = YEARWEEK(CURDATE(), 1)`;
+                    WHERE phone = ? AND YEARWEEK(today, 1) = YEARWEEK(CURDATE(), 1)
+                    GROUP BY game, bet`;
                 break;
             case 'this month':
                 query = `
-                    SELECT SUM(money) AS betAmount, COUNT(id) AS betCount, SUM(get) AS betWinLossAmount, game 
+                    SELECT 
+                        game,
+                        bet,
+                        SUM(money) AS betAmount,
+                        COUNT(id) AS betCount,
+                        SUM(\`get\`) AS betWinLossAmount
                     FROM minutes_1 
-                    WHERE phone = ? AND MONTH(today) = MONTH(CURDATE()) AND YEAR(today) = YEAR(CURDATE())`;
+                    WHERE phone = ? AND MONTH(today) = MONTH(CURDATE()) AND YEAR(today) = YEAR(CURDATE())
+                    GROUP BY game, bet`;
                 break;
             default:
                 return res.status(400).json({
@@ -2203,21 +2227,38 @@ const gamestatis = async (req, res) => {
 
         const [bets] = await connection.query(query, queryParams);
         
-        const gameStatis = (bets.length > 0 && bets[0].betAmount !== null) ? {
-            betAmount: bets[0].betAmount || 0,
-            betCount: bets[0].betCount || 0,
-            betWinLossAmount: bets[0].betWinLossAmount || 0,
-            game: 'lottery',
-        } : {};
+        // Process the results to group by game and bet type
+        const gameStats = {};
+        bets.forEach(bet => {
+            if (!gameStats[bet.game]) {
+                gameStats[bet.game] = {
+                    totalBetAmount: 0,
+                    totalBetCount: 0,
+                    totalWinLoss: 0,
+                    categories: {}
+                };
+            }
+            
+            // Add to totals
+            gameStats[bet.game].totalBetAmount += parseFloat(bet.betAmount) || 0;
+            gameStats[bet.game].totalBetCount += parseInt(bet.betCount) || 0;
+            gameStats[bet.game].totalWinLoss += parseFloat(bet.betWinLossAmount) || 0;
+            
+            // Add category stats
+            gameStats[bet.game].categories[bet.bet] = {
+                betAmount: parseFloat(bet.betAmount) || 0,
+                betCount: parseInt(bet.betCount) || 0,
+                betWinLossAmount: parseFloat(bet.betWinLossAmount) || 0
+            };
+        });
 
         return res.status(200).json({
             message: 'Success',
             data: {
-                gameStatis,
-                sumBetAmount: gameStatis.betAmount, 
+                gameStats,
+                timeStamp: timeNow
             },
-            status: true,
-            timeStamp: timeNow,
+            status: true
         });
 
     } catch (error) {
@@ -2505,6 +2546,37 @@ const bethistory = async (req, res) => {
     }
 };
 
+// Get current user's VIP EXP and level
+const getVipExp = async (req, res) => {
+    let auth = req.cookies.auth;
+    const timeNow = new Date().toISOString();
+
+    if (!auth) {
+        return res.status(200).json({
+            message: 'Failed',
+            status: false,
+            timeStamp: timeNow,
+        });
+    }
+
+    const [rows] = await connection.query('SELECT vip_exp, user_level FROM users WHERE `token` = ? AND veri = 1 LIMIT 1', [auth]);
+
+    if (!rows || rows.length === 0) {
+        return res.status(200).json({
+            message: 'User not found',
+            status: false,
+            timeStamp: timeNow,
+        });
+    }
+
+    return res.status(200).json({
+        message: 'Success',
+        status: true,
+        vip_exp: rows[0].vip_exp,
+        user_level: rows[0].user_level,
+        timeStamp: timeNow,
+    });
+};
 
 export default {
     verifyCode,
@@ -2540,5 +2612,6 @@ export default {
     messagelist,
     trnsactiontype,
     getrebatedetail,
-    bethistory
+    bethistory,
+    getVipExp
 }

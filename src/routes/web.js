@@ -163,6 +163,7 @@ const initWebRouter = app => {
    router.post("/api/webapi/register", accountController.register) // register
    router.get("/aviator", middlewareController, userController.aviator)
    router.get("/api/webapi/GetUserInfo", middlewareController, userController.userInfo) // get info account
+   router.get("/api/webapi/vip-exp", middlewareController, userController.getVipExp) // get vip exp and level
    router.put("/api/webapi/change/userInfo", middlewareController, userController.changeUser) // get info account
    router.put('/api/webapi/EditUserPhoto', middlewareController, userController.userphoto); // get info account
    router.put("/api/webapi/change/pass", middlewareController, userController.changePassword) // get info account

@@ -568,6 +568,7 @@ CREATE TABLE `users` (
   `time` varchar(50) NOT NULL DEFAULT '0',
   `time_otp` varchar(50) NOT NULL DEFAULT '0',
   `user_level` int(11) DEFAULT 0,
+  `vip_exp` int(11) NOT NULL DEFAULT 0,
   `proxy` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
@@ -575,8 +576,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `id_user`, `phone`, `token`, `name_user`, `img_user`, `password`, `plain_password`, `money`, `total_money`, `roses_f1`, `roses_f`, `roses_today`, `level`, `rank`, `code`, `invite`, `ctv`, `veri`, `otp`, `ip_address`, `status`, `today`, `time`, `time_otp`, `user_level`, `proxy`) VALUES
-(282, '2000000', '1234567890', '5298e1a9dc9f6eb69ead8e1bd66cadc8', 'Djfuchxgzydyx', '17-bedde42f.png', 'e807f1fcf82d132f9bb018ca6738a19f', '1234567890', 25.65, 159030.00, 42526.41, 42632.47, 0.00, 1, 1, 'uVxnY75353', 'SUTFD37284', '000000', 1, '309099', '::1', 1, '2024-02-25 18:41:52', '1708886512413', '0', 1, 0);
+INSERT INTO `users` (`id`, `id_user`, `phone`, `token`, `name_user`, `img_user`, `password`, `plain_password`, `money`, `total_money`, `roses_f1`, `roses_f`, `roses_today`, `level`, `rank`, `code`, `invite`, `ctv`, `veri`, `otp`, `ip_address`, `status`, `today`, `time`, `time_otp`, `user_level`, `vip_exp`, `proxy`) VALUES
+(282, '2000000', '1234567890', '5298e1a9dc9f6eb69ead8e1bd66cadc8', 'Djfuchxgzydyx', '17-bedde42f.png', 'e807f1fcf82d132f9bb018ca6738a19f', '1234567890', 25.65, 159030.00, 42526.41, 42632.47, 0.00, 1, 1, 'uVxnY75353', 'SUTFD37284', '000000', 1, '309099', '::1', 1, '2024-02-25 18:41:52', '1708886512413', '0', 1, 0, 0);
 
 -- --------------------------------------------------------
 

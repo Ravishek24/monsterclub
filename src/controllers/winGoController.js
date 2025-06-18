@@ -136,6 +136,49 @@ const rosesPlus = async (auth, money) => {
     }
 };
 
+const updateVipExperience = async (phone, betAmount) => {
+    try {
+        // Calculate experience points (1 EXP per bet amount)
+        const expPoints = Math.floor(betAmount);
+        
+        // Update user's experience points
+        await connection.query(
+            'UPDATE users SET vip_exp = vip_exp + ? WHERE phone = ?',
+            [expPoints, phone]
+        );
+        
+        // Check if user should level up
+        const [user] = await connection.query(
+            'SELECT vip_exp, user_level FROM users WHERE phone = ?',
+            [phone]
+        );
+        
+        if (user[0]) {
+            const currentExp = user[0].vip_exp;
+            const currentLevel = user[0].user_level;
+            
+            // Define level thresholds (you can adjust these values)
+            const levelThresholds = {
+                1: 1000,   // Level 1 to 2
+                2: 5000,   // Level 2 to 3
+                3: 10000,  // Level 3 to 4
+                4: 20000,  // Level 4 to 5
+                5: 50000   // Level 5 to 6
+            };
+            
+            // Check if user should level up
+            if (currentLevel < 6 && currentExp >= levelThresholds[currentLevel]) {
+                await connection.query(
+                    'UPDATE users SET user_level = user_level + 1 WHERE phone = ?',
+                    [phone]
+                );
+            }
+        }
+    } catch (error) {
+        console.error('Error updating VIP experience:', error);
+    }
+};
+
 const betWinGo = async (req, res) => {
     let { typeid, join, x, money } = req.body;
     let auth = req.cookies.auth;
@@ -165,7 +208,7 @@ const betWinGo = async (req, res) => {
     
     let period = activePeriodRow[0].period;
 
-    const [user] = await connection.query('SELECT `phone`, `code`, `invite`, `level`, `money`, `proxy` FROM users WHERE token = ? AND veri = 1  LIMIT 1 ', [auth]);
+    const [user] = await connection.query('SELECT `phone`, `code`, `invite`, `level`, `money`, `proxy`, `vip_exp`, `user_level` FROM users WHERE token = ? AND veri = 1  LIMIT 1 ', [auth]);
     if (!user[0] || !isNumber(x) || !isNumber(money)) {
         return res.status(200).json({
             message: 'Error!',
@@ -263,14 +306,74 @@ const betWinGo = async (req, res) => {
         proxy = ?`;
         await connection.execute(sql, [id_product, userInfo.phone, userInfo.code, userInfo.invite, period, userInfo.level, total, x, fee, 0, gameJoin, join, 0, checkTime, timeNow, userInfo.proxy]);
         await connection.execute('UPDATE `users` SET `money` = `money` - ? WHERE `token` = ? ', [money * x, auth]);
-        const [users] = await connection.query('SELECT `money`, `level` FROM users WHERE token = ? AND veri = 1  LIMIT 1 ', [auth]);
+        const [users] = await connection.query('SELECT `money`, `level`, `vip_exp`, `user_level` FROM users WHERE token = ? AND veri = 1  LIMIT 1 ', [auth]);
         await rosesPlus(auth, money * x);
+        
+        // Add instant VIP experience points update
+        await updateVipExperience(userInfo.phone, total);
+        
+        // Get updated user data after experience points update
+        const [updatedUser] = await connection.query('SELECT `vip_exp`, `user_level` FROM users WHERE token = ? AND veri = 1  LIMIT 1 ', [auth]);
+
+        // Get current betting statistics for the current period
+        const [stats] = await connection.query(`
+            SELECT 
+                game,
+                bet,
+                SUM(money) as betAmount,
+                COUNT(*) as betCount,
+                SUM(\`get\`) as betWinLossAmount
+            FROM minutes_1 
+            WHERE DATE(today) = CURDATE() 
+            AND game = ? 
+            AND stage = ?
+            AND status = 0
+            GROUP BY game, bet`, [gameJoin, period]);
+
+        // Process the results to group by game and bet type
+        const gameStats = {};
+        stats.forEach(stat => {
+            if (!gameStats[stat.game]) {
+                gameStats[stat.game] = {
+                    totalBetAmount: 0,
+                    totalBetCount: 0,
+                    totalWinLoss: 0,
+                    categories: {}
+                };
+            }
+            
+            // Add to totals
+            gameStats[stat.game].totalBetAmount += parseFloat(stat.betAmount) || 0;
+            gameStats[stat.game].totalBetCount += parseInt(stat.betCount) || 0;
+            gameStats[stat.game].totalWinLoss += parseFloat(stat.betWinLossAmount) || 0;
+            
+            // Add category stats
+            gameStats[stat.game].categories[stat.bet] = {
+                betAmount: parseFloat(stat.betAmount) || 0,
+                betCount: parseInt(stat.betCount) || 0,
+                betWinLossAmount: parseFloat(stat.betWinLossAmount) || 0
+            };
+        });
+
+        // Emit betting statistics update
+        const io = req.app.get('io');
+        if (io) {
+            try {
+                console.log('Emitting betting stats:', { gameStats });
+                io.emit('betting-stats', { gameStats });
+            } catch (error) {
+                console.error('Error emitting betting stats:', error);
+            }
+        }
+        
         return res.status(200).json({
             message: 'Successful bet',
             status: true,
             data: result,
             change: users[0].level,
             money: users[0].money,
+            vip_exp: updatedUser[0].vip_exp,
+            user_level: updatedUser[0].user_level
         });
     } else {
         return res.status(200).json({

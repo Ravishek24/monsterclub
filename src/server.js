@@ -13,6 +13,9 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
+// Make io available to routes
+app.set('io', io);
+
 const port = process.env.PORT || 3000;
 
 app.use(cookieParser());

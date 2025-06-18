@@ -111,6 +111,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `roses_today` decimal(20,2) NOT NULL DEFAULT 0.00,
   `token` varchar(255) DEFAULT NULL,
   `veri` int(11) NOT NULL DEFAULT 0,
+  `user_level` int(11) NOT NULL DEFAULT 0,
+  `vip_exp` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `phone` (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -1,4 +1,3 @@
-
 var socket = io();
 let typeid = $('html').attr('data-change');
 let game = '';
@@ -8,8 +7,48 @@ if (typeid == '3') game = 'wingo5';
 if (typeid == '4') game = 'wingo10';
 $(`.container-fluid:eq(1) .row:eq(0) .info-box-content:eq(${Number(typeid) - 1}) .info-box-text`).css('color', '#e67e22');
 
-function formatMoney(money, type) {
-    return String(money).replace(/(\d)(?=(\d{3})+(?!\d))/g, `$1${type}`);
+// Socket.IO connection monitoring
+socket.on('connect', () => {
+    console.log('Connected to Socket.IO server');
+    // Load initial data when connected
+    loadInitialStats();
+});
+
+socket.on('disconnect', () => {
+    console.log('Disconnected from Socket.IO server');
+});
+
+socket.on('error', (error) => {
+    console.error('Socket.IO error:', error);
+});
+
+// Load initial betting statistics
+function loadInitialStats() {
+    $.ajax({
+        url: '/api/webapi/GameStatis',
+        method: 'POST',
+        data: { type: 'today' },
+        success: function(response) {
+            if (response.status) {
+                const data = response.data;
+                // Update statistics display
+                if (data.gameStatis) {
+                    $('.orderNumbers').text(formatMoney(data.sumBetAmount || 0, ','));
+                    $('.orderNumbers').attr('totalmoney', data.sumBetAmount || 0);
+                }
+            }
+        },
+        error: function(error) {
+            console.error('Error loading initial stats:', error);
+        }
+    });
+}
+
+function formatMoney(amount, separator = ',') {
+    if (typeof amount !== 'number') {
+        amount = parseFloat(amount) || 0;
+    }
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }
 
 function formateT(params) {
@@ -83,80 +122,146 @@ function showJoinMember2(data) {
     $('.direct-chat-msg').append(result);
 }
 
+// Original handler for bet placements
+socket.on('data-server_2', function (msg) {
+    try {
+        // Log the incoming message for debugging
+        console.log('Received data-server_2 message:', msg);
 
-socket.on("data-server_2", function (msg) {
-    showJoinMember2(msg);
-    $(".direct-chat-warning .direct-chat-messages").animate({
-        scrollTop: $(".direct-chat-msg").prop("scrollHeight")
-    }, 750);
-    if (msg.level == 1) return;
-    var red = Number($('.orderRed').attr('totalmoney'));
-    var green = Number($('.orderViolet').attr('totalmoney'));
-    var violet = Number($('.orderGreen').attr('totalmoney'));
-    var n0 = Number($('.orderNumber:eq(0)').attr('totalmoney'));
-    var n1 = Number($('.orderNumber:eq(1)').attr('totalmoney'));
-    var n2 = Number($('.orderNumber:eq(2)').attr('totalmoney'));
-    var n3 = Number($('.orderNumber:eq(3)').attr('totalmoney'));
-    var n4 = Number($('.orderNumber:eq(4)').attr('totalmoney'));
-    var n5 = Number($('.orderNumber:eq(5)').attr('totalmoney'));
-    var n6 = Number($('.orderNumber:eq(6)').attr('totalmoney'));
-    var n7 = Number($('.orderNumber:eq(7)').attr('totalmoney'));
-    var n8 = Number($('.orderNumber:eq(8)').attr('totalmoney'));
-    var n9 = Number($('.orderNumber:eq(9)').attr('totalmoney'));
-    var n = Number($('.orderNumber:eq(10)').attr('totalmoney'));
-    var l = Number($('.orderNumber:eq(11)').attr('totalmoney'));
-    var ns = Number($('.orderNumbers').attr('totalmoney', ns));
+        // Handle both string and object message formats
+        const data = typeof msg === 'string' ? JSON.parse(msg) : msg;
+        if (!data || !data.gameStats) {
+            console.log('Invalid betting stats message format:', msg);
+            return;
+        }
 
-    if (msg.join == '0') n0 += msg.money - (msg.money * 0.02);
-    if (msg.join == '1') n1 += msg.money - (msg.money * 0.02);
-    if (msg.join == '2') n2 += msg.money - (msg.money * 0.02);
-    if (msg.join == '3') n3 += msg.money - (msg.money * 0.02);
-    if (msg.join == '4') n4 += msg.money - (msg.money * 0.02);
-    if (msg.join == '5') n5 += msg.money - (msg.money * 0.02);
-    if (msg.join == '6') n6 += msg.money - (msg.money * 0.02);
-    if (msg.join == '7') n7 += msg.money - (msg.money * 0.02);
-    if (msg.join == '8') n8 += msg.money - (msg.money * 0.02);
-    if (msg.join == '9') n9 += msg.money - (msg.money * 0.02);
-    if (msg.join == 'x') green += msg.money - (msg.money * 0.02);
-    if (msg.join == 't') violet += msg.money - (msg.money * 0.02);
-    if (msg.join == 'd') red += msg.money - (msg.money * 0.02);
-    if (msg.join == 'l') l += msg.money - (msg.money * 0.02);
-    if (msg.join == 'n') n += msg.money - (msg.money * 0.02);
-    ns = n0 + n1 + n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9;
+        const stats = data.gameStats;
+        console.log('Processing stats:', stats);
 
-    $('.orderRed').text(formatMoney(red, ','));
-    $('.orderViolet').text(formatMoney(violet, ','));
-    $('.orderGreen').text(formatMoney(green, ','));
-    $('.orderNumber:eq(0)').text(formatMoney(n0, ','));
-    $('.orderNumber:eq(1)').text(formatMoney(n1, ','));
-    $('.orderNumber:eq(2)').text(formatMoney(n2, ','));
-    $('.orderNumber:eq(3)').text(formatMoney(n3, ','));
-    $('.orderNumber:eq(4)').text(formatMoney(n4, ','));
-    $('.orderNumber:eq(5)').text(formatMoney(n5, ','));
-    $('.orderNumber:eq(6)').text(formatMoney(n6, ','));
-    $('.orderNumber:eq(7)').text(formatMoney(n7, ','));
-    $('.orderNumber:eq(8)').text(formatMoney(n8, ','));
-    $('.orderNumber:eq(9)').text(formatMoney(n9, ','));
-    $('.orderNumber:eq(10)').text(formatMoney(l, ','));
-    $('.orderNumber:eq(11)').text(formatMoney(n, ','));
-    $('.orderNumbers').text(formatMoney(ns, ','));
+        // Reset all values to 0 first
+        $('.orderRed, .orderViolet, .orderGreen, .orderNumber, .orderNumbers').text('0');
+        $('.orderRed, .orderViolet, .orderGreen, .orderNumber, .orderNumbers').attr('totalmoney', '0');
 
-    $('.orderRed').attr('totalmoney', red);
-    $('.orderViolet').attr('totalmoney', green);
-    $('.orderGreen').attr('totalmoney', violet);
-    $('.orderNumber:eq(0)').attr('totalmoney', n0);
-    $('.orderNumber:eq(1)').attr('totalmoney', n1);
-    $('.orderNumber:eq(2)').attr('totalmoney', n2);
-    $('.orderNumber:eq(3)').attr('totalmoney', n3);
-    $('.orderNumber:eq(4)').attr('totalmoney', n4);
-    $('.orderNumber:eq(5)').attr('totalmoney', n5);
-    $('.orderNumber:eq(6)').attr('totalmoney', n6);
-    $('.orderNumber:eq(7)').attr('totalmoney', n7);
-    $('.orderNumber:eq(8)').attr('totalmoney', n8);
-    $('.orderNumber:eq(9)').attr('totalmoney', n9);
-    $('.orderNumber:eq(10)').attr('totalmoney', n);
-    $('.orderNumber:eq(11)').attr('totalmoney', l);
-    $('.orderNumbers').attr('totalmoney', ns);
+        // Process each game's statistics
+        Object.entries(stats).forEach(([game, gameStats]) => {
+            console.log(`Processing game ${game}:`, gameStats);
+            
+            // Update total betting amount
+            const totalAmount = gameStats.totalBetAmount || 0;
+            $('.orderNumbers').text(formatMoney(totalAmount, ','));
+            $('.orderNumbers').attr('totalmoney', totalAmount);
+
+            // Update category-specific statistics
+            if (gameStats.categories) {
+                Object.entries(gameStats.categories).forEach(([betType, categoryStats]) => {
+                    console.log(`Processing bet type ${betType}:`, categoryStats);
+                    const amount = categoryStats.betAmount || 0;
+
+                    // Update red/green/violet bets
+                    if (betType === 'd') { // Red
+                        $('.orderRed').text(formatMoney(amount, ','));
+                        $('.orderRed').attr('totalmoney', amount);
+                    } else if (betType === 'x') { // Green
+                        $('.orderGreen').text(formatMoney(amount, ','));
+                        $('.orderGreen').attr('totalmoney', amount);
+                    } else if (betType === 't') { // Violet
+                        $('.orderViolet').text(formatMoney(amount, ','));
+                        $('.orderViolet').attr('totalmoney', amount);
+                    } else if (/^[0-9]$/.test(betType)) { // Numbers 0-9
+                        $(`.orderNumber:eq(${betType})`).text(formatMoney(amount, ','));
+                        $(`.orderNumber:eq(${betType})`).attr('totalmoney', amount);
+                    } else if (betType === 'l') { // Big
+                        $('.orderNumber:eq(10)').text(formatMoney(amount, ','));
+                        $('.orderNumber:eq(10)').attr('totalmoney', amount);
+                    } else if (betType === 'n') { // Small
+                        $('.orderNumber:eq(11)').text(formatMoney(amount, ','));
+                        $('.orderNumber:eq(11)').attr('totalmoney', amount);
+                    }
+                });
+            }
+        });
+
+        // Update total amount
+        const totalAmount = Object.values(stats).reduce((sum, game) => sum + (game.totalBetAmount || 0), 0);
+        $('.orderNumbers').text(formatMoney(totalAmount, ','));
+        $('.orderNumbers').attr('totalmoney', totalAmount);
+
+    } catch (error) {
+        console.error('Error in data-server_2 handler:', error);
+        console.error('Error details:', error.message);
+        console.error('Stack trace:', error.stack);
+    }
+});
+
+// New handler for betting statistics
+socket.on('betting-stats', function (msg) {
+    try {
+        // Log the incoming message for debugging
+        console.log('Received betting-stats message:', msg);
+
+        // Handle both string and object message formats
+        const data = typeof msg === 'string' ? JSON.parse(msg) : msg;
+        if (!data || !data.gameStats) {
+            console.log('Invalid betting stats message format:', msg);
+            return;
+        }
+
+        const stats = data.gameStats;
+        console.log('Processing stats:', stats);
+
+        // Reset all values to 0 first
+        $('.orderRed, .orderViolet, .orderGreen, .orderNumber, .orderNumbers').text('0');
+        $('.orderRed, .orderViolet, .orderGreen, .orderNumber, .orderNumbers').attr('totalmoney', '0');
+
+        // Process each game's statistics
+        Object.entries(stats).forEach(([game, gameStats]) => {
+            console.log(`Processing game ${game}:`, gameStats);
+            
+            // Update total betting amount
+            const totalAmount = gameStats.totalBetAmount || 0;
+            $('.orderNumbers').text(formatMoney(totalAmount, ','));
+            $('.orderNumbers').attr('totalmoney', totalAmount);
+
+            // Update category-specific statistics
+            if (gameStats.categories) {
+                Object.entries(gameStats.categories).forEach(([betType, categoryStats]) => {
+                    console.log(`Processing bet type ${betType}:`, categoryStats);
+                    const amount = categoryStats.betAmount || 0;
+
+                    // Update red/green/violet bets
+                    if (betType === 'd') { // Red
+                        $('.orderRed').text(formatMoney(amount, ','));
+                        $('.orderRed').attr('totalmoney', amount);
+                    } else if (betType === 'x') { // Green
+                        $('.orderGreen').text(formatMoney(amount, ','));
+                        $('.orderGreen').attr('totalmoney', amount);
+                    } else if (betType === 't') { // Violet
+                        $('.orderViolet').text(formatMoney(amount, ','));
+                        $('.orderViolet').attr('totalmoney', amount);
+                    } else if (/^[0-9]$/.test(betType)) { // Numbers 0-9
+                        $(`.orderNumber:eq(${betType})`).text(formatMoney(amount, ','));
+                        $(`.orderNumber:eq(${betType})`).attr('totalmoney', amount);
+                    } else if (betType === 'l') { // Big
+                        $('.orderNumber:eq(10)').text(formatMoney(amount, ','));
+                        $('.orderNumber:eq(10)').attr('totalmoney', amount);
+                    } else if (betType === 'n') { // Small
+                        $('.orderNumber:eq(11)').text(formatMoney(amount, ','));
+                        $('.orderNumber:eq(11)').attr('totalmoney', amount);
+                    }
+                });
+            }
+        });
+
+        // Update total amount
+        const totalAmount = Object.values(stats).reduce((sum, game) => sum + (game.totalBetAmount || 0), 0);
+        $('.orderNumbers').text(formatMoney(totalAmount, ','));
+        $('.orderNumbers').attr('totalmoney', totalAmount);
+
+    } catch (error) {
+        console.error('Error in betting-stats handler:', error);
+        console.error('Error details:', error.message);
+        console.error('Stack trace:', error.stack);
+    }
 });
 
 function showListOrder4(list_orders, x) {

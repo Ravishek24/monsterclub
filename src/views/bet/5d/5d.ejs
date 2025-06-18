@@ -363,6 +363,105 @@
 
 
             </script>
+
+  <!-- Add VIP experience points display function -->
+  <script>
+  function showVipExpUpdate(vipExp, userLevel) {
+      const vipExpElement = document.createElement('div');
+      vipExpElement.className = 'vip-exp-update';
+      vipExpElement.innerHTML = `
+          <div class="vip-exp-content">
+              <div class="vip-exp-icon">✨</div>
+              <div class="vip-exp-text">
+                  <div class="vip-exp-title">VIP Experience Points</div>
+                  <div class="vip-exp-value">${vipExp} EXP</div>
+                  <div class="vip-exp-level">Level ${userLevel}</div>
+              </div>
+          </div>
+      `;
+      
+      document.body.appendChild(vipExpElement);
+      
+      // Add animation class
+      setTimeout(() => {
+          vipExpElement.classList.add('show');
+      }, 100);
+      
+      // Remove after animation
+      setTimeout(() => {
+          vipExpElement.classList.remove('show');
+          setTimeout(() => {
+              vipExpElement.remove();
+          }, 500);
+      }, 3000);
+  }
+
+  // Modify the bet success handler
+  function handleBetSuccess(response) {
+      if (response.status) {
+          // Existing bet success handling code
+          // ... existing code ...
+          
+          // Show VIP experience points update
+          if (response.vip_exp !== undefined && response.user_level !== undefined) {
+              showVipExpUpdate(response.vip_exp, response.user_level);
+          }
+      }
+  }
+
+  // Add CSS for VIP experience points display
+  const style = document.createElement('style');
+  style.textContent = `
+      .vip-exp-update {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: linear-gradient(135deg, #FFD700, #FFA500);
+          border-radius: 10px;
+          padding: 15px;
+          color: white;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+          transform: translateX(120%);
+          transition: transform 0.5s ease;
+          z-index: 9999;
+      }
+      
+      .vip-exp-update.show {
+          transform: translateX(0);
+      }
+      
+      .vip-exp-content {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+      }
+      
+      .vip-exp-icon {
+          font-size: 24px;
+      }
+      
+      .vip-exp-text {
+          display: flex;
+          flex-direction: column;
+      }
+      
+      .vip-exp-title {
+          font-size: 14px;
+          opacity: 0.9;
+      }
+      
+      .vip-exp-value {
+          font-size: 18px;
+          font-weight: bold;
+      }
+      
+      .vip-exp-level {
+          font-size: 12px;
+          opacity: 0.8;
+      }
+  `;
+  document.head.appendChild(style);
+  </script>
 </body>
 
 </html>

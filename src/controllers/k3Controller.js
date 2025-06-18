@@ -110,6 +110,49 @@ const validateBet = async (join, list_join, x, money, game) => {
     return true;
 }
 
+const updateVipExperience = async (phone, betAmount) => {
+    try {
+        // Calculate experience points (1 EXP per bet amount)
+        const expPoints = Math.floor(betAmount);
+        
+        // Update user's experience points
+        await connection.query(
+            'UPDATE users SET vip_exp = vip_exp + ? WHERE phone = ?',
+            [expPoints, phone]
+        );
+        
+        // Check if user should level up
+        const [user] = await connection.query(
+            'SELECT vip_exp, user_level FROM users WHERE phone = ?',
+            [phone]
+        );
+        
+        if (user[0]) {
+            const currentExp = user[0].vip_exp;
+            const currentLevel = user[0].user_level;
+            
+            // Define level thresholds (you can adjust these values)
+            const levelThresholds = {
+                1: 1000,   // Level 1 to 2
+                2: 5000,   // Level 2 to 3
+                3: 10000,  // Level 3 to 4
+                4: 20000,  // Level 4 to 5
+                5: 50000   // Level 5 to 6
+            };
+            
+            // Check if user should level up
+            if (currentLevel < 6 && currentExp >= levelThresholds[currentLevel]) {
+                await connection.query(
+                    'UPDATE users SET user_level = user_level + 1 WHERE phone = ?',
+                    [phone]
+                );
+            }
+        }
+    } catch (error) {
+        console.error('Error updating VIP experience:', error);
+    }
+};
+
 const betK3 = async (req, res) => {
     try {
         let { listJoin, game, gameJoin, xvalue, money } = req.body;
@@ -244,12 +287,21 @@ const betK3 = async (req, res) => {
             let f3 = (total_m / 100) * level0.f3;
             let f4 = (total_m / 100) * level0.f4;
             await connection.execute(sql2, [userInfo.phone, userInfo.code, userInfo.invite, f1, f2, f3, f4, timeNow]);
+            
+            // Add instant VIP experience points update
+            await updateVipExperience(userInfo.phone, total);
+            
+            // Get updated user data after experience points update
+            const [updatedUser] = await connection.query('SELECT `vip_exp`, `user_level` FROM users WHERE token = ? AND veri = 1  LIMIT 1 ', [auth]);
+            
             return res.status(200).json({
                 message: 'Successful bet',
                 status: true,
                 // data: result,
                 change: users[0].level,
                 money: users[0].money,
+                vip_exp: updatedUser[0].vip_exp,
+                user_level: updatedUser[0].user_level
             });
         } else {
             return res.status(200).json({
