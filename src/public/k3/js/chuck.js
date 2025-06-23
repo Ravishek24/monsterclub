@@ -167,6 +167,111 @@ function callListOrder() {
             $('.slot-transform:eq(0) .slot-num').attr('class', `slot-num bg${result[0]}`);
             $('.slot-transform:eq(1) .slot-num').attr('class', `slot-num bg${result[1]}`);
             $('.slot-transform:eq(2) .slot-num').attr('class', `slot-num bg${result[2]}`);
+
+            // Check if we have a recent game result to show popup (IMMEDIATE)
+            if (list_orders.length > 0) {
+                // Get the user's bet history to check for recent bets
+                $.ajax({
+                    type: "POST",
+                    url: "/api/webapi/k3/GetMyEmerdList",
+                    data: {
+                        gameJoin: $('html').attr('data-dpr'),
+                        pageno: "0",
+                        pageto: "10",
+                    },
+                    dataType: "json",
+                    success: function (betResponse) {
+                        let betData = betResponse.data.gameslist;
+                        
+                        if (betData && betData.length > 0) {
+                            let firstGame = betData[0];
+                            
+                            // Check if the firstGame period matches any recent result
+                            let shouldShowPopup = false;
+                            let matchingResult = null;
+                            
+                            // Only check the MOST RECENT result to avoid multiple popups
+                            if (list_orders.length > 0 && firstGame.stage == list_orders[0].period) {
+                                shouldShowPopup = true;
+                                matchingResult = list_orders[0];
+                            }
+                            
+                            if (shouldShowPopup && matchingResult) {
+                                // Create stable unique key for this specific game result (without timestamp)
+                                let popupKey = `popup_${firstGame.stage}_${firstGame.get}_${firstGame.money}`;
+                                
+                                // Only show if we haven't shown this popup before
+                                if (!sessionStorage.getItem(popupKey)) {
+                                    console.log('K3 showing IMMEDIATE popup for:', popupKey);
+                                    
+                                    // Mark this popup as shown
+                                    sessionStorage.setItem(popupKey, 'true');
+                                    
+                                    // Set flag to prevent other popups
+                                    popupCurrentlyShowing = true;
+                                    
+                                    var modal = document.getElementById("myModal");
+                                    if (modal) {
+                                        modal.style.display = "block";
+                                        var myModalheader = document.getElementById("myModal_header");
+                                        var myModal_result = document.getElementById("myModal_result");
+                                        var lottery_result = document.getElementById("lottery_result");
+                                        var loss_image = document.getElementById("loss-img");
+                                        var myModal_result_Period = document.getElementById("myModal_result_Period");
+                                        
+                                        if (firstGame.get == 0) {
+                                            loss_image.src="/assets/png/missningLBg-ca049a47.png";
+                                            myModalheader.innerHTML = "Sorry";
+                                            myModal_result.innerHTML = "LOSS ";
+                                        } else {
+                                            loss_image.src="/assets/png/missningBg-c1f02bcd.png";
+                                            myModalheader.innerHTML = "Congratulations";
+                                            myModal_result.innerHTML = "WIN :" + firstGame.get;
+                                        }
+                                        myModal_result_Period.innerHTML = "Period : K3 " + firstGame.stage;
+                                        
+                                        let color;
+                                        let type;
+
+                                        if (matchingResult.result >= 0 && matchingResult.result <= 4) {
+                                            type = "Small";
+                                        } else if (matchingResult.result >= 5 && matchingResult.result <= 9) {
+                                            type = "Big";
+                                        }
+
+                                        if (matchingResult.result == 0) {
+                                            color = "Red + Violet";
+                                        } else if (matchingResult.result == 5) {
+                                            color = "Green + Violet";
+                                        } else if (matchingResult.result % 2 == 0) {
+                                            color = "Red";
+                                        } else {
+                                            color = "Green";
+                                        }
+
+                                        lottery_result.innerHTML = "Lottery Result:<span class='btn-boox'>" + color + "</span><span class='btn-boox'>" + matchingResult.result + "</span><span class='btn-boox'>" + type + "</span>";
+                                        
+                                        // Auto-hide popup after 5 seconds and reset flag
+                                        setTimeout(() => {
+                                            if (modal) {
+                                                modal.style.display = "none";
+                                            }
+                                            // Reset the flag to allow new popups
+                                            popupCurrentlyShowing = false;
+                                            console.log('K3 immediate popup closed, flag reset');
+                                        }, 5000);
+                                    } else {
+                                        // If modal doesn't exist, reset flag anyway
+                                        popupCurrentlyShowing = false;
+                                    }
+                                } else {
+                                    console.log('K3 immediate popup already shown for this result:', popupKey);
+                                }
+                            }
+                        }
+                    }
+                });
+            }
         },
     });
 }

@@ -16618,13 +16618,51 @@
 
 <script>
     // Initialize Swiper
-    var swiper = new Swiper('.swiper-container', {
-        slidesPerView: 'auto',
+    // Initialize Swiper for VIP cards with mobile-responsive configuration
+    var vipSwiper = new Swiper('.my-swipe', {
+        slidesPerView: 1,
         spaceBetween: 20,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+        centeredSlides: true,
+        loop: false,
+        autoplay: false,
+        allowTouchMove: true,
+        allowMouseDrag: true,
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true,
         },
+        breakpoints: {
+            // Mobile (default)
+            320: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+                centeredSlides: true,
+            },
+            // Tablet
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 15,
+                centeredSlides: false,
+            },
+            // Desktop
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+                centeredSlides: false,
+            },
+            1200: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+                centeredSlides: false,
+            }
+        },
+        // Enable a11y
+        a11y: {
+            prevSlideMessage: 'Previous VIP level',
+            nextSlideMessage: 'Next VIP level',
+            firstSlideMessage: 'This is the first VIP level',
+            lastSlideMessage: 'This is the last VIP level',
+        }
     });
     window.addEventListener('DOMContentLoaded', function () {
         fetch('/api/webapi/vip-exp')
@@ -16715,15 +16753,7 @@
             });
     }
 
-    // Initialize Swiper
-    var swiper = new Swiper('.swiper-container', {
-        slidesPerView: 'auto',
-        spaceBetween: 20,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-    });
+   
 
     // Update on page load
     window.addEventListener('DOMContentLoaded', fetchAndUpdateVipExp);

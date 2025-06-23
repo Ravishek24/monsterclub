@@ -1108,3 +1108,170 @@ $('.confirm').click(async function (e) {
     }
     callAjaxMeJoin();
 });
+
+// Global flag to prevent multiple popups
+let popupCurrentlyShowing = false;
+
+// Function to show win/loss popup
+function showWinLossPopup(gameData, resultData, duration) {
+    var modal = document.getElementById("myModal");
+    if (modal) {
+        modal.style.display = "block";
+        var myModalheader = document.getElementById("myModal_header");
+        var myModal_result = document.getElementById("myModal_result");
+        var lottery_result = document.getElementById("lottery_result");
+        var loss_image = document.getElementById("loss-img");
+        var myModal_result_Period = document.getElementById("myModal_result_Period");
+        
+        if (gameData.get == 0) {
+            loss_image.src="/assets/png/missningLBg-ca049a47.png";
+            myModalheader.innerHTML = "Sorry";
+            myModal_result.innerHTML = "LOSS ";
+        } else {
+            loss_image.src="/assets/png/missningBg-c1f02bcd.png";
+            myModalheader.innerHTML = "Congratulations";
+            myModal_result.innerHTML = "WIN :" + gameData.get;
+        }
+        myModal_result_Period.innerHTML = "Period : " + duration + " " + gameData.stage;
+        
+        let color;
+        let type;
+
+        if (resultData.result >= 0 && resultData.result <= 4) {
+            type = "Small";
+        } else if (resultData.result >= 5 && resultData.result <= 9) {
+            type = "Big";
+        }
+
+        if (resultData.result == 0) {
+            color = "Red + Violet";
+        } else if (resultData.result == 5) {
+            color = "Green + Violet";
+        } else if (resultData.result % 2 == 0) {
+            color = "Red";
+        } else {
+            color = "Green";
+        }
+
+        lottery_result.innerHTML = "Lottery Result:<span class='btn-boox'>" + color + "</span><span class='btn-boox'>" + resultData.result + "</span><span class='btn-boox'>" + type + "</span>";
+        
+        // Auto-hide popup after 5 seconds and reset flag
+        setTimeout(() => {
+            if (modal) {
+                modal.style.display = "none";
+            }
+            // Reset the flag to allow new popups
+            popupCurrentlyShowing = false;
+            console.log('K3 popup closed, flag reset');
+        }, 5000);
+    } else {
+        // If modal doesn't exist, reset flag anyway
+        popupCurrentlyShowing = false;
+        console.log('K3 modal not found, flag reset');
+    }
+}
+
+// Function to clear popup history when user places a new bet
+function clearPopupHistory() {
+    const keys = Object.keys(sessionStorage);
+    keys.forEach(key => {
+        if (key.startsWith('popup_')) {
+            sessionStorage.removeItem(key);
+        }
+    });
+    // Reset the popup flag
+    popupCurrentlyShowing = false;
+    console.log('K3 popup history cleared and flag reset');
+}
+
+// Add periodic check for new results and popups
+function checkForNewResults() {
+    // Don't check if popup is currently showing
+    if (popupCurrentlyShowing) {
+        console.log('K3 popup currently showing, skipping check');
+        return;
+    }
+    
+    $.ajax({
+        type: "POST",
+        url: "/api/webapi/k3/GetMyEmerdList",
+        data: {
+            gameJoin: $('html').attr('data-dpr'),
+            pageno: "0",
+            pageto: "5",
+        },
+        dataType: "json",
+        success: function(response) {
+            let data = response.data.gameslist;
+            if (data && data.length > 0) {
+                let mostRecentGame = data[0];
+                
+                // Only show popup if this is a very recent game (within last 30 seconds)
+                let gameTime = new Date(mostRecentGame.time || Date.now()).getTime();
+                let currentTime = Date.now();
+                let timeDiff = currentTime - gameTime;
+                
+                // Create a unique key for this specific game result with timestamp
+                let popupKey = `popup_${mostRecentGame.stage}_${mostRecentGame.get}_${mostRecentGame.money}_${gameTime}`;
+                
+                console.log('K3 checking popup for:', {
+                    stage: mostRecentGame.stage,
+                    get: mostRecentGame.get,
+                    money: mostRecentGame.money,
+                    timeDiff: timeDiff,
+                    popupKey: popupKey,
+                    alreadyShown: sessionStorage.getItem(popupKey)
+                });
+                
+                // If game is very recent (within 30 seconds) and we haven't shown popup for this specific result
+                if (timeDiff < 30000 && mostRecentGame.stage && !sessionStorage.getItem(popupKey)) {
+                    console.log('K3 showing popup for:', popupKey);
+                    
+                    // Mark this specific popup as shown
+                    sessionStorage.setItem(popupKey, 'true');
+                    
+                    // Set flag to prevent other popups
+                    popupCurrentlyShowing = true;
+                    
+                    // Get the result for this period
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/webapi/k3/GetNoaverageEmerdList",
+                        data: {
+                            gameJoin: $('html').attr('data-dpr'),
+                            pageno: "0",
+                            pageto: "10",
+                        },
+                        dataType: "json",
+                        success: function(resultResponse) {
+                            let list_orders = resultResponse.data.gameslist;
+                            let matchingResult = null;
+                            
+                            // Find the matching result
+                            for (let i = 0; i < list_orders.length; i++) {
+                                if (list_orders[i].period == mostRecentGame.stage) {
+                                    matchingResult = list_orders[i];
+                                    break;
+                                }
+                            }
+                            
+                            if (matchingResult) {
+                                showWinLossPopup(mostRecentGame, matchingResult, "K3");
+                            }
+                        }
+                    });
+                } else {
+                    console.log('K3 skipping popup - already shown or too old');
+                }
+            }
+        }
+    });
+}
+
+// Start periodic checks for K3 popups
+setInterval(checkForNewResults, 5000); // Check every 5 seconds
+
+// Clear popup history when placing new bets
+$('.confirm').click(function() {
+    clearPopupHistory();
+});
